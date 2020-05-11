@@ -1,0 +1,95 @@
+#indexthumbnail {
+    padding: 0;
+   height: 380px;
+   display: block;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 3px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.thumbnail img {
+    display: block;
+    width: auto;
+    background-size: contain;
+}
+
+.photosmall img {
+    display: inline-block;
+    width: auto;
+    background-size: contain;
+    height: 150px;
+    margin: 2px;
+}
+
+
+#indexthumbnail img {
+    object-fit: cover;
+    width: 100%;
+    height:150px;
+}
+
+.thumbnail .caption-full{
+    padding: 9px;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+  
+    padding: 4px;
+    border-radius: 2px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.red {
+      background-color: red;
+}
+
+.green {
+      background-color: green;
+}
+
+/* Google Maps */
+#map {
+    height: 400px;
+    width: 100%;
+    margin: 15px auto;
+}
+
+.table td {
+   text-align: left;   
+}
+
+.textarea {
+ min-height: 100px;
+}
+
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.containerindex {
+    display: block;
+    width: auto;
+    background-size: contain;
+
+    object-fit: cover;
+    width: 100%;
+    height:150px;
+    position: relative;
+    color: white;
+}
+
