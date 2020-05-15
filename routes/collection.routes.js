@@ -6,21 +6,21 @@ module.exports = app => {
   
   // NEW - Show new form
   app.get("/collections/new",function(req,res){
-        res.render("collection/new");
+        res.render("collections/new");
   });
   
   // CREATE - add new collection
   app.post("/collections", collections.create);
 
   // SHOW - Retrieve a single collection with collectionId
-  app.get("/collections/:Id", collections.findOne);
+  app.get("/collections/:Id",  collections.findOne);
 
-  // SHOW - Retrieve a single collection with collectionId
-  app.get("/collections/:Id/edit", collections.findOne);
+  // EDIT - Retrieve a single collection with collectionId to edit entries
+  app.get("/collections/:Id/edit", collections.editOne);
   
   // UPDATE - Update a collection with collectionId
   app.put("/collections/:Id", collections.update);
-
+  
   // DELETE - Delete a collection with collectionId
   app.delete("/collections/:Id", collections.delete);
 

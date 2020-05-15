@@ -1,12 +1,12 @@
 const mysql = require("mysql");
-const dbConfig = require("../config/db.config.js");
+const dbConfig = require("./db.config.js");
 
 // Create a connection to the database
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "WebDBUser",
-  password: "qF2J%9a84zU",
-  database: "LegoSorterDB"
+  host: dbConfig.HOST,
+  user: dbConfig.USER,
+  password: dbConfig.PASSWORD,
+  database: dbConfig.DB
 });
 
 connection.connect(function(err) {

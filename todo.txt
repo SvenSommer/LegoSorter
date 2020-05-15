@@ -1,0 +1,3 @@
+- download and store Parts, prices and imagesOfParts of a set when adding a new set to a collection
+- use downloaded data to display parts of a set and parts of a collection
+- define and use status for ets and parts

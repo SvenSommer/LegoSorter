@@ -1,0 +1,118 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="row">
+    <div class="col-md-12">
+        <% if(set.image_url  != null) {%>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img class="img-responsive" style= "width:300px" src="<%=set.image_url %>">
+            </div>
+        </div>
+        <% }%>
+        <div class="col-md-9">
+            <div class="well well">
+                <div class="caption-full">
+                    <h2><%=set.no %> - <%=set.name%></h2>
+                    <a href="/sets/<%= set.id %>/edit" class="btn btn-warning">Edit</a>
+                    <form id="delete-form" action="/sets/<%=set.id %>?_method=DELETE" method="POST" >
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <hr>
+                </div>
+            <div class="caption">
+                <!--Details!-->
+                <h3>Details</h3>
+                    <p><span style="white-space: pre-line"><%=set.comments%></span></p>
+                    <div class="table-responsive">          
+                        <table class="table">
+                            <tbody>
+                              <tr>
+                                <td><strong>Category</strong></td>
+                                    <td><%=set.category_id%></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Year</strong></td>
+                                    <td><%=set.year%></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Weight</strong></td>
+                                    <td><%=set.weight_g%> g</td>
+                              </tr>
+                              <tr>
+                                <td><strong>Size</strong></td>
+                                    <td><%=set.size%></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Instructions</strong></td>
+                                    <td><%=set.instructions%></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Parts</strong></td>
+                                    <td><%=set.complete_part_count%></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Minifigs</strong></td>
+                                    <td><%=set.complete_minifigs_count%></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Price</strong></td>
+                                    <td><%=set.price%> €</td>
+                              </tr>
+                              <tr>
+                                <td><strong>Comments</strong></td>
+                                    <td><%=set.comments%> </td>
+                              </tr>
+                              <tr>
+                                <td><strong>Status</strong></td>
+                                    <td><%=set.status%> </td>
+                              </tr>
+                              <tr>
+                                  <td><strong>Created:</strong></td>
+                                  <td><%=moment(set.created).format('DD. MMMM YYYY')%></td>
+                              </tr>
+                            </tbody>
+                        </table>
+                        <h3>Parts</h3>
+                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th data-sortable="true">Regular item</th>
+                                    <th data-sortable="true">Number</th>
+                                    <th data-sortable="true">Name</th>
+                                    <th data-sortable="true">Type</th>
+                                    <th data-sortable="true">Category</th>
+                                    <th data-sortable="true">color_id</th>
+                                    <th data-sortable="true">quantity</th>
+                                    <th data-sortable="true">extra_quantity</th>
+                                    <th data-sortable="true">is_alternate</th>
+                                     <th data-sortable="true">is_counterpart</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <% subsetData.forEach(function(subset){ %>
+                         <tr>
+                            <td><img class="img-responsive" style= "width:50px" src="//img.bricklink.com/P/1/<%=subset["entries"][0]["item"]["no"] %>.gif"></td>
+                            <td><%=subset["match_no"]%></td>
+                            <td><%=subset["entries"][0]["item"]["no"]%></td>
+                            <td><%=subset["entries"][0]["item"]["name"]%></td>
+                            <td><%=subset["entries"][0]["item"]["type"]%></td>
+                            <td><%=subset["entries"][0]["item"]["category_id"]%></td>
+                            <td><%=subset["entries"][0]["color_id"]%></td>
+                            <td><%=subset["entries"][0]["quantity"]%></td>
+                            <td><%=subset["entries"][0]["extra_quantity"]%></td>
+                            <td><%=subset["entries"][0]["is_alternate"]%></td>
+                            <td><%=subset["entries"][0]["is_counterpart"]%></td>
+                           </tr>
+                     <% }); %>
+                     </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
+    <a href="/collections">Go back</a>
+</div>
+<%- include ("../partials/footer.ejs") %> 
