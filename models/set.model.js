@@ -127,11 +127,10 @@ Set.removeAll = result => {
 };
 
 Set.findAllSubsetsBySetId = (setId, result) => {
- blApi.bricklinkClient.getItemSubset(blApi.ItemType.Set, setId + "-1", {break_minifigs: true})
-      .then(function(subsetData){
-          result(null, subsetData);
-      });
+  blApi.bricklinkClient.getItemSubset(blApi.ItemType.Set, setId + "-1", {break_minifigs: true})
+    .then(function(subsetData){
+        result(null, subsetData);
+    });
   };
-
 
 module.exports = Set;

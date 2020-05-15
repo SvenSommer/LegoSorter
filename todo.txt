@@ -1,3 +1,12 @@
 - download and store Parts, prices and imagesOfParts of a set when adding a new set to a collection
+- sum prices and part count
 - use downloaded data to display parts of a set and parts of a collection
-- define and use status for ets and parts
+- define and use status for sets and parts
+
+- introduce user routes and authentication
+- create sets.index
+- create parts.index
+- introduce navbar
+
+- make own pictures upload able (also from mobile)
+- show bigger pictures on click

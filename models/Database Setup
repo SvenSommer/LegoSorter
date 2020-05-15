@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS `Sets` (
 	`complete_part_count` INT unsigned,
 	`complete_minifigs_count` INT,
 	`price` DECIMAL(11),
-	
 	`status` INT,
 	`thumbnail_url` VARCHAR(500) DEFAULT NULL,
 	`image_url` VARCHAR(500) DEFAULT NULL,
