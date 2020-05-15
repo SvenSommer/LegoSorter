@@ -1,2 +1,3 @@
 node_modules/
-db.config.js
+config/bl.api.config.js
+config/db.config.js

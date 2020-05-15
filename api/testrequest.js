@@ -1,8 +1,5 @@
 const blApi = require("../config/bl.api.js");
 
-
-
-
     //SET Information
     blApi.bricklinkClient.getCatalogItem(blApi.ItemType.Set, '9526-1')
     .then(function(setinfo){
