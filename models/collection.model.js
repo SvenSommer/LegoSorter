@@ -12,7 +12,8 @@ const Collection = function(collection) {
   this.cost = collection.cost;
   this.porto = collection.porto;
   this.thumbnail_url = collection.thumbnail_url;
-  this.created = collection.created;
+  this.status = 10;
+  this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
 Collection.create = (newCollection, result) => {
@@ -62,8 +63,8 @@ Collection.getAll = result => {
 
 Collection.updateById = (id, collection, result) => {
   sql.query(
-    "UPDATE Collections SET name = ?, weight_kg = ?, origin = ?, origin_url = ?, seller = ?, description = ?, purchase_date = ?, cost = ?, porto = ?, thumbnail_url = ?, created = ? WHERE id = ?",
-    [collection.name, collection.weight_kg, collection.origin, collection.origin_url, collection.seller, collection.description, collection.purchase_date, collection.cost, collection.porto, collection.thumbnail_url, collection.created, id],
+    "UPDATE Collections SET name = ?, weight_kg = ?, origin = ?, origin_url = ?, seller = ?, description = ?, purchase_date = ?, cost = ?, porto = ?, thumbnail_url = ?, status = ?, created = ? WHERE id = ?",
+    [collection.name, collection.weight_kg, collection.origin, collection.origin_url, collection.seller, collection.description, collection.purchase_date, collection.cost, collection.porto, collection.thumbnail_url, collection.status, collection.created, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

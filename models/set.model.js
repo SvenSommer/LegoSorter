@@ -1,6 +1,7 @@
 const sql = require("../config/db.js");
 const blApi = require("../config/bl.api.js");
 
+
 // constructor
 const Set = function(set) {
   this.collection_id = set.collection_id;
@@ -8,12 +9,14 @@ const Set = function(set) {
   this.comments = set.comments;
   this.instructions = set.instructions;
   this.condition = set.condition;
+  this.status = 10;
+  this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
 Set.create = (newSet, result) => {
   blApi.bricklinkClient.getCatalogItem(blApi.ItemType.Set, newSet.no + '-1')
     .then(function(setinfo){
-        console.log(setinfo);
+       // console.log(setinfo);
         newSet.name = setinfo.name;
         newSet.year = setinfo.year_released;
         newSet.weight_g = setinfo.weight;
@@ -21,8 +24,8 @@ Set.create = (newSet, result) => {
         newSet.thumbnail_url = setinfo.thumbnail_url;
         newSet.image_url = setinfo.image_url;
         newSet.category_id = setinfo.category_id;
-        newSet.status = 10;
-        newSet.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+        
        // newSet.complete_part_count = 
        // newSet.complete_minifigs_count = 
        // newSet. price = 
@@ -127,7 +130,7 @@ Set.removeAll = result => {
 };
 
 Set.findAllSubsetsBySetId = (setId, result) => {
-  blApi.bricklinkClient.getItemSubset(blApi.ItemType.Set, setId + "-1", {break_minifigs: true})
+  blApi.bricklinkClient.getItemSubset(blApi.ItemType.Set, setId + "-1", {break_minifigs: false})
     .then(function(subsetData){
         result(null, subsetData);
     });

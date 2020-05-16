@@ -75,8 +75,8 @@
                         <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
                             <thead>
                                 <tr>
+                                    <th data-sortable="true">Match No</th>
                                     <th>Image</th>
-                                    <th data-sortable="true">Regular item</th>
                                     <th data-sortable="true">Number</th>
                                     <th data-sortable="true">Name</th>
                                     <th data-sortable="true">Type</th>
@@ -85,24 +85,26 @@
                                     <th data-sortable="true">quantity</th>
                                     <th data-sortable="true">extra_quantity</th>
                                     <th data-sortable="true">is_alternate</th>
-                                     <th data-sortable="true">is_counterpart</th>
+                                    <th data-sortable="true">is_counterpart</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                         <% subsetData.forEach(function(subset){ %>
                          <tr>
-                            <td><img class="img-responsive" style= "width:50px" src="//img.bricklink.com/P/1/<%=subset["entries"][0]["item"]["no"] %>.gif"></td>
-                            <td><%=subset["match_no"]%></td>
-                            <td><%=subset["entries"][0]["item"]["no"]%></td>
-                            <td><%=subset["entries"][0]["item"]["name"]%></td>
-                            <td><%=subset["entries"][0]["item"]["type"]%></td>
-                            <td><%=subset["entries"][0]["item"]["category_id"]%></td>
-                            <td><%=subset["entries"][0]["color_id"]%></td>
-                            <td><%=subset["entries"][0]["quantity"]%></td>
-                            <td><%=subset["entries"][0]["extra_quantity"]%></td>
-                            <td><%=subset["entries"][0]["is_alternate"]%></td>
-                            <td><%=subset["entries"][0]["is_counterpart"]%></td>
+                             <td><%=subset["match_no"]%></td>
+                              <% subset["entries"].forEach(function(entry){ %>
+                                <td><img class="img-responsive" style= "width:50px" src="//img.bricklink.com/P/<%=entry["color_id"]%>/<%=entry["item"]["no"] %>.gif"></td>
+                                <td><%=entry["item"]["no"]%></td>
+                                <td><%=entry["item"]["name"]%></td>
+                                <td><%=entry["item"]["type"]%></td>
+                                <td><%=entry["item"]["category_id"]%></td>
+                                <td><%=entry["color_id"]%></td>
+                                <td><%=entry["quantity"]%></td>
+                                <td><%=entry["extra_quantity"]%></td>
+                                <td><%=entry["is_alternate"]%></td>
+                                <td><%=entry["is_counterpart"]%></td>
+                             <% }); %>
                            </tr>
                      <% }); %>
                      </tbody>

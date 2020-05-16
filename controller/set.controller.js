@@ -1,5 +1,7 @@
-const Set = require("../models/set.model.js");
 const Collection = require("../models/collection.model.js");
+const Set = require("../models/set.model.js");
+const Subset = require("../models/subset.model.js");
+
 
 // Retrieve all sets from the database.
 exports.findAll = (req, res) => {
@@ -62,7 +64,7 @@ exports.create = (req, res) => {
           condition: req.body.condition
         });
       
-        // Save Set in the database
+        // SAVE SET INFORMATION - Save Set info in the database
         Set.create(set, (err, data) => {
           if (err)
             res.status(500).send({
@@ -70,6 +72,16 @@ exports.create = (req, res) => {
                 err.message || "Some error occurred while creating the Set."
             });
           else res.redirect("/collections/"+ collection.id);  
+        });
+        
+        // PART OUT - Save the Subsets in the database
+        Subset.create(req.body.no, (err, data) => {
+               if (err)
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while creating the SubSet."
+            });
+           else res.redirect("/collections/"+ collection.id); 
         });
       }
   });

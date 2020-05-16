@@ -20,7 +20,6 @@ exports.create = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-  var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
   // Create a Collection
   const customer = new Collection({
     name: req.body.name,
@@ -33,7 +32,6 @@ exports.create = (req, res) => {
     cost: req.body.cost,
     porto: req.body.porto,
     thumbnail_url: req.body.thumbnail_url,
-    created: date
   });
 
   // Save Collection in the database
