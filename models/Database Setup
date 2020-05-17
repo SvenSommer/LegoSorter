@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `Sets` (
 
 CREATE TABLE `Parts` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
-	`no` INT unsigned NOT NULL,
+	`no` VARCHAR(100) NOT NULL,
 	`name` VARCHAR(200) NOT NULL,
 	`type` VARCHAR(50) NOT NULL,
 	`category_id` INT unsigned NOT NULL,
@@ -46,19 +46,21 @@ CREATE TABLE `Parts` (
 	`weight_g` INT,
 	`size` VARCHAR(200),
 	`is_obsolete` BOOLEAN,
-	`qty_avg_price` DOUBLE unsigned,
+	`qty_avg_price_stock` DOUBLE unsigned,
+	`qty_avg_price_sold` DOUBLE unsigned,
 	`image_url` VARCHAR(200) ,
 	`thumbnail_url` VARCHAR(500),
 	`status` INT NOT NULL,
 	`created` DATETIME NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	CONSTRAINT `part` UNIQUE KEY  (`no`)
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE `SubSets` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`setNo` INT NOT NULL,
 	`match_no` INT unsigned NOT NULL,
-	`no` INT unsigned NOT NULL,
+	`no` VARCHAR(100) NOT NULL,
 	`name` VARCHAR(200) NOT NULL,
 	`type` VARCHAR(50) NOT NULL,
 	`category_id` INT unsigned NOT NULL,
@@ -68,7 +70,28 @@ CREATE TABLE `SubSets` (
 	`is_alternate` BOOLEAN NOT NULL,
 	`is_counterpart` BOOLEAN NOT NULL,
 	`created` DATETIME NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	CONSTRAINT  `subset` UNIQUE (`setNo`, `no`,`color_id`, `is_counterpart`)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Prices` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`no` VARCHAR(100) NOT NULL,
+	`type` VARCHAR(50) NOT NULL,
+	`new_or_used` VARCHAR(1) NOT NULL,
+	`color_id` INT unsigned NOT NULL,
+	`country_code` VARCHAR(10) NOT NULL,
+	`guide_type` VARCHAR(10) NOT NULL,
+	`currency_code` VARCHAR(10) NOT NULL,
+	`min_price` DOUBLE unsigned NOT NULL,
+	`max_price` DOUBLE unsigned NOT NULL,
+	`avg_price` DOUBLE unsigned NOT NULL,
+	`qty_avg_price` DOUBLE unsigned NOT NULL,
+	`unit_quantity` INT unsigned NOT NULL,
+	`total_quantity` INT unsigned NOT NULL,
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT  `price` UNIQUE (`no`, `type`, `new_or_used`, `color_id`, `country_code`, `guide_type`, `currency_code`)
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Status` (

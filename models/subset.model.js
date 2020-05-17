@@ -37,16 +37,18 @@ Subset.create = (setNumber, result) => {
                       is_counterpart: entry["is_counterpart"]
                     });
       
-              sql.query("INSERT INTO SubSets SET ?", subset, (err, res) => {
+              sql.query("INSERT INTO SubSets SET ? ON DUPLICATE KEY UPDATE id=id", subset, (err, res) => {
                 if (err) {
                   console.log("error while writing into Subsets: ", err);
                   result(err, null);
                   return;
                 }
             
-              console.log("created Subset entry: ", { id: res.insertId, ...subset });
+             // console.log("created Subset entry: ", { id: res.insertId, ...subset });
               // result(null, { id: res.insertId, ...newSubset });
-            }); // insert
+            });
+          
+            // insert
             var part = new Part({no : entry["item"]["no"]});
             
             Part.create(part, (err, data)=> {

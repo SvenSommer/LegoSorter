@@ -12,18 +12,22 @@ const blApi = require("../config/bl.api.js");
         console.log(setimage);
     });
     
+      //SET Subset
+        blApi.bricklinkClient.getItemSubset(blApi.ItemType.Set, '9479-1', {break_minifigs: true})
+    .then(function(subsets){
+       
+        console.log(JSON.stringify(subsets));
+    });
 
     
+   
+
+   */ 
+   
     //SET PriceGuide
     blApi.bricklinkClient.getPriceGuide(blApi.ItemType.Set, '9526-1', {new_or_used: blApi.Condition.Used})
     .then(function(price){
         console.log(price);
     });
-  */  
-        //SET Subset
-    blApi.bricklinkClient.getItemSubset(blApi.ItemType.Set, '9479-1', {break_minifigs: true})
-    .then(function(subsets){
-       
-        console.log(JSON.stringify(subsets));
-    });
+
  

@@ -1,5 +1,6 @@
 const sql = require("../config/db.js");
 const blApi = require("../config/bl.api.js");
+const Price = require("./price.model.js");
 
 
 // constructor
@@ -12,27 +13,38 @@ const Part = function(part) {
 Part.create = (newPart, result) => {
   blApi.bricklinkClient.getCatalogItem(blApi.ItemType.Part, newPart.no, newPart.color_id)
     .then(function(partinfo){
-        newPart.name = partinfo.name;
-        newPart.type = partinfo.type;
-        newPart.category_id = partinfo.category_id;
-        newPart.year = partinfo.year_released;
-        newPart.weight_g = partinfo.weight;
-        newPart.size = partinfo.dim_x + " x " + partinfo.dim_y + " x " + partinfo.dim_z + " cm";
-        newPart.is_obsolete = partinfo.is_obsolete;
-        newPart.qty_avg_price = partinfo.qty_avg_price;
-        newPart.image_url = partinfo.image_url;
-        newPart.thumbnail_url = partinfo.thumbnail_url;
-        newPart.status = 10;
-        newPart.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        sql.query("INSERT INTO Parts SET ?", newPart, (err, res) => {
-          if (err) {
-            console.log("error: ", err);
-            result(err, null);
-            return;
-          }
+      newPart.name = partinfo.name;
+      newPart.type = partinfo.type;
+      newPart.category_id = partinfo.category_id;
+      newPart.year = partinfo.year_released;
+      newPart.weight_g = partinfo.weight;
+      newPart.size = partinfo.dim_x + " x " + partinfo.dim_y + " x " + partinfo.dim_z + " cm";
+      newPart.is_obsolete = partinfo.is_obsolete;
+      newPart.image_url = partinfo.image_url;
+      newPart.thumbnail_url = partinfo.thumbnail_url;
+      newPart.status = 10;
+      newPart.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
       
-          console.log("created Part: ", { id: res.insertId, ...newPart });
-          result(null, { id: res.insertId, ...newPart });
+        //Part PRICEINFO 
+        Price.create(newPart, (err, data)=> {
+                if (err) {
+                    console.log("error while writing into Prices: ", err);
+                    result(err, null);
+                    return;
+                  }
+                newPart.qty_avg_price_stock = data.priceinfostock.qty_avg_price;
+                newPart.qty_avg_price_sold = data.priceinfosold.qty_avg_price;
+               
+                sql.query("INSERT INTO Parts SET ? ON DUPLICATE KEY UPDATE id=id", newPart, (err, res) => {
+                  if (err) {
+                    console.log("error: ", err);
+                    result(err, null);
+                    return;
+                  }
+              
+                  //console.log("created Part: ", { id: res.insertId, ...newPart });
+                  result(null, { id: res.insertId, ...newPart });
+                });
         });
     });
 };
