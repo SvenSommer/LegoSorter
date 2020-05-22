@@ -35,6 +35,6 @@ require("./routes/category.routes.js")(app);
 
 require("./routes/sorter.routes.js")(app);
 
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(process.env.PORT || 3000, process.env.IP || '192.168.178.67', function(){
     console.log("Server has started!");
 });
