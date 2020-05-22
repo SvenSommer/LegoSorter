@@ -2,7 +2,9 @@ const api = require('bricklink-api');
 const blConfig = require("./bl.api.config.js");
 const Client = api.Client,
     ItemType = api.ItemType,
-    Condition = api.Condition;
+    Condition = api.Condition,
+    Category = api.Category,
+    Color = api.Color;
     
 var bricklinkClient = new Client({
     "consumer_key": blConfig.CONSUMERKEY,
@@ -14,5 +16,7 @@ var bricklinkClient = new Client({
 module.exports = {
     bricklinkClient,
     ItemType,
-    Condition
+    Condition,
+    Category,
+    Color
 };

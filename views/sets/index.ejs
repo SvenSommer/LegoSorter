@@ -1,0 +1,44 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="container">
+    <div class="row">
+        <div style="margin: 25px auto;">
+            <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Col.</th>
+                        <th>Image</th>
+                        <th data-sortable="true">Number</th>
+                        <th data-sortable="true">Category</th>
+                        <th data-sortable="true">Name</th>
+                        <th data-sortable="true">Year</th>
+                        <th data-sortable="true">Weight (g)</th>
+                        <th data-sortable="true">Parts</th>
+                        <th data-sortable="true">Minifigs</th>
+                        <th data-sortable="true">min. Price (€)</th>
+                        <th data-sortable="true">avg. Price (€)</th>
+                        <th data-sortable="true">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                      <% sets.forEach(function(set){ %>
+                      <tr>
+                        <td><%=set.collection_id%></td>
+                        <td><img class="img-responsive" style= "height:60px" src="<%=set.thumbnail_url %>"></td>
+                        <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?S=<%= set.no %>#T=S&O={%22ss%22:%22DE%22,%22cond%22:%22U%22,%22ii%22:0,%22is%22:0,%22iconly%22:0}"><%=set.no%></a></td>
+                        <td><%=set.category_name%></td>
+                        <td><a data-value="<%= set.id %>" href="/sets/<%=set.id %>"><%= set.name  %></a></td>
+                        <td><%=set.year%></td>
+                        <td><%=set.weight_g%></td>
+                        <td><%=set.complete_part_count%></td>
+                        <td><%=set.complete_minifigs_count%></td>
+                        <td><%=set.min_price.toFixed(2)%>€%></td>
+                        <td><%=set.avg_price.toFixed(2)%>€%></td>
+                        <td><%=set.status_name%></td>
+                      </tr>
+                   <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<%- include ("../partials/footer.ejs") %> 

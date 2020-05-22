@@ -6,15 +6,16 @@ const Price = require("./price.model.js");
 // constructor
 const Part = function(part) {
   this.no = part.no;
+  this.color_id = part.color_id;
+  this.type = part.type;
   this.status = 10;
   this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
 Part.create = (newPart, result) => {
-  blApi.bricklinkClient.getCatalogItem(blApi.ItemType.Part, newPart.no, newPart.color_id)
+  blApi.bricklinkClient.getCatalogItem(newPart.type, newPart.no, newPart.color_id)
     .then(function(partinfo){
       newPart.name = partinfo.name;
-      newPart.type = partinfo.type;
       newPart.category_id = partinfo.category_id;
       newPart.year = partinfo.year_released;
       newPart.weight_g = partinfo.weight;
@@ -22,9 +23,7 @@ Part.create = (newPart, result) => {
       newPart.is_obsolete = partinfo.is_obsolete;
       newPart.image_url = partinfo.image_url;
       newPart.thumbnail_url = partinfo.thumbnail_url;
-      newPart.status = 10;
-      newPart.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
-      
+
         //Part PRICEINFO 
         Price.create(newPart, (err, data)=> {
                 if (err) {

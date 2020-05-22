@@ -10,9 +10,14 @@ CREATE TABLE IF NOT EXISTS `Collections` (
 	`cost` DECIMAL(18) unsigned DEFAULT NULL,
 	`porto` DECIMAL(18) unsigned DEFAULT NULL,
 	`thumbnail_url` VARCHAR(500) DEFAULT NULL,
-	`status` INT,
+	`status` INT NOT NULL,
 	`created` DATETIME DEFAULT NULL
 ) DEFAULT CHARSET=utf8;
+
+DROP TABLE Sets;
+DROP TABLE Parts; 
+DROP TABLE Subsets; 
+DROP TABLE Prices;
 
 CREATE TABLE IF NOT EXISTS `Sets` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
@@ -28,8 +33,13 @@ CREATE TABLE IF NOT EXISTS `Sets` (
 	`size` VARCHAR(200),
 	`complete_part_count` INT unsigned,
 	`complete_minifigs_count` INT,
-	`price` DECIMAL(11),
-	`status` INT,
+	`min_price` DECIMAL(11),
+	`max_price` DECIMAL(11),
+	`avg_price` DECIMAL(11),
+	`qty_avg_price` DECIMAL(11),
+	`unit_quantity` INT,
+	`total_quantity` INT,
+	`status` INT NOT NULL,
 	`thumbnail_url` VARCHAR(500) DEFAULT NULL,
 	`image_url` VARCHAR(500) DEFAULT NULL,
 	`created` DATETIME NOT NULL,
@@ -42,6 +52,7 @@ CREATE TABLE `Parts` (
 	`name` VARCHAR(200) NOT NULL,
 	`type` VARCHAR(50) NOT NULL,
 	`category_id` INT unsigned NOT NULL,
+	`color_id` INT unsigned NOT NULL,
 	`year` VARCHAR(100),
 	`weight_g` INT,
 	`size` VARCHAR(200),
@@ -53,10 +64,10 @@ CREATE TABLE `Parts` (
 	`status` INT NOT NULL,
 	`created` DATETIME NOT NULL,
 	PRIMARY KEY (`id`),
-	CONSTRAINT `part` UNIQUE KEY  (`no`)
+	CONSTRAINT `part` UNIQUE KEY  (`no`, `color_id`,`type`)
 ) DEFAULT CHARSET=utf8;
 
-CREATE TABLE `SubSets` (
+CREATE TABLE `Subsets` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`setNo` INT NOT NULL,
 	`match_no` INT unsigned NOT NULL,
@@ -80,7 +91,7 @@ CREATE TABLE `Prices` (
 	`type` VARCHAR(50) NOT NULL,
 	`new_or_used` VARCHAR(1) NOT NULL,
 	`color_id` INT unsigned NOT NULL,
-	`country_code` VARCHAR(10) NOT NULL,
+	`region` VARCHAR(10) NOT NULL,
 	`guide_type` VARCHAR(10) NOT NULL,
 	`currency_code` VARCHAR(10) NOT NULL,
 	`min_price` DOUBLE unsigned NOT NULL,
@@ -91,21 +102,112 @@ CREATE TABLE `Prices` (
 	`total_quantity` INT unsigned NOT NULL,
 	`created` DATETIME NOT NULL,
 	PRIMARY KEY (`id`),
-	CONSTRAINT  `price` UNIQUE (`no`, `type`, `new_or_used`, `color_id`, `country_code`, `guide_type`, `currency_code`)
+	CONSTRAINT  `price` UNIQUE (`no`, `type`, `new_or_used`, `color_id`, `region`, `guide_type`, `currency_code`)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Categories` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`category_id` INT unsigned NOT NULL,
+	`category_name` VARCHAR(500) NOT NULL,
+	`parent_id` INT unsigned NOT NULL,
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE (`category_id`)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Colors` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`color_id` INT unsigned NOT NULL,
+	`color_name` VARCHAR(500) NOT NULL,
+	`color_code` VARCHAR(20) NOT NULL,
+	`color_type` VARCHAR(20) NOT NULL,
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE (`color_id`)
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Status` (
 	`id` INT NOT NULL,
 	`name` VARCHAR(100) NOT NULL,
+	`type` VARCHAR(20) NOT NULL,
 	`description` VARCHAR(500),
-	PRIMARY KEY (`id`)
+	CONSTRAINT  `status_id` UNIQUE (`id`, `type`)
 ) DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Photos` (
+INSERT INTO Status (id, name, type, description) VALUES (10, 'expected','set','Probably a set of the collection'); 
+INSERT INTO Status (id, name, type, description) VALUES (10, 'expected','part','Probably a part of the collection'); 
+INSERT INTO Status (id, name, type, description) VALUES (10, 'initialized','run','Run is planned for this collection'); 
+
+CREATE TABLE `Users` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`username` varchar(16) NOT NULL,
+`password` varchar(60) NOT NULL,
+`full_name` varchar(100) NOT NULL,
+PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;
+
+INSERT INTO `Users` (`username`, `password`, `full_name`) VALUES
+('Robert', '6607a999607711cd339dce1de6d64425a0985cfd', 'Robert Hoffmann');
+
+CREATE TABLE `Runs` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`collection_id` INT unsigned NOT NULL,
-	`path` VARCHAR(300) NOT NULL,
+	`sorter_id` INT unsigned NOT NULL,
 	`created` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
+CREATE TABLE `RunStatus` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`run_id` INT unsigned NOT NULL,
+	`status` INT unsigned NOT NULL,
+	`reason` VARCHAR(1000),
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Sorters` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(100) NOT NULL,
+	`separate_conveyor_mode_url` VARCHAR(200),
+	`separate_conveyor_speed_url` VARCHAR(200),
+	`separate_conveyor_status_url` VARCHAR(200),
+	`vibration_motor_mode_url` VARCHAR(200),
+	`vibration_motor_speed_url` VARCHAR(200),
+	`vibration_motor_status_url` VARCHAR(200),
+	`dispense_conveyor_mode_url` VARCHAR(200),
+	`dispense_conveyor_speed_url` VARCHAR(200),
+	`dispense_conveyor_status_url` VARCHAR(200),
+	`pusher_count` INT(200),
+	`pusher_status_baseurl` VARCHAR(200),
+	`pusher_mode_baseurl` VARCHAR(200),
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Partimages` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`run_id` INT unsigned NOT NULL,
+	`path` VARCHAR(300) NOT NULL,
+	`size_kb` INT unsigned,
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Recognisedparts` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`no` INT unsigned NOT NULL,
+	`color_id` DATETIME NOT NULL,
+	`score` DOUBLE unsigned NOT NULL,
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Recognisedimages` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`image_id` INT unsigned NOT NULL,
+	`part_id` INT unsigned NOT NULL,
+	`score` DOUBLE unsigned,
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;

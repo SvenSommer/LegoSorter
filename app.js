@@ -2,7 +2,9 @@ var express             = require("express"),
     app                 = express(),
     moment              = require('moment'),
     bodyParser          = require("body-parser"),
-    methodOverride      = require("method-override");
+    methodOverride      = require("method-override"),
+    passport            = require('passport'),
+    LocalStrategy       = require('passport-local').Strategy;
 
 
 // sudo service mysqld start
@@ -26,6 +28,12 @@ app.locals.moment = moment;
 
 require("./routes/collection.routes.js")(app);
 require("./routes/set.routes.js")(app);
+require("./routes/part.routes.js")(app);
+require("./routes/preferences.routes.js")(app);
+require("./routes/color.routes.js")(app);
+require("./routes/category.routes.js")(app);
+
+require("./routes/sorter.routes.js")(app);
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server has started!");

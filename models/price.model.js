@@ -6,24 +6,23 @@ const blApi = require("../config/bl.api.js");
 const Price = function(price) {
     this.no = price.no;
     this.color_id = price.color_id;
-    this.country_code = price.country_code;
+    this.region = price.region;
     this.guide_type = price.guide_type;
     this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
 Price.create = (part, result) => {
-    var priceinfostock = new Price({no : part.no, color_id: part.color_id, country_code: "DE", guide_type: "stock"});
-    var priceinfosold = new Price({no : part.no, color_id: part.color_id, country_code: "DE", guide_type: "sold"});
-      
+    var priceinfostock = new Price({no : part.no, color_id: part.color_id,  region: 'europe', guide_type: "stock"});
+    var priceinfosold = new Price({no : part.no, color_id: part.color_id,  region: 'europe' , guide_type: "sold"});
            //Price PriceGuide STOCK
-        blApi.bricklinkClient.getPriceGuide(blApi.ItemType.Part, part.no, 
-          {new_or_used: blApi.Condition.Use,
+        blApi.bricklinkClient.getPriceGuide(part.type, part.no, 
+          {new_or_used: blApi.Condition.Used,
             color_id:  part.color_id, 
-            country_code: 'DE', 
+            region: 'europe',  
             guide_type: 'stock'
           }).then(function(priceinfostockdata){
               
-            priceinfostock.type = priceinfostockdata.type;
+            priceinfostock.type = part.type;
             priceinfostock.new_or_used = priceinfostockdata.new_or_used;
             priceinfostock.currency_code = priceinfostockdata.currency_code;
             priceinfostock.min_price = priceinfostockdata.min_price;
@@ -39,16 +38,16 @@ Price.create = (part, result) => {
                 result(err, null);
                 return;
               }
-              console.log("created Price: ", { id: res.insertId, ...priceinfostock });
+              //console.log("created Price: ", { id: res.insertId, ...priceinfostock });
               
-            blApi.bricklinkClient.getPriceGuide(blApi.ItemType.Part, part.no, 
-              {new_or_used: blApi.Condition.Use,
+            blApi.bricklinkClient.getPriceGuide(part.type, part.no, 
+              {new_or_used: blApi.Condition.Used,
                 color_id:  part.color_id, 
-                country_code: 'DE', 
+                region: 'europe', 
                 guide_type: 'sold'
               }).then(function(priceinfosolddata){
                   
-                priceinfosold.type = priceinfosolddata.type;
+                priceinfosold.type = part.type;
                 priceinfosold.new_or_used = priceinfosolddata.new_or_used;
                 priceinfosold.currency_code = priceinfosolddata.currency_code;
                 priceinfosold.min_price = priceinfosolddata.min_price;
@@ -66,7 +65,7 @@ Price.create = (part, result) => {
                   }
                
               
-                  console.log("created Price: ", { id: res.insertId, ...priceinfosold });
+                  //console.log("created Price: ", { id: res.insertId, ...priceinfosold });
                   result(null, { priceinfostock: priceinfostock, priceinfosold: priceinfosold});
                 });
           });

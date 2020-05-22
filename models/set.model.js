@@ -25,19 +25,26 @@ Set.create = (newSet, result) => {
         newSet.image_url = setinfo.image_url;
         newSet.category_id = setinfo.category_id;
 
-        
-       // newSet.complete_part_count = 
-       // newSet.complete_minifigs_count = 
-       // newSet. price = 
-        sql.query("INSERT INTO Sets SET ?", newSet, (err, res) => {
-          if (err) {
-            console.log("error: ", err);
-            result(err, null);
-            return;
-          }
-      
-          console.log("created Set: ", { id: res.insertId, ...newSet });
-          result(null, { id: res.insertId, ...newSet });
+
+        blApi.bricklinkClient.getPriceGuide(blApi.ItemType.Set, newSet.no + '-1', {new_or_used: blApi.Condition.Used,  region: 'europe', guide_type: 'stock'})
+        .then(function(priceinfo){
+            newSet.min_price = priceinfo.min_price;
+            newSet.max_price = priceinfo.max_price;
+            newSet.avg_price = priceinfo.avg_price;
+            newSet.qty_avg_price = priceinfo.qty_avg_price;
+            newSet.unit_quantity = priceinfo.unit_quantity;
+            newSet.total_quantity = priceinfo.total_quantity;
+
+            sql.query("INSERT INTO Sets SET ?", newSet, (err, res) => {
+              if (err) {
+                console.log("error: ", err);
+                result(err, null);
+                return;
+              }
+          
+              console.log("created Set: ", { id: res.insertId, ...newSet });
+              result(null, { id: res.insertId, ...newSet });
+            });
         });
     });
 };
@@ -62,7 +69,9 @@ Set.findById = (SetId, result) => {
 };
 
 Set.getAll = result => {
-  sql.query("SELECT * FROM Sets", (err, res) => {
+  sql.query(`SELECT s.* , c.category_name, st.name as status_name, st.description as status_description FROM Sets s
+JOIN Categories c On c.category_id =  s.category_id
+JOIN Status st ON s.status = st.id AND st.type = 'SET'`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -129,11 +138,6 @@ Set.removeAll = result => {
   });
 };
 
-Set.findAllSubsetsBySetId = (setId, result) => {
-  blApi.bricklinkClient.getItemSubset(blApi.ItemType.Set, setId + "-1", {break_minifigs: false})
-    .then(function(subsetData){
-        result(null, subsetData);
-    });
-  };
+
 
 module.exports = Set;

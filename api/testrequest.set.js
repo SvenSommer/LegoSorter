@@ -25,7 +25,7 @@ const blApi = require("../config/bl.api.js");
    */ 
    
     //SET PriceGuide
-    blApi.bricklinkClient.getPriceGuide(blApi.ItemType.Set, '9526-1', {new_or_used: blApi.Condition.Used})
+    blApi.bricklinkClient.getPriceGuide(blApi.ItemType.Set, '8880-1', {new_or_used: blApi.Condition.Used, country_code: 'DE', guide_type: 'stock'})
     .then(function(price){
         console.log(price);
     });

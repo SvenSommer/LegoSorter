@@ -1,6 +1,6 @@
 <%- include ("../partials/header.ejs") %> 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-9">
         <% if(set.image_url  != null) {%>
         <div class="col-md-3">
             <div class="thumbnail">
@@ -21,7 +21,6 @@
             <div class="caption">
                 <!--Details!-->
                 <h3>Details</h3>
-                    <p><span style="white-space: pre-line"><%=set.comments%></span></p>
                     <div class="table-responsive">          
                         <table class="table">
                             <tbody>
@@ -47,16 +46,43 @@
                               </tr>
                               <tr>
                                 <td><strong>Parts</strong></td>
-                                    <td><%=set.complete_part_count%></td>
+                                    <td>
+                                        complete: <%=partcounts[0].parts_count%></br>
+                                        extra: <%=partcounts[0].extra_quantity_count%></br>
+                                        alternate_count: <%=partcounts[0].alternate_count%></br>
+                                        counterpart: <%=partcounts[0].counterpart_count%></br>
+                                    </td>
                               </tr>
                               <tr>
                                 <td><strong>Minifigs</strong></td>
-                                    <td><%=set.complete_minifigs_count%></td>
+                                    <td><%=minifigscount[0].minifigs_count%></td>
+                              </tr>
+                              <td><strong>Set Price</strong></td>
+                                    <td>
+                                        Min  <%=set.min_price%> €</br>
+                                        Avg  <%=set.avg_price%> €</br>
+                                        QAvg <%=set.qty_avg_price%> €</br>
+                                        Max  <%=set.max_price%> €
+                                     </td>
                               </tr>
                               <tr>
-                                <td><strong>Price</strong></td>
-                                    <td><%=set.price%> €</td>
+                                <td><strong>Parts price (stock)</strong></td>
+                                    <td><%=partcounts[0].part_stock_price_sum.toFixed(2)%>€%></td>
                               </tr>
+                               <tr>
+                                <td><strong>Parts price (sold)</strong></td>
+                                    <td><%=partcounts[0].part_sold_price_sum.toFixed(2)%>€%></td>
+                              </tr>
+                              <% if(minifigscount[0].minifigs_count != null) {%> 
+                              <tr>
+                                <td><strong>Minifigs price (stock)</strong></td>
+                                    <td><%=minifigscount[0].part_stock_price_sum.toFixed(2)%>€%></td>
+                              </tr>
+                               <tr>
+                                <td><strong>Minifigs price (sold)</strong></td>
+                                    <td><%=minifigscount[0].part_sold_price_sum.toFixed(2)%>€%></td>
+                              </tr>
+                              <% }%>
                               <tr>
                                 <td><strong>Comments</strong></td>
                                     <td><%=set.comments%> </td>
@@ -71,43 +97,82 @@
                               </tr>
                             </tbody>
                         </table>
+                        
+                        <h3>Minifigs</h3>
+                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th data-sortable="true">Match No</th>
+                                    <th>Image</th>
+                                    <th data-sortable="true">Qty</th>
+                                    <th data-sortable="true">Item No</th>
+                                    <th data-sortable="true">Description</th>
+                                    <th data-sortable="true">Price (stock)</th>
+                                    <th data-sortable="true">Price (sold)</th>
+                                    <th data-sortable="true">Status</th>
+                                   <!--   <th data-sortable="true">extra_quantity</th>-->
+                                   <!--   <th data-sortable="true">is_alternate</th>-->
+                                  <!--    <th data-sortable="true">is_counterpart</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <% subsetData.forEach(function(subset){ %>
+                        <% if(subset.type == "MINIFIG"){%>
+                         <tr>
+                                <td><%=subset.match_no%></td>
+                                <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/M/<%=subset.part_no%>.jpg"  onerror="this.onerror=null;this.src='//img.bricklink.com/M/<%=subset.part_no%>.gif';"></td>
+                                <td><%=subset.quantity%></td>
+                                <td><%=subset.part_no%></td>
+                                <td><%=subset.color_name%> <%-subset.name%></td>
+                                <td><%=subset.qty_avg_price_stock.toFixed(2)%>€</td>
+                                <td><%=subset.qty_avg_price_sold.toFixed(2)%>€</td>
+                                <td><%=subset.status_name%></td>
+                        <!--         <td><%=subset.extra_quantity%></td>-->
+                         <!--        <td><%=subset.is_alternate%></td>-->
+                          <!--       <td><%=subset.is_counterpart%></td>-->
+                                <% } %>
+                        
+                             <% }); %>
+                            </tr>
+                         </tbody>
+                        </table>
                         <h3>Parts</h3>
                         <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
                             <thead>
                                 <tr>
                                     <th data-sortable="true">Match No</th>
                                     <th>Image</th>
-                                    <th data-sortable="true">Number</th>
-                                    <th data-sortable="true">Name</th>
-                                    <th data-sortable="true">Type</th>
-                                    <th data-sortable="true">Category</th>
-                                    <th data-sortable="true">color_id</th>
-                                    <th data-sortable="true">quantity</th>
-                                    <th data-sortable="true">extra_quantity</th>
-                                    <th data-sortable="true">is_alternate</th>
-                                    <th data-sortable="true">is_counterpart</th>
-                                    <th></th>
+                                    <th data-sortable="true">Qty</th>
+                                    <th data-sortable="true">Item No</th>
+                                    <th data-sortable="true">Description</th>
+                                    <th data-sortable="true">Price (stock)</th>
+                                    <th data-sortable="true">Price (sold)</th>
+                                    <th data-sortable="true">Status</th>
+                                   <!--   <th data-sortable="true">extra_quantity</th>-->
+                                   <!--   <th data-sortable="true">is_alternate</th>-->
+                                  <!--    <th data-sortable="true">is_counterpart</th>-->
                                 </tr>
                             </thead>
                             <tbody>
                         <% subsetData.forEach(function(subset){ %>
                          <tr>
-                             <td><%=subset["match_no"]%></td>
-                              <% subset["entries"].forEach(function(entry){ %>
-                                <td><img class="img-responsive" style= "width:50px" src="//img.bricklink.com/P/<%=entry["color_id"]%>/<%=entry["item"]["no"] %>.gif"></td>
-                                <td><%=entry["item"]["no"]%></td>
-                                <td><%=entry["item"]["name"]%></td>
-                                <td><%=entry["item"]["type"]%></td>
-                                <td><%=entry["item"]["category_id"]%></td>
-                                <td><%=entry["color_id"]%></td>
-                                <td><%=entry["quantity"]%></td>
-                                <td><%=entry["extra_quantity"]%></td>
-                                <td><%=entry["is_alternate"]%></td>
-                                <td><%=entry["is_counterpart"]%></td>
+                              <% if(subset.type == "PART"){%>
+                                <td><%=subset.match_no%></td>
+                                <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.jpg" onerror="this.onerror=null;this.src='//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.gif';"></td>
+                                <td><%=subset.quantity%></td>
+                                <td><%=subset.part_no%></td>
+                                <td><%=subset.color_name%> <%-subset.name%></td>
+                                <td><%=subset.qty_avg_price_stock.toFixed(2)%>€</td>
+                                <td><%=subset.qty_avg_price_sold.toFixed(2)%>€</td>
+                                <td><%=subset.status_name%></td>
+                        <!--         <td><%=subset.extra_quantity%></td>-->
+                         <!--        <td><%=subset.is_alternate%></td>-->
+                          <!--       <td><%=subset.is_counterpart%></td>-->
+                                <% } %>
+                        
                              <% }); %>
-                           </tr>
-                     <% }); %>
-                     </tbody>
+                            </tr>
+                         </tbody>
                         </table>
                     </div>
                 </div>

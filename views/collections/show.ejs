@@ -12,6 +12,8 @@
             <div class="well well">
                 <div class="caption-full">
                     <h2><%=collection.name%></h2>
+                    
+                    <a href="/collections">Go back</a>
                     <a href="/collections/<%= collection.id %>/edit" class="btn btn-warning">Edit</a>
                     <form id="delete-form" action="/collections/<%=collection.id %>?_method=DELETE" method="POST" >
                         <button class="btn btn-danger">Delete</button>
@@ -38,20 +40,36 @@
                                   <td><%=collection.seller%> </td>
                               </tr>
                               <tr>
-                                  <td><strong>Cost:</strong></td>
-                                  <td><%=collection.cost%> €</td>
+                                  <td><strong>Cost</strong></td>
+                                  <td><%=collection.cost + collection.porto%>€ (incl. Porto <%=collection.porto%>€)</td>
                               </tr>
                               <tr>
-                                  <td><strong>Porto:</strong></td>
-                                  <td><%=collection.porto%> €</td>
+                                  <td><strong>Sets</strong></td>
+                                  <td><%=setssum[0].allSets_count%></td>
+                              </tr>
+                              <tr>
+                                  <td><strong>Sum Parts Weight</strong></td>
+                                  <td><%=setssum[0].allSets_weight/1000%> kg</td>
+                              </tr>
+                                                            <tr>
+                                  <td><strong>Sum Parts Count</strong></td>
+                                  <td><%=setssum[0].allSets_part_count%></td>
+                              </tr>
+                                                            <tr>
+                                  <td><strong>Sum Minifigs Count</strong></td>
+                                  <td><%=setssum[0].allSets_minifigs_count%></td>
+                              </tr>
+                                                            <tr>
+                                  <td><strong>All Sets Price</strong></td>
+                                  <td>Min <%=setssum[0].AllSets_minPrice%>€</br>Avg <%=setssum[0].AllSets_avgPrice%>€</td>
                               </tr>
                                <tr>
-                                  <td><strong>Purchased:</strong></td>
-                                  <td><%=moment(collection.purchase_date).format('DD. MMMM YYYY')%></td>
+                                  <td><strong>Purchased</strong></td>
+                                  <td><%=moment(collection.purchase_date).format('DD.MM.YYYY')%></td>
                               </tr>
                               <tr>
-                                  <td><strong>Created:</strong></td>
-                                  <td><%=moment(collection.created).format('DD. MMMM YYYY')%></td>
+                                  <td><strong>Created</strong></td>
+                                  <td><%=moment(collection.created).format('DD.MM.YYYY')%></td>
                               </tr>
                             </tbody>
                         </table>
@@ -74,12 +92,14 @@
                                 <tr>
                                     <th>Image</th>
                                     <th data-sortable="true">Number</th>
+                                    <th data-sortable="true">Category</th>
                                     <th data-sortable="true">Name</th>
                                     <th data-sortable="true">Year</th>
                                     <th data-sortable="true">Weight (g)</th>
                                     <th data-sortable="true">Parts</th>
                                     <th data-sortable="true">Minifigs</th>
-                                    <th data-sortable="true">Price</th>
+                                    <th data-sortable="true">min. Price (€)</th>
+                                    <th data-sortable="true">avg. Price (€)</th>
                                     <th data-sortable="true">Status</th>
                                     <th></th>
                                 </tr>
@@ -87,15 +107,17 @@
                             <tbody>
                                   <% sets.forEach(function(set){ %>
                                   <tr>
-                                    <td><img class="img-responsive" style= "width:50px" src="<%=set.thumbnail_url %>"></td>
-                                    <td><a href="<%=set.bricklink_url %>"><%=set.no%></a></td>
+                                    <td><img class="img-responsive" style= "height:60px" src="<%=set.thumbnail_url %>"></td>
+                                    <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?S=<%= set.no %>#T=S&O={%22ss%22:%22DE%22,%22cond%22:%22U%22,%22ii%22:0,%22is%22:0,%22iconly%22:0}"><%=set.no%></a></td>
+                                    <td><%= set.category_name%></td>
                                     <td><a data-value="<%= set.id %>" href="/sets/<%=set.id %>"><%= set.name  %></a></td>
                                     <td><%=set.year%></td>
                                     <td><%=set.weight_g%></td>
                                     <td><%=set.complete_part_count%></td>
                                     <td><%=set.complete_minifigs_count%></td>
-                                    <td><%=set.price%></td>
-                                    <td><%=set.status%></td>
+                                    <td><%=set.min_price.toFixed(2)%>€%></td>
+                                    <td><%=set.avg_price.toFixed(2)%>€%></td>
+                                    <td><%=set.status_name%></td>
                                     <td><a href="/sets/<%= set.id %>/edit" class="btn btn-sm btn-warning">Edit</a> 
                                     <form id="delete-form" action="/sets/<%= set.id %>?_method=DELETE" method="POST" >
                                         <button class="btn btn-sm btn-danger">Delete</button>
@@ -110,6 +132,6 @@
         </div>
     </div>  
     
-    <a href="/collections">Go back</a>
+    
 </div>
 <%- include ("../partials/footer.ejs") %> 

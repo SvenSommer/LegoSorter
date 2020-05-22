@@ -1,4 +1,5 @@
 const Collection = require("../models/collection.model.js");
+const Subset = require("../models/subset.model.js");
 
 // Retrieve all Collections from the database.
 exports.findAll = (req, res) => {
@@ -62,7 +63,37 @@ exports.findOne = (req, res) => {
       }
     } else {
         Collection.findAllSetsByCollectionId(req.params.Id, (err, sets) => {
-        res.render("collections/show", {collection:data, sets : sets});
+          sets.forEach(function(set){
+             Subset.CountPartsBySetNo(set.no, (err, partcounts) => {
+              if (err) {
+                res.status(500).send({
+                message: "Error retrieving PartCount for Setid " + req.params.Id
+                });
+              } else{
+                Subset.CountMinifigsBySetNo(set.no, (err, minifigscount) => {
+                if (err) {
+                  res.status(500).send({
+                  message: "Error retrieving Minifigs Count for Setid " + req.params.Id
+                  });
+                } 
+                  
+                });
+              } // 
+            }); //Count parts
+          
+          }); // sets for each
+           Collection.SumallSetInfosByCollectionId(req.params.Id, (err, setssum) => {
+            if (err) {
+                
+                res.status(500).send({
+                message: "Error retrieving setsCount for collectionid " + req.params.Id
+                });
+              } else{
+                console.log(setssum)
+                res.render("collections/show", {collection:data, sets : sets,setssum:setssum });
+              }
+             
+           });
       });
       
     }
@@ -83,7 +114,10 @@ exports.editOne = (req,res) => {
           message: "Error retrieving Collection with id " + req.params.Id
         });
       }
-    } else res.render("collections/edit", {collection:data});
+    } else { 
+      res.render("collections/edit", {collection:data});
+      
+    }
   });
 };
 

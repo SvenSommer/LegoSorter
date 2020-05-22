@@ -1,0 +1,48 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="container">
+    <div class="row">
+        <div style="margin: 25px auto;">
+            <div class="caption">
+                <h1 style="text-align:center;">Preferences</h1>
+             </div>
+              <div class="well well">
+                <h4>Bricklink API</h4>
+                <form action="/colors/" method ="POST">
+                    <button class="btn btn-lg btn-primary" >Get Colors</button>
+                </form>
+                <p></p>
+                <form action="/categories/" method ="POST">
+                    <button class="btn btn-lg btn-primary" >Get Categories</button>
+            </form>
+            </div>
+            <div class="well well">
+                <h4>Sorting Machines</h4>
+                <a class="btn btn-primary btn-lg" href="/sorters/new">Add new Sorter</a>
+                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th data-sortable="true">Id</th>
+                                    <th data-sortable="true">name</th>
+                                    <th data-sortable="true">Pushers</th>
+                                    <th data-sortable="true">created</th>
+                                    <th></th>
+                                   <!--   <th data-sortable="true">extra_quantity</th>-->
+                                   <!--   <th data-sortable="true">is_alternate</th>-->
+                                  <!--    <th data-sortable="true">is_counterpart</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <% sorter.forEach(function(sortmachine){ %>
+                         <tr>
+                                <td><%=sortmachine.id%></td>
+                                <td><%=sortmachine.name%></td>
+                                <td><%=sortmachine.pusher_count%></td>
+                                <td><%=sortmachine.created%></td>
+                                <% }); %>
+                            </tr>
+                         </tbody>
+                        </table>
+            </div>
+        </div>
+    </div>
+</div>

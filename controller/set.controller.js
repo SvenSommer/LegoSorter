@@ -43,6 +43,9 @@ exports.create = (req, res) => {
   if(req.params.Id == "") {
     res.redirect("/collections/"+ req.params.id);
   }
+  
+  req.params.Id = req.params.Id.replace(/\s+/g, '');
+  
   Collection.findById(req.params.Id, (err, collection) => {
     if (err) {
       if (err.kind === "not_found") {
@@ -56,25 +59,15 @@ exports.create = (req, res) => {
       }
     } else {
           // Create a Set
-          const set = new Set({
+          var set = new Set({
           collection_id: collection.id,
-          no: req.body.no,
+          no: req.body.no.replace(/\s+/g, ''),
           comments: req.body.comments,
           instructions: req.body.instructions,
           condition: req.body.condition
         });
       
-        // SAVE SET INFORMATION - Save Set info in the database
-        Set.create(set, (err, data) => {
-          if (err)
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while creating the Set."
-            });
-          else res.redirect("/collections/"+ collection.id);  
-        });
-        
-        // PART OUT - Save the Subsets in the database
+        // PART OUT - Save the inlcuded Parts and their prices in the database
         Subset.create(req.body.no, (err, data) => {
                if (err)
             res.status(500).send({
@@ -83,8 +76,21 @@ exports.create = (req, res) => {
             });
            else res.redirect("/collections/"+ collection.id); 
         });
+
+             // SAVE SET INFORMATION - Save Set info in the database
+        Set.create(set, (err, data) => {
+          if (err)
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while creating the Set."
+            });
+          else res.redirect("/collections/"+ collection.id);  
+        });
+   
+        
       }
   });
+
  
 };
 
@@ -102,12 +108,39 @@ exports.findOne = (req, res) => {
         });
       }
     } else {
-      Set.findAllSubsetsBySetId(set.no, (err, subsetData) => {
-        res.render("sets/show", {set:set, subsetData:subsetData});
+      Subset.findBySetNo(set.no, (err, subsetData) => {
+        if (err) {
+          if (err.kind === "not_found") {
+            res.status(404).send({
+              message: `Not found Subsets for Setid ${req.params.id}.`
+            });
+          } else {
+            res.status(500).send({
+              message: "Error retrieving Subsets for Setid " + req.params.Id
+            });
+          }
+        } else {
+          
+           Subset.CountPartsBySetNo(set.no, (err, partcounts) => {
+            if (err) {
+              res.status(500).send({
+              message: "Error retrieving PartCount for Setid " + req.params.Id
+              });
+            } else{
+              Subset.CountMinifigsBySetNo(set.no, (err, minifigscount) => {
+              if (err) {
+                res.status(500).send({
+                message: "Error retrieving Minifigs Count for Setid " + req.params.Id
+                });
+              } else
+                res.render("sets/show", {set:set, subsetData:subsetData, partcounts: partcounts,minifigscount:minifigscount});
+                });
+            }
+          });
+        }
       });
-     
     }
-  });
+  });   
 };
 
 //Edit Show edit form for Set with id

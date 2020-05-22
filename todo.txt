@@ -1,14 +1,20 @@
-- download and store Parts, prices and imagesOfParts of a set when adding a new set to a collection
-- show parts in the correct color
-- sum prices and part count
-- use downloaded data to display parts of a set and parts of a collection
-- define and use status for sets and parts
+x download and store Parts, prices and imagesOfParts of a set when adding a new set to a collection
+x show parts in the correct color
+x sum prices and part count
+x use downloaded data to display parts of a set and parts of a collection
+x define and use status for sets and parts
+
+
+x create sets.index
+x create parts.index
+- introduce navbar
+- make run routes
+- download pictures from ebay automatically
 
 - introduce user routes and authentication
-- create sets.index
-- create parts.index
-- introduce navbar
-- make tun routes
-
 - make own pictures upload able (also from mobile)
 - show bigger pictures on click
+
+Bugfix:
+- comments, instructions , condition for sets
+- alternativ parts download (compare with bl site)
