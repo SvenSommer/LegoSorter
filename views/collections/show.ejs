@@ -44,7 +44,7 @@
                                   <td><%=collection.cost + collection.porto%>€ (incl. Porto <%=collection.porto%>€)</td>
                               </tr>
                               <tr>
-                                  <td><strong>Sets</strong></td>
+                                  <td><strong>Sets identified</strong></td>
                                   <td><%=setssum[0].allSets_count%></td>
                               </tr>
                               <tr>
@@ -85,6 +85,7 @@
                         <button class="btn btn-primary" >Add new set</button>
                 </form>
                 <a class="btn btn-secondary" style="float:right;" href="/collections/<%=collection.id %>/sets/new">Add new detailed Set</a>
+                <a class="btn btn-secondary" style="float:right;" href="/collections/<%=collection.id %>/runs/new">Add new Run</a>
                   </p>
                     <div class="table table-striped table-hover table-responsive">          
                         <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">

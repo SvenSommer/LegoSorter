@@ -38,7 +38,12 @@ Run.create = (newRun, result) => {
 };
 
 Run.findById = (runId, result) => {
-  sql.query(`SELECT * FROM Runs WHERE id = ${runId}`, (err, res) => {
+  sql.query(`SELECT *, r.id as run_id,  st.name as status_name, st.description as status_description
+  FROM Runs r
+  LEFT JOIN RunStatus rs ON r.id = rs.run_id
+  LEFT JOIN Status st ON rs.status = st.id AND st.type = 'run'
+   WHERE run_id = ${runId}
+   ORDER BY rs.created desc`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -57,9 +62,10 @@ Run.findById = (runId, result) => {
 };
 
 Run.getAll = result => {
-  sql.query(`SELECT * 
+  sql.query(`SELECT *, r.id as run_id, st.name as status_name, st.description as status_description
             FROM Runs r
-            LEFT JOIN RunStatus rs ON r.id = rs.run_id`, (err, res) => {
+            LEFT JOIN RunStatus rs ON r.id = rs.run_id
+            LEFT JOIN Status st ON rs.status = st.id AND st.type = 'run'`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -128,6 +134,21 @@ Run.removeAll = result => {
 
 Run.findAllRunsByCollectionId = (colId, result) => {
   sql.query(`SELECT * FROM Runs WHERE collection_id =  ${colId}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    result(null, res);
+  });
+};
+
+Run.findRunStatusByRunId= (runId, result) => {
+  sql.query(`SELECT * ,st.name as status_name, st.description as status_description
+  FROM RunStatus rs
+  LEFT JOIN Status st ON rs.status = st.id AND st.type = 'run'
+  WHERE run_id =  ${runId}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);

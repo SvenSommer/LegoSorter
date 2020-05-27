@@ -89,6 +89,7 @@ exports.findOne = (req, res) => {
                 message: "Error retrieving setsCount for collectionid " + req.params.Id
                 });
               } else{
+                console.log(sets)
                 console.log(setssum)
                 res.render("collections/show", {collection:data, sets : sets,setssum:setssum });
               }

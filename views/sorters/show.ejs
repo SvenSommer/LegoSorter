@@ -1,0 +1,66 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="container">
+    <div class="row">
+        <div style="margin: 25px auto;">
+            <div class="caption">
+                <h1 style="text-align:center;"><%=sorter.name%></h1>
+             </div>
+             <div class="caption">
+                <!--Details!-->
+                <h3>Status</h3>
+                <div class="table-responsive">          
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><strong>Lifter Clientmode</strong></td>
+                                <td><%=lifter_status.clientmode%></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lifter MotorSpeed</strong></td>
+                                <td><%=lifter_status.speed%></td>
+                                <td>
+                                    <a href="/sorters/<%= sorter.id %>/alterspeed/5" class="btn btn-warning">+5</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lifter MotorMode</strong></td>
+                                <td><%=lifter_status.motormode%></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conveyor Clientmode</strong></td>
+                                <td><%=conveyor_status.clientmode%></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conveyor MotorSpeed</strong></td>
+                                <td><%=conveyor_status.speed%></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conveyor MotorMode</strong></td>
+                                <td><%=conveyor_status.motormode%></td>
+                            </tr>
+                            <tr>
+                                <td><strong>VFeeder Clientmode</strong></td>
+                                <td><%=vfeeder_status.clientmode%></td>
+                            </tr>
+                            <tr>
+                                <td><strong>VFeeder MotorSpeed</strong></td>
+                                <td><%=vfeeder_status.speed%></td>
+                            </tr>
+                            <tr>
+                                <td><strong>VFeeder MotorMode</strong></td>
+                                <td><%=vfeeder_status.motormode%></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Created:</strong></td>
+                                <td><%=moment(sorter.created).format('DD. MMMM YYYY')%></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include ("../partials/footer.ejs") %> 

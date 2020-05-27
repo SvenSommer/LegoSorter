@@ -1,3 +1,13 @@
+CREATE DATABASE LegoSorterDB;
+
+USE LegoSorterDB;
+
+CREATE USER 'DBUser'@'localhost' IDENTIFIED BY 'DBUser';
+
+GRANT ALL PRIVILEGES ON *.* TO 'DBUser'@'localhost'  WITH GRANT OPTION;
+ALTER USER 'DBUser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'
+
+
 CREATE TABLE IF NOT EXISTS `Collections` (
 	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`name` VARCHAR(300) DEFAULT NULL,
@@ -13,11 +23,6 @@ CREATE TABLE IF NOT EXISTS `Collections` (
 	`status` INT NOT NULL,
 	`created` DATETIME DEFAULT NULL
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE Sets;
-DROP TABLE Parts; 
-DROP TABLE Subsets; 
-DROP TABLE Prices;
 
 CREATE TABLE IF NOT EXISTS `Sets` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
@@ -169,15 +174,15 @@ CREATE TABLE `RunStatus` (
 CREATE TABLE `Sorters` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(100) NOT NULL,
-	`separate_conveyor_mode_url` VARCHAR(200),
-	`separate_conveyor_speed_url` VARCHAR(200),
-	`separate_conveyor_status_url` VARCHAR(200),
-	`vibration_motor_mode_url` VARCHAR(200),
-	`vibration_motor_speed_url` VARCHAR(200),
-	`vibration_motor_status_url` VARCHAR(200),
-	`dispense_conveyor_mode_url` VARCHAR(200),
-	`dispense_conveyor_speed_url` VARCHAR(200),
-	`dispense_conveyor_status_url` VARCHAR(200),
+	`lifter_status_url` VARCHAR(200),
+	`lifter_update_url` VARCHAR(200),
+	`lifter_alterspeed_url` VARCHAR(200),
+	`vfeeder_status_url` VARCHAR(200),
+	`vfeeder_update_url` VARCHAR(200),
+	`vfeeder_alterspeed_url` VARCHAR(200),
+	`conveyor_status_url` VARCHAR(200),
+	`conveyor_update_url` VARCHAR(200),
+	`conveyor_alterspeed_url` VARCHAR(200),
 	`pusher_count` INT(200),
 	`pusher_status_baseurl` VARCHAR(200),
 	`pusher_mode_baseurl` VARCHAR(200),

@@ -1,0 +1,27 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            Current Sorting Machines
+        </div>
+    </div>
+    <div class="container">
+        <p><a class="btn btn-primary btn-lg" href="/sorters/new">add Sorter</a>
+        </p>
+    </div>
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% sorters.forEach(function(sorter){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="img-thumbnail">
+                     <div class="caption">
+                         <h4><%= sorter.name %></h4>
+                     </div>
+                     <p>
+                         <a href="/sorters/<%= sorter.id %>" class="btn btn-primary">Show</a>
+                     </p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+<%- include ("../partials/footer.ejs") %> 

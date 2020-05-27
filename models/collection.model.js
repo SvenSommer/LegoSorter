@@ -118,14 +118,14 @@ Collection.removeAll = result => {
 
 Collection.findAllSetsByCollectionId = (collectionId, result) => {
   sql.query(`SELECT s.* , c.category_name, st.name as status_name, st.description as status_description FROM Sets s
-JOIN Categories c On c.category_id =  s.category_id
-JOIN Status st ON s.status = st.id AND st.type = 'SET'
-WHERE collection_id = ${collectionId}`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
+            LEFT JOIN Categories c On c.category_id =  s.category_id
+            LEFT JOIN Status st ON s.status = st.id AND st.type = 'SET'
+            WHERE collection_id = ${collectionId}`, (err, res) => {
+            if (err) {
+              console.log("error: ", err);
+              result(err, null);
+              return;
+            }
 
     result(null, res);
   });

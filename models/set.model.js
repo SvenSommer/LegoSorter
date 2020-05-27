@@ -50,7 +50,11 @@ Set.create = (newSet, result) => {
 };
 
 Set.findById = (SetId, result) => {
-  sql.query(`SELECT * FROM Sets WHERE id = ${SetId}`, (err, res) => {
+  sql.query(`SELECT *, c.category_name, st.name as status_name, st.description as status_description  
+            FROM Sets  s
+            LEFT JOIN Categories c On c.category_id =  s.category_id
+            LEFT JOIN Status st ON s.status = st.id AND st.type = 'set'
+            WHERE s.id = ${SetId}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -69,9 +73,10 @@ Set.findById = (SetId, result) => {
 };
 
 Set.getAll = result => {
-  sql.query(`SELECT s.* , c.category_name, st.name as status_name, st.description as status_description FROM Sets s
-JOIN Categories c On c.category_id =  s.category_id
-JOIN Status st ON s.status = st.id AND st.type = 'SET'`, (err, res) => {
+  sql.query(`SELECT s.* , c.category_name, st.name as status_name, st.description as status_description 
+            FROM Sets s
+            LEFT JOIN Categories c On c.category_id =  s.category_id
+            LEFT JOIN Status st ON s.status = st.id AND st.type = 'SET'`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

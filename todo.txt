@@ -1,20 +1,39 @@
-x download and store Parts, prices and imagesOfParts of a set when adding a new set to a collection
-x show parts in the correct color
-x sum prices and part count
-x use downloaded data to display parts of a set and parts of a collection
-x define and use status for sets and parts
+collections.index
+- show collections in list
 
+collections.new
+- make interesting auctions downloadable
 
-x create sets.index
-x create parts.index
-- introduce navbar
-- make run routes
-- download pictures from ebay automatically
+collections.show
+- show minifigs and all parts of a collection
+- show runs of a collection and let a run start from here
+- make own pictures of a collcetion upload able (also from mobile)
+- show bigger pictures on click 
 
+run.index
+- create run.index, to summarise different runs overall collections
+
+user.index
 - introduce user routes and authentication
-- make own pictures upload able (also from mobile)
-- show bigger pictures on click
 
-Bugfix:
-- comments, instructions , condition for sets
-- alternativ parts download (compare with bl site)
+sets.update
+- Bugfix: comments, instructions , condition for sets
+
+Parts.create
+- Bugfix: alternativ parts download (compare with bl site)
+
+Hardware:
+- Let motor control search for server
+- if server is not available -> offline mode
+- if server is online post request to start and stop, and speed control
+- if server is online, manuial mode should be an option
+
+ImageCams
+- mask areas where no part appears
+- get a higher FrameRate for less blurred pictures
+- design a solid frame for mirrors
+- prevent parts from falling down
+
+Pusher
+- design and build
+

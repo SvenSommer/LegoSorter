@@ -1,0 +1,20 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="container">
+    <div class="row">
+        <div style="width: 30%; margin: 25px auto;">
+            <h1 style="text-align:center;">Add new Run to <%= collection.name %></h1>
+            <form action="/collections/<%= collection.id %>/runs" method ="POST">
+                <div class="form-group">
+                    <label for="sorter_id">Sorter id</label>
+                    <input id="sorter_id" class="form-control" type="text" name="sorter_id">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" >Create Run</button>
+                </div>
+            </form>
+                    <a href="/collections/ <%=collection.id%> ">Go back</a>
+        </div>
+
+    </div>
+</div>
+<%- include ("../partials/footer.ejs") %> 
