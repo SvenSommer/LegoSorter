@@ -4,6 +4,7 @@ const sql = require("../config/db.js");
 const Run = function(run) {
   this.collection_id = run.collection_id;
   this.sorter_id = run.sorter_id;
+  this.imagefolder = run.imagefolder;
   this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
@@ -79,8 +80,8 @@ Run.getAll = result => {
 
 Run.updateById = (id, run, result) => {
   sql.query(
-    "UPDATE Runs SET collection_id = ?, sorter_id = ?, created = ? WHERE id = ?",
-    [run.collection_id, run.sorter_id, run.created, id],
+    "UPDATE Runs SET collection_id = ?, sorter_id = ?, imagefolder = ?, created = ? WHERE id = ?",
+    [run.collection_id, run.sorter_id, run.imagefolder, run.created, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -133,8 +134,12 @@ Run.removeAll = result => {
 };
 
 Run.findAllRunsByCollectionId = (colId, result) => {
-  sql.query(`SELECT * FROM Runs WHERE collection_id =  ${colId}`, (err, res) => {
-    if (err) {
+  sql.query(`SELECT *, r.id as run_id, st.name as status_name, st.description as status_description
+            FROM Runs r
+            LEFT JOIN RunStatus rs ON r.id = rs.run_id
+            LEFT JOIN Status st ON rs.status = st.id AND st.type = 'run'
+            WHERE collection_id =  ${colId}`, (err, res) => {
+              if (err) {
       console.log("error: ", err);
       result(err, null);
       return;

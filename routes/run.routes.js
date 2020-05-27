@@ -16,10 +16,10 @@ module.exports = app => {
   // EDIT - Retrieve a single run with runId to edit entries
   app.get("/runs/:Id/edit", runs.editOne);
   
-  // UPDATE - Update a run with sorterId
+  // UPDATE - Update a run with runId
   app.put("runs/:Id", runs.update);
   
-  // DELETE - Delete a run with sorterId
+  // DELETE - Delete a run with runId
   app.delete("/runs/:Id", runs.delete);
 
   // DESTROY - Delete all runs

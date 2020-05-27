@@ -1,5 +1,6 @@
 const Collection = require("../models/collection.model.js");
 const Subset = require("../models/subset.model.js");
+const Run = require("../models/run.model.js");
 
 // Retrieve all Collections from the database.
 exports.findAll = (req, res) => {
@@ -83,17 +84,22 @@ exports.findOne = (req, res) => {
           
           }); // sets for each
            Collection.SumallSetInfosByCollectionId(req.params.Id, (err, setssum) => {
-            if (err) {
+              if (err) {
                 
                 res.status(500).send({
                 message: "Error retrieving setsCount for collectionid " + req.params.Id
                 });
               } else{
-                console.log(sets)
-                console.log(setssum)
-                res.render("collections/show", {collection:data, sets : sets,setssum:setssum });
+                  Run.findAllRunsByCollectionId(req.params.Id,(err, runs)  => {
+                    if (err) {
+                        res.status(500).send({
+                        message: "Error retrieving setsCount for collectionid " + req.params.Id
+                        });
+                      } else{
+                        res.render("collections/show", {collection:data, sets : sets,setssum:setssum, runs: runs });
+                      }
+                });
               }
-             
            });
       });
       

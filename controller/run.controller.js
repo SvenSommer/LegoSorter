@@ -59,7 +59,8 @@ exports.create = (req, res) => {
       // Create a Run
       var run = new Run({
       collection_id: collection.id,
-      sorter_id: req.body.sorter_id
+      sorter_id: req.body.sorter_id,
+      imagefolder : req.body.imagefolder
       });
 
       Run.create(run, (err, data) => {
@@ -113,7 +114,7 @@ exports.findOne = (req, res) => {
               });
             }
           } else {
-          res.render("runs/show", {run:run, partimages:partimages, runstatus: runstatus});
+            res.render("runs/show", {run:run, partimages:partimages, runstatus: runstatus});
           }
         });
       });
