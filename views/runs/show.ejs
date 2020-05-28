@@ -22,19 +22,37 @@
                 <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
                     <tbody>
                         <tr>
-                        <td><strong>Collection id</strong></td>
+                            <td><strong>Collection id</strong></td>
                             <td><%=run.collection_id%></td>
                         </tr>
-                        <td><strong>Image Folder id</strong></td>
-                            <td><%=run.imagefolder%></td>
+                            <td><strong>Image Folder</strong></td>
+                            <td> 
+                                <form style="display: inline;" action="/runs/<%= run.run_id %>/scanFolder" method ="POST">
+                                    <button style="display: inline;" class="btn btn-sm btn-primary" ><%=run.imagefolder%></button>
+                                </form>
+                            </td>
                         </tr>
                         <tr>
-                        <td><strong>Current Status</strong></td>
+                            <td><strong>Current Status</strong></td>
                             <td><%=run.status_name%></td>
                         </tr>
                         <tr>
-                        <td><strong>Created</strong></td>
+                            <td><strong>Created</strong></td>
                             <td><%=moment(run.created).format('DD.MM.YYYY')%></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="caption">
+                <!--Details!-->
+                <h3>Control</h3>
+            </div>
+            <div class="table-responsive">          
+                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                    <tbody>
+                        <tr>
+                            <td><a href="/runs/<%=run.run_id%>/startRun" class="btn btn-danger">Start Run</a></td>
+                            <td><a href="/runs/<%=run.run_id%>/stopRun" class="btn btn-warning">Stop Run</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -83,10 +101,23 @@
                         <th data-sortable="true">Identifier</th>
                         <th data-sortable="true">Size (kb)</th>
                         <th data-sortable="true">Created</th>
+                        <th data-sortable="true">Imported</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    <% partimages.forEach(function(image){ %>
+                        <tr>
+                            <td><img class="img-responsive" style= "height:60px" src="<%=image.path %>"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><%=image.size_kb/1000%></td>
+                            <td><%=moment(image.created).format('DD.MM.YYYY HH:mm:ss')%></td>
+                            <td><%=moment(image.imported).format('DD.MM.YYYY HH:mm:ss')%></td>
+                        </tr>
+                    <% }); %>
+                    
                 </tbody>
             </table>
         </div>

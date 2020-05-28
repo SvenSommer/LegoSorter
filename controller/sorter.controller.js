@@ -1,5 +1,6 @@
 const Sorter = require("../models/sorter.model.js");
 const request = require('request');
+const { exec } = require('child_process');
 
 // Retrieve all Sorters from the database.
 exports.findAll = (req, res) => {
@@ -169,7 +170,7 @@ exports.deleteAll = (req, res) => {
   });
 };
 
-exports.alterspeed = (req,res) => {
+exports.startConveyor = (req,res) => {
   Sorter.findById(req.params.Id, (err, sorter) => {
    if (err) {
      if (err.kind === "not_found") {
@@ -182,38 +183,81 @@ exports.alterspeed = (req,res) => {
        });
      }
    } else { 
-     if(sorter.lifter_status_url != null) {
-      request(sorter.lifter_status_url, (err2, res2, body) => {
-      if(body != null) {
-      lifter_status =  JSON.parse(body);
-      request(sorter.conveyor_status_url, (err2, res2, body) => {
-        if(body != null) {
-        conveyor_status =  JSON.parse(body);
-        request(sorter.vfeeder_status_url, (err2, res2, body) => {
-
-          if(body != null) {0
-          vfeeder_status =  JSON.parse(body);
-                   
-          var options = {
-            'method': 'PUT',
-            'url': 'http://liftercontroller/alterspeed?speedchange=5',
-            'headers': {
-            }
-          };
-          request(options, function (error, response) { 
-            if (error) throw new Error(error);
-            console.log(response.body);
-          });
-
-          res.render("sorters/show", {sorter:sorter,lifter_status:lifter_status,conveyor_status:conveyor_status,vfeeder_status:vfeeder_status });
-          }
-        });  
-      }
-
+     if(sorter.conveyor_update_url != null) {
+      exec("curl --location --request PUT '" + sorter.conveyor_update_url + "?clientmode=PAGE&motormode=ON'", (err, stdout, stderr) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+    
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
       });
-    }
-    }); 
-  } else console.log("sorter.lifter_status_url is not set");
+     }
    }
  });
+ res.redirect("/sorters/"+ req.params.Id);  
+};
+
+exports.stopConveyor = (req,res) => {
+  Sorter.findById(req.params.Id, (err, sorter) => {
+   if (err) {
+     if (err.kind === "not_found") {
+       res.status(404).send({
+         message: `Not found Sorter with id ${req.params.id}.`
+       });
+     } else {
+       res.status(500).send({
+         message: "Error retrieving Sorter with id " + req.params.Id
+       });
+     }
+   } else { 
+     if(sorter.conveyor_update_url != null) {
+      exec("curl --location --request PUT '" + sorter.conveyor_update_url + "?clientmode=PAGE&motormode=OFF'", (err, stdout, stderr) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+    
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+      });
+     }
+   }
+    
+ });
+ res.redirect("/sorters/"+ req.params.Id); 
+};
+
+exports.alterSpeed = (req,res) => {
+  Sorter.findById(req.params.Id, (err, sorter) => {
+   if (err) {
+     if (err.kind === "not_found") {
+       res.status(404).send({
+         message: `Not found Sorter with id ${req.params.id}.`
+       });
+     } else {
+       res.status(500).send({
+         message: "Error retrieving Sorter with id " + req.params.Id
+       });
+     }
+   } else { 
+     if(sorter.conveyor_update_url != null) {
+      exec("curl --location --request PUT '" + sorter.conveyor_alterspeed_url + "?speedchange="+ req.params.Speed+ "'", (err, stdout, stderr) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+    
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+      });
+     }
+   }
+   
+ });
+ res.redirect("/sorters/"+ req.params.Id); 
 };

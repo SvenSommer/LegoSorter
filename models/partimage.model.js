@@ -1,11 +1,12 @@
 const sql = require("../config/db.js");
 
 // constructor
-const Partimage = function(partimage) {
+const Partimage =  function(partimage) {
   this.run_id = partimage.run_id;
   this.path = partimage.path;
   this.size_kb = partimage.size_kb;
-  this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  this.created = partimage.created;
+  this.imported = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
 Partimage.create = (newPartimage, result) => {
@@ -40,17 +41,14 @@ Partimage.findById = (partimageId, result) => {
   });
 };
 
-Partimage.findByRunId = (runId, result) => {
-  console.log("receeived Run_id"+ runId);
-  sql.query(`SELECT * FROM Partimages WHERE run_id = ${runId}`, (err, res) => {
+Partimage.getAllByRunId = (runId, result) => {
+  sql.query(`SELECT * FROM Partimages WHERE run_id = ${runId} ORDER BY created`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
-   
-      console.log("found partimage: ", res[0]);
-      result(null, res[0]);
+      result(null, res);
       return;
   });
 };
@@ -71,8 +69,8 @@ Partimage.getAll = result => {
 
 Partimage.updateById = (id, partimage, result) => {
   sql.query(
-    "UPDATE Partimages SET run_id = ?, path = ?, size_kb = ?, created = ? WHERE id = ?",
-    [partimage.run_id, partimage.path, partimage.size_kb, partimage.created, id],
+    "UPDATE Partimages SET run_id = ?, path = ?, size_kb = ?, created = ?, imported = ? WHERE id = ?",
+    [partimage.run_id, partimage.path, partimage.size_kb, partimage.created,partimage.imported, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

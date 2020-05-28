@@ -23,7 +23,7 @@ exports.create = (req, res) => {
     });
   }
   // Create a Collection
-  const customer = new Collection({
+  const collection = new Collection({
     name: req.body.name,
     weight_kg: req.body.weight_kg,
     origin: req.body.origin,
@@ -37,7 +37,7 @@ exports.create = (req, res) => {
   });
 
   // Save Collection in the database
-  Collection.create(customer, (err, data) => {
+  Collection.create(collection, (err, data) => {
     if (err)
       res.status(500).send({
         message:

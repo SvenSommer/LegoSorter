@@ -197,6 +197,7 @@ CREATE TABLE `Partimages` (
 	`path` VARCHAR(300) NOT NULL,
 	`size_kb` INT unsigned,
 	`created` DATETIME NOT NULL,
+	`imported` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 

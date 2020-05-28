@@ -1,5 +1,6 @@
 module.exports = app => {
   const runs = require("../controller/run.controller.js");
+  const partimages = require("../controller/partimage.controller.js");
 
   // INDEX - Retrieve all runs
   app.get("/runs", runs.findAll);
@@ -9,7 +10,7 @@ module.exports = app => {
 
   // CREATE - add new run
   app.post("/collections/:Id/runs", runs.create);
-
+  
   // SHOW - Retrieve a single run with runId
   app.get("/runs/:Id",  runs.findOne);
 
@@ -24,4 +25,13 @@ module.exports = app => {
 
   // DESTROY - Delete all runs
   app.delete("/runs", runs.deleteAll);
+
+  // scanFolder - import new Partimages for run
+  app.post("/runs/:Id/scanFolder", partimages.importImagesFromFolder);
+
+  // startRun - run python script to execute run
+  app.get("/runs/:Id/startRun", runs.startRun);
+
+  // startRun - run python script to execute run
+  app.get("/runs/:Id/stopRun", runs.stopRun);
 };

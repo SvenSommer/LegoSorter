@@ -19,9 +19,7 @@
                             <tr>
                                 <td><strong>Lifter MotorSpeed</strong></td>
                                 <td><%=lifter_status.speed%></td>
-                                <td>
-                                    <a href="/sorters/<%= sorter.id %>/alterspeed/5" class="btn btn-warning">+5</a>
-                                </td>
+                                
                             </tr>
                             <tr>
                                 <td><strong>Lifter MotorMode</strong></td>
@@ -34,10 +32,16 @@
                             <tr>
                                 <td><strong>Conveyor MotorSpeed</strong></td>
                                 <td><%=conveyor_status.speed%></td>
+                                <td>
+                                    <a href="/sorters/<%= sorter.id %>/alterspeedConveyor/5" class="btn btn-warning">+5</a>
+                                    <a href="/sorters/<%= sorter.id %>/alterspeedConveyor/-5" class="btn btn-warning">-5</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>Conveyor MotorMode</strong></td>
                                 <td><%=conveyor_status.motormode%></td>
+                                <td><a href="/sorters/<%= sorter.id %>/startConveyor" class="btn btn-primary">Start</a>
+                                    <a href="/sorters/<%= sorter.id %>/stopConveyor" class="btn btn-primary">Stop</a></td>
                             </tr>
                             <tr>
                                 <td><strong>VFeeder Clientmode</strong></td>

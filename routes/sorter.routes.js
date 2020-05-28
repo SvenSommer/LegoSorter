@@ -26,4 +26,12 @@ module.exports = app => {
 
   // DESTROY - Delete all sorters
   app.delete("/sorters", sorters.deleteAll);
+
+  // startRun - run python script to execute run
+  app.get("/sorters/:Id/startConveyor", sorters.startConveyor);
+
+  // startRun - run python script to execute run
+  app.get("/sorters/:Id/stopConveyor", sorters.stopConveyor);
+
+  app.get("/sorters/:Id/alterspeedConveyor/:Speed", sorters.alterSpeed);
 };

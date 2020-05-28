@@ -115,6 +115,20 @@ Run.remove = (id, result) => {
       return;
     }
 
+    sql.query("DELETE FROM RunStatus WHERE run_id = ?", id, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found run with the id
+        result({ kind: "not_found" }, null);
+        return;
+      }
+    });
+
     console.log("deleted run with id: ", id);
     result(null, res);
   });

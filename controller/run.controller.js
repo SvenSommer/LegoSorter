@@ -1,9 +1,10 @@
 const Collection = require("../models/collection.model.js");
 const Run = require("../models/run.model.js");
 const Partimage = require("../models/partimage.model.js");
+const { exec } = require('child_process');
 
 
-// Retrieve all sets from the database.
+// Retrieve all Runs from the database.
 exports.findAll = (req, res) => {
   Run.getAll((err, runs) => {
     if (err)
@@ -15,9 +16,9 @@ exports.findAll = (req, res) => {
   });
 };
 
-// Show new Set form
+// Show new Run form
 exports.new = (req, res) => {
-  Collection.findById(req.params.Id, (err, collection) => {
+  Run.findById(req.params.Id, (err, collection) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -32,7 +33,7 @@ exports.new = (req, res) => {
   });
 };
 
-// Create and Save a new Set
+// Create and Save a new Run
 exports.create = (req, res) => {
    // Validate request
   if (!req.body) {
@@ -89,16 +90,15 @@ exports.findOne = (req, res) => {
         });
       }
     } else {
-      console.log("run.run_id:" + run.run_id);
-      Partimage.findByRunId(run.run_id, (err, partimages) => {
+      Partimage.getAllByRunId(run.id, (err, partimages) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found partimages for Runid ${run.run_id}.`
+              message: `Not found partimages for Runid ${run.id}.`
             });
           } else {
             res.status(500).send({
-              message: "Error retrieving partimages for Runid " + run.run_id
+              message: "Error retrieving partimages for Runid " + run.id
             });
           }
         } else 
@@ -188,12 +188,43 @@ exports.delete = (req, res) => {
 
 // Delete all Sets from the database.
 exports.deleteAll = (req, res) => {
-  Set.removeAll((err, data) => {
+  Run.removeAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all Sets."
+          err.message || "Some error occurred while removing all Runs."
       });
     else res.redirect("/runs");
   });
+};
+
+// Delete all Sets from the database.
+exports.startRun = (req, res) => {
+ // exec('workon cv && python opencv/pcs1.py -w 1 -c 100 - b 1', (err, stdout, stderr) => {
+  exec("curl --location --request PUT 'conveyorcontroller/update?clientmode=SORTER&motormode=ON&speed=10'", (err, stdout, stderr) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+
+    // the *entire* stdout and stderr (buffered)
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+  });
+};
+
+exports.stopRun = (req, res) => {
+    // exec('workon cv && python opencv/pcs1.py -w 1 -c 100 - b 1', (err, stdout, stderr) => {
+     exec("curl --location --request PUT 'conveyorcontroller/update?clientmode=SORTER&motormode=OFF&speed=10'", (err, stdout, stderr) => {
+       if (err) {
+         console.log(err);
+         return;
+       }
+   
+       // the *entire* stdout and stderr (buffered)
+       console.log(`stdout: ${stdout}`);
+       console.log(`stderr: ${stderr}`);
+     });
+
+  res.redirect("/runs/"+ req.params.Id);  
 };
