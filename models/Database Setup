@@ -158,6 +158,7 @@ CREATE TABLE `Runs` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`collection_id` INT unsigned NOT NULL,
 	`sorter_id` INT unsigned NOT NULL,
+	`imagefolder` VARCHAR(500) NOT NULL,
 	`created` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
@@ -187,6 +188,7 @@ CREATE TABLE `Sorters` (
 	`pusher_status_baseurl` VARCHAR(200),
 	`pusher_mode_baseurl` VARCHAR(200),
 	`created` DATETIME NOT NULL,
+	`status` INT NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -196,6 +198,7 @@ CREATE TABLE `Partimages` (
 	`path` VARCHAR(300) NOT NULL,
 	`size_kb` INT unsigned,
 	`created` DATETIME NOT NULL,
+	`imported` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
@@ -204,6 +207,7 @@ CREATE TABLE `Recognisedparts` (
 	`no` INT unsigned NOT NULL,
 	`color_id` DATETIME NOT NULL,
 	`score` DOUBLE unsigned NOT NULL,
+	`identifier` VARCHAR(300) NOT NULL,
 	`created` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;

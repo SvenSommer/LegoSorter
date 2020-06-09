@@ -1,85 +1,128 @@
 <%- include ("../partials/header.ejs") %> 
-<div class="row">
-    <div class="col-md-9">
-        <div class="col-md-9">
-            <div class="well well">
-                <div class="caption-full">
-                    <h2>Run <%=run.run_id %></h2>
-                    <a href="/runs/<%=run.run_id%>/edit" class="btn btn-warning">Edit</a>
-                    <form id="delete-form" action="/runs/<%=run.run_id%>?_method=DELETE" method="POST" >
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
-                    <hr>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="caption-full">
+                <h2>Run <%=run.run_id %></h2>
+                <a href="/runs/<%=run.run_id%>/edit" class="btn btn-warning">Edit</a>
+                <form id="delete-form" action="/runs/<%=run.run_id%>?_method=DELETE" method="POST" >
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg">
             <div class="caption">
                 <!--Details!-->
                 <h3>Details</h3>
-                    <div class="table-responsive">          
-                        <table class="table">
-                            <tbody>
-                              <tr>
-                                <td><strong>Collection id</strong></td>
-                                    <td><%=run.collection_id%></td>
-                              </tr>
-                              <tr>
-                                <td><strong>Status</strong></td>
-                                    <td><%=run.status_name%></td>
-                              </tr>
-                              <tr>
-                                <td><strong>Created</strong></td>
-                                    <td><%=moment(run.created).format('DD.MM.YYYY')%></td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <h3>History</h3>
+            </div>
+            <div class="table-responsive">          
                 <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                    <thead>
-                        <tr>
-                            <th data-sortable="true">Date</th>
-                            <th data-sortable="true">Status Id</th>
-                            <th data-sortable="true">Status</th>
-                            <th data-sortable="true">Reason</th>
-                        </tr>
-                    </thead>
                     <tbody>
-                <% runstatus.forEach(function(rs){ %>
-                     <tr>
-                        <td><%=moment(rs.created).format('DD.MM.YYYY HH:mm:ss')%></td>
-                        <td><%=rs.status%></td>
-                        <td><%=rs.status_name%></td>
-                        <td><%=rs.reason%></td>
-                    </tr>
-                    <% }); %>
-                 </tbody>
-                </table>
-                <h3>Partimages</h3>
-                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                    <thead>
                         <tr>
-                            <th data-sortable="true">Date</th>
-                            <th data-sortable="true">Status Id</th>
-                            <th data-sortable="true">Status</th>
-                            <th data-sortable="true">Reason</th>
+                            <td><strong>Collection id</strong></td>
+                            <td><%=run.collection_id%></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                <% runstatus.forEach(function(rs){ %>
-                     <tr>
-                        <td><%=moment(rs.created).format('DD.MM.YYYY HH:mm:ss')%></td>
-                        <td><%=rs.status%></td>
-                        <td><%=rs.status_name%></td>
-                        <td><%=rs.reason%></td>
-                    </tr>
-                    <% }); %>
-                 </tbody>
+                            <td><strong>Image Folder</strong></td>
+                            <td> 
+                                <form style="display: inline;" action="/runs/<%= run.run_id %>/scanFolder" method ="POST">
+                                    <button style="display: inline;" class="btn btn-sm btn-primary" ><%=run.imagefolder%></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Current Status</strong></td>
+                            <td><%=run.status_name%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Created</strong></td>
+                            <td><%=moment(run.created).format('DD.MM.YYYY')%></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
+            <div class="caption">
+                <!--Details!-->
+                <h3>Control</h3>
+            </div>
+            <div class="table-responsive">          
+                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                    <tbody>
+                        <tr>
+                            <td><a href="/runs/<%=run.run_id%>/startRun" class="btn btn-danger">Start Run</a></td>
+                            <td><a href="/runs/<%=run.run_id%>/stopRun" class="btn btn-warning">Stop Run</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>  
+        <div class="col">
+            <div class="caption">
+                <h3>History</h3>
+            </div>
+            <div class="table-responsive">  
+                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th data-sortable="true">Date</th>
+                            <th data-sortable="true">Status Id</th>
+                            <th data-sortable="true">Status</th>
+                            <th data-sortable="true">Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% runstatus.forEach(function(rs){ %>
+                        <tr>
+                            <td><%=moment(rs.created).format('DD.MM.YYYY HH:mm:ss')%></td>
+                            <td><%=rs.status%></td>
+                            <td><%=rs.status_name%></td>
+                            <td><%=rs.reason%></td>
+                        </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row"></div>
+        <div class="col-lg">
+            <div class="caption">
+                <h3>Partimages</h3>
+            </div>
+            <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th data-sortable="true">Image</th>
+                        <th data-sortable="true">No</th>
+                        <th data-sortable="true">ColorId</th>
+                        <th data-sortable="true">Score</th>
+                        <th data-sortable="true">Identifier</th>
+                        <th data-sortable="true">Size (kb)</th>
+                        <th data-sortable="true">Created</th>
+                        <th data-sortable="true">Imported</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% partimages.forEach(function(image){ %>
+                        <tr>
+                            <td><img class="img-responsive" style= "height:60px" src="<%=image.path %>"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><%=image.size_kb/1000%></td>
+                            <td><%=moment(image.created).format('DD.MM.YYYY HH:mm:ss')%></td>
+                            <td><%=moment(image.imported).format('DD.MM.YYYY HH:mm:ss')%></td>
+                        </tr>
+                    <% }); %>
+                    
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+</div>  
     
-    <a href="/runs">Go back</a>
-</div>
 <%- include ("../partials/footer.ejs") %> 

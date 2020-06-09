@@ -18,7 +18,7 @@ class Sorter {
     this.pusher_status_baseurl = sorter.pusher_status_baseurl;
     this.pusher_mode_baseurl = sorter.pusher_mode_baseurl;
     this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    this.status = null;
+    this.status = 10;
   }
   static create(newSorter, result) {
     sql.query("INSERT INTO Sorters SET ?", newSorter, (err, res) => {
@@ -59,7 +59,7 @@ class Sorter {
     });
   }
   static updateById(id, sorter, result) {
-    sql.query("UPDATE Sorters SET name = ?, lifter_motormode_url = ?, lifter_motorspeed_url = ?, lifter_clientstatus_url = ?, vfeeder_motormode_url = ?, vfeeder_motorspeed_url = ?, vfeeder_clientstatus_url = ?, conveyor_motormode_url = ?, conveyor_motorspeed_url = ?, conveyor_clientstatus_url = ?, pusher_count = ?, pusher_status_baseurl = ?, pusher_mode_baseurl = ?, created = ? WHERE id = ?", [sorter.name, sorter.lifter_motormode_url, sorter.lifter_motorspeed_url, sorter.lifter_clientstatus_url, sorter.vfeeder_motormode_url, sorter.vfeeder_motorspeed_url, sorter.vfeeder_clientstatus_url, sorter.conveyor_motormode_url, sorter.conveyor_motorspeed_url, sorter.conveyor_clientstatus_url, sorter.pusher_count, sorter.pusher_status_baseurl, sorter.pusher_mode_baseurl, sorter.created, id], (err, res) => {
+    sql.query("UPDATE Sorters SET name = ?, lifter_motormode_url = ?, lifter_motorspeed_url = ?, lifter_clientstatus_url = ?, vfeeder_motormode_url = ?, vfeeder_motorspeed_url = ?, vfeeder_clientstatus_url = ?, conveyor_motormode_url = ?, conveyor_motorspeed_url = ?, conveyor_clientstatus_url = ?, pusher_count = ?, pusher_status_baseurl = ?, pusher_mode_baseurl = ?, created = ?, status = ? WHERE id = ?", [sorter.name, sorter.lifter_motormode_url, sorter.lifter_motorspeed_url, sorter.lifter_clientstatus_url, sorter.vfeeder_motormode_url, sorter.vfeeder_motorspeed_url, sorter.vfeeder_clientstatus_url, sorter.conveyor_motormode_url, sorter.conveyor_motorspeed_url, sorter.conveyor_clientstatus_url, sorter.pusher_count, sorter.pusher_status_baseurl, sorter.pusher_mode_baseurl, sorter.created, id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

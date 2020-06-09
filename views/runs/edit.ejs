@@ -1,0 +1,24 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="container">
+    <div class="row">
+        <div style="width: 30%; margin: 25px auto;">
+            <h1 style="text-align:center;">Edit Run</h1>
+            <form action="/runs/<%= run.run_id %>?_method=PUT" method="POST">
+                <div class="form-group">
+                    <label for="sorter_id">Sorter id</label>
+                    <input id="sorter_id" class="form-control" type="text" name="sorter_id" value="<%=run.sorter_id%>">
+                </div>
+                <div class="form-group">
+                    <label for="imagefolder">Image Folder</label>
+                    <input id="imagefolder" class="form-control" type="text" name="imagefolder" value="<%=run.imagefolder%>">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" >Save changes</button>
+                </div>
+            </form>
+                    <a href="/runs/<%= run.run_id %> ">Go back</a>
+        </div>
+
+    </div>
+</div>
+<%- include ("../partials/footer.ejs") %> 

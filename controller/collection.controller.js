@@ -1,5 +1,6 @@
 const Collection = require("../models/collection.model.js");
 const Subset = require("../models/subset.model.js");
+const Run = require("../models/run.model.js");
 
 // Retrieve all Collections from the database.
 exports.findAll = (req, res) => {
@@ -22,7 +23,7 @@ exports.create = (req, res) => {
     });
   }
   // Create a Collection
-  const customer = new Collection({
+  const collection = new Collection({
     name: req.body.name,
     weight_kg: req.body.weight_kg,
     origin: req.body.origin,
@@ -36,7 +37,7 @@ exports.create = (req, res) => {
   });
 
   // Save Collection in the database
-  Collection.create(customer, (err, data) => {
+  Collection.create(collection, (err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -83,17 +84,22 @@ exports.findOne = (req, res) => {
           
           }); // sets for each
            Collection.SumallSetInfosByCollectionId(req.params.Id, (err, setssum) => {
-            if (err) {
+              if (err) {
                 
                 res.status(500).send({
                 message: "Error retrieving setsCount for collectionid " + req.params.Id
                 });
               } else{
-                console.log(sets)
-                console.log(setssum)
-                res.render("collections/show", {collection:data, sets : sets,setssum:setssum });
+                  Run.findAllRunsByCollectionId(req.params.Id,(err, runs)  => {
+                    if (err) {
+                        res.status(500).send({
+                        message: "Error retrieving setsCount for collectionid " + req.params.Id
+                        });
+                      } else{
+                        res.render("collections/show", {collection:data, sets : sets,setssum:setssum, runs: runs });
+                      }
+                });
               }
-             
            });
       });
       
