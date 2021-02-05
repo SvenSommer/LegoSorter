@@ -90,6 +90,21 @@ CREATE TABLE `Subsets` (
 	CONSTRAINT  `subset` UNIQUE (`setNo`, `no`,`color_id`, `is_counterpart`)
 ) DEFAULT CHARSET=utf8;
 
+CREATE TABLE `SuperSets` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`partNo` INT NOT NULL,
+	`setNo` VARCHAR(100) NOT NULL,
+	`name` VARCHAR(200) NOT NULL,
+	`type` VARCHAR(50) NOT NULL,
+	`category_id` INT unsigned NOT NULL,
+	`color_id` INT unsigned,
+	`quantity` INT unsigned NOT NULL,
+	`appears_as` VARCHAR(10),
+	`created` DATETIME NOT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT  `superset` UNIQUE (`partNo`, `setNo`,`color_id`)
+) DEFAULT CHARSET=utf8;
+
 CREATE TABLE `Prices` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`no` VARCHAR(100) NOT NULL,
@@ -156,6 +171,7 @@ INSERT INTO `Users` (`username`, `password`, `full_name`) VALUES
 
 CREATE TABLE `Runs` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`no` INT unsigned NOT NULL,
 	`collection_id` INT unsigned NOT NULL,
 	`sorter_id` INT unsigned NOT NULL,
 	`imagefolder` VARCHAR(500) NOT NULL,
@@ -192,31 +208,42 @@ CREATE TABLE `Sorters` (
 	PRIMARY KEY (`id`)
 );
 
+DROP TABLE Partimages;
 CREATE TABLE `Partimages` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`run_id` INT unsigned NOT NULL,
 	`path` VARCHAR(300) NOT NULL,
 	`size_kb` INT unsigned,
+	`x` INT unsigned,
+	`y` INT unsigned,
+	`w` INT unsigned,
+	`h` INT unsigned,
 	`created` DATETIME NOT NULL,
 	`imported` DATETIME NOT NULL,
-	PRIMARY KEY (`id`)
+	`deleted` DATETIME NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE (`path`)
 ) DEFAULT CHARSET=utf8;
 
+DROP TABLE `Recognisedparts`;
 CREATE TABLE `Recognisedparts` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
-	`no` INT unsigned NOT NULL,
-	`color_id` DATETIME NOT NULL,
-	`score` DOUBLE unsigned NOT NULL,
-	`identifier` VARCHAR(300) NOT NULL,
+	`run_id` INT unsigned NOT NULL,
+	`no` VARCHAR(100),
+	`color_id` INT unsigned,
+	`score` DOUBLE unsigned,
+	`identifier` VARCHAR(300),
 	`created` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
+DROP TABLE Recognisedimages;
 CREATE TABLE `Recognisedimages` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`image_id` INT unsigned NOT NULL,
 	`part_id` INT unsigned NOT NULL,
 	`score` DOUBLE unsigned,
 	`created` DATETIME NOT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	UNIQUE (`image_id`)
 ) DEFAULT CHARSET=utf8;

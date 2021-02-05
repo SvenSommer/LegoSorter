@@ -91,6 +91,27 @@ Subset.findById = (SubsetId, result) => {
   });
 };
 
+
+Subset.getMinifigById = (SubsetId, result) => {
+  sql.query(`SELECT * FROM Subsets WHERE id = ${SubsetId}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      //console.log("found Subset: ", res[0]);
+      result(null, res[0]);
+      return;
+    }
+
+    // not found Subset with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
+
 Subset.findBySetNo = (setNumber, result) => {
   sql.query(`SELECT 
             Subsets.match_no as match_no, 
@@ -194,32 +215,8 @@ Subset.CountMinifigsBySetNo = (setNumber, result) => {
   });
 };
 
-Subset.getAll = result => {
-  sql.query(`SELECT 
-            Subsets.match_no as match_no, 
-            sets.collection_id as collection_id,
-            p.thumbnail_url as thumbnail_url,
-            p.no as part_no,
-            Subsets.setNo as setNo,
-            Subsets.name as name,
-            Subsets.type as type,
-            Subsets.category_id as category_id,
-            Subsets.color_id as color_id,
-            c.color_name as color_name,
-            Subsets.quantity as quantity,
-            p.qty_avg_price_stock as qty_avg_price_stock,
-            p.qty_avg_price_sold as qty_avg_price_sold,
-            Subsets.extra_quantity as extra_quantity,
-            Subsets.is_alternate as is_alternate,
-            Subsets.is_counterpart as is_counterpart,
-            st.name as status_name, 
-            st.description as status_description 
-            FROM Subsets  
-            LEFT JOIN Sets sets On sets.no = Subsets.setNo
-            LEFT JOIN Colors c ON c.color_id = Subsets.color_id
-            LEFT JOIN Parts p ON Subsets.no = p.no AND Subsets.color_id = p.color_id
-            LEFT JOIN Status st ON p.status = st.id AND st.type = 'Part'
-            ORDER BY CONCAT (c.color_name, ' ',Subsets.name) `, (err, res) => {
+Subset.getAllParts = result => {
+  sql.query(`SELECT * FROM LegoSorterDB.parts_overview WHERE collection_id IS NOT NULL AND type = 'PART' ORDER BY part_no`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -228,6 +225,32 @@ Subset.getAll = result => {
 
     result(null, res);
   });
+};
+
+
+Subset.getAllMinifigs = result => {
+  sql.query(`SELECT * FROM LegoSorterDB.parts_overview WHERE collection_id IS NOT NULL AND type = 'MINIFIG' ORDER BY part_no`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    result(null, res);
+  });
+};
+
+
+Subset.getAllbyColId = (colId, result) => {
+  sql.query(`SELECT * FROM LegoSorterDB.parts_overview WHERE collection_id = ${colId} ORDER BY part_no`, (err, subsetData) => {
+    if (err) {
+      console.log("error while getting unsettet Parts: ", err);
+      result(err, null);
+      return;
+    }
+    result(null, subsetData);
+  });
+
 };
 
 Subset.removeAll = result => {

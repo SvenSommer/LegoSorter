@@ -116,21 +116,6 @@ Collection.removeAll = result => {
   });
 };
 
-Collection.findAllSetsByCollectionId = (collectionId, result) => {
-  sql.query(`SELECT s.* , c.category_name, st.name as status_name, st.description as status_description FROM Sets s
-            LEFT JOIN Categories c On c.category_id =  s.category_id
-            LEFT JOIN Status st ON s.status = st.id AND st.type = 'SET'
-            WHERE collection_id = ${collectionId}`, (err, res) => {
-            if (err) {
-              console.log("error: ", err);
-              result(err, null);
-              return;
-            }
-
-    result(null, res);
-  });
-};
-
 Collection.SumallSetInfosByCollectionId = (collectionId, result) => {
   sql.query(`SELECT 
             COUNT(no) as allSets_count,
@@ -139,8 +124,9 @@ Collection.SumallSetInfosByCollectionId = (collectionId, result) => {
             SUM(complete_minifigs_count) as allSets_minifigs_count,
             SUM(min_price) as AllSets_minPrice,
             SUM(avg_price) as AllSets_avgPrice
-            FROM Sets s
-            WHERE collection_id = ${collectionId}`, (err, res) => {
+            FROM LegoSorterDB.Recognisedsets rs
+            LEFT JOIN LegoSorterDB.Sets s ON rs.setno = s.no
+            WHERE rs.collection_id = ${collectionId}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -148,6 +134,25 @@ Collection.SumallSetInfosByCollectionId = (collectionId, result) => {
     }
 
     result(null, res);
+  });
+};
+
+Collection.SumAllUniquePartsByCollectionId = (collectionId, result) => {
+  sql.query(`SELECT COUNT(*) as uniquePartCount FROM (
+           SELECT COUNT(*) as count, ss.no FROM LegoSorterDB.Recognisedsets rs
+          LEFT JOIN LegoSorterDB.Sets s ON s.no = rs.setNo
+                LEFT JOIN LegoSorterDB.Subsets ss ON s.no = ss.Setno
+                WHERE rs.collection_id = 1
+                GROUP BY ss.no
+                ORDER by count desc   ) as x
+    `, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    result(null, res[0]);
   });
 };
   

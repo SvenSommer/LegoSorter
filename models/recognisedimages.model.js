@@ -2,8 +2,8 @@ const sql = require("../config/db.js");
 
 // constructor
 const Recognisedimages = function(recognisedimages) {
-  this.no = recognisedimages.no;
-  this.color_id = recognisedimages.color_id;
+  this.image_id = recognisedimages.image_id;
+  this.part_id = recognisedimages.part_id;
   this.score = recognisedimages.score;
   this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
@@ -53,10 +53,10 @@ Recognisedimages.getAll = result => {
   });
 };
 
-Recognisedimages.updateById = (id, recognisedimages, result) => {
+Recognisedimages.updateById = (id, recognisedimage, result) => {
   sql.query(
-    "UPDATE Recognisedimages SET no = ?, color_id = ?, score = ?, created = ? WHERE id = ?",
-    [recognisedimages.no, recognisedimages.color_id, recognisedimages.score, recognisedimages.created, id],
+    "UPDATE Recognisedimages SET image_id = ?, part_id = ?, score = ?, created = ? WHERE image_id = ?",
+    [recognisedimage.image_id, recognisedimage.part_id, recognisedimage.score, recognisedimage.created, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -65,16 +65,17 @@ Recognisedimages.updateById = (id, recognisedimages, result) => {
       }
 
       if (res.affectedRows == 0) {
-        // not found recognisedimages with the id
+        // not found recognisedimage with the id
         result({ kind: "not_found" }, null);
         return;
       }
 
-      //console.log("updated recognisedimages: ", { id: id, ...recognisedimages });
-      result(null, { id: id, ...recognisedimages });
+      //console.log("updated recognisedimage: ", { id: id, ...recognisedimage });
+      result(null, { id: id, ...recognisedimage });
     }
   );
 };
+
 
 Recognisedimages.remove = (id, result) => {
   sql.query("DELETE FROM Recognisedimages WHERE id = ?", id, (err, res) => {

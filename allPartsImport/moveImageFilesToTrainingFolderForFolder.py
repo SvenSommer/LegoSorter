@@ -2,66 +2,65 @@ import os
 import argparse
 from shutil import copyfile
 
-#LDR_FILE = "./"+ folder +"/LDRAW_file_7633.ldr"
-#IMAGE_FILE_DIRECTORY = "./"+ folder +"/unlabeled_images"
 FRAMECOUNT = 25
-TRAINING_DIR =  './../training_images_all'
 imagecounter = 0
 
-def readLabel_ids(folder):
-    with open("./"+ folder +"/" + folder +".ldr") as f:
+def readLabel_ids(sourcefolder):
+    with open("./"+ sourcefolder +"/" + sourcefolder +".ldr") as f:
         content = f.readlines()
         # you may also want to remove whitespace characters like `\n` at the end of each line
     content = [x[28:-5].strip() for x in content] 
     return content
 
-def getImages(folder):
-    fileNames = [fileName for fileName in os.listdir("./"+ folder +"/unlabeled_images") if fileName.endswith(".png")]
+def getImages(sourcefolder):
+    fileNames = [fileName for fileName in os.listdir("./"+ sourcefolder +"/unlabeled_images") if fileName.endswith(".png")]
     fileNames.sort()
     return fileNames
 
-def moveImages(folder, label, imageFiles, framecount,labelscount):
+def moveImages(sourcefolder, destinationfolder, label, imageFiles, framecount,labelscount):
     global imagecounter
-    #create folder if not exisiting
-    newfolder = os.path.join(TRAINING_DIR,label) 
-    folder_existed = 1
-    if not os.path.exists(newfolder):
-        print("    Creating Folder: " + newfolder)
-        os.makedirs(newfolder)
-        folder_existed = 0
+    #create sourcefolder if not exisiting
+    newsourcefolder = os.path.join(destinationfolder,label) 
+    sourcefolder_existed = 1
+    if not os.path.exists(newsourcefolder):
+        print("    Creating sourcefolder: " + newsourcefolder)
+        os.makedirs(newsourcefolder)
+        sourcefolder_existed = 0
     for _ in range(framecount):
-        #save the next x files into the label-folder corresponding to this image
+        #save the next x files into the label-sourcefolder corresponding to this image
         try:
-            filefrom = os.path.join("./"+ folder +"/unlabeled_images",imageFiles[imagecounter])
-            fileto = os.path.join(newfolder, label + "_" + imageFiles[imagecounter])
+            filefrom = os.path.join("./"+ sourcefolder +"/unlabeled_images",imageFiles[imagecounter])
+            fileto = os.path.join(newsourcefolder, label + "_" + imageFiles[imagecounter])
             #print("moving file: " +  filefrom + " to \n" + fileto)
-            if folder_existed == 0:
+            if sourcefolder_existed == 0:
                 copyfile(filefrom, fileto)
             else:
-                print("    Folder '" + newfolder + "' already existed, will not copy file.\n") 
+                print("    sourcefolder '" + newsourcefolder + "' already existed, will not copy file.\n") 
             #os.rename(filefrom,fileto)
                 
             imagecounter += 1
         except IndexError:
-            print("WARNING: Not enough images in the folder to copy. Only found " + str(imagecounter) + " but exspected " + str(framecount * labelscount-1) + "!\n" )
+            print("WARNING: Not enough images in the sourcefolder to copy. Only found " + str(imagecounter) + " but exspected " + str(framecount * labelscount-1) + "!\n" )
             return 0
 
 def run():
-    parser = argparse.ArgumentParser(description='Moves files from a specific set into the subfolders of the training_images folder')
-    parser.add_argument('-f','--folder', help='folder the images needs to be labeled', required=True)
+    parser = argparse.ArgumentParser(description='Moves files from a specific set into the subsourcefolders of the training_images sourcefolder')
+    parser.add_argument('-s','--source', help='sourcefolder the images come from.', required=True)
+    parser.add_argument('-d','--destination', help='destinationfolder the images are written to.', required=True)
     args = vars(parser.parse_args())
-    folder = args['folder']
+    sourcefolder = args['source']
+    destinationfolder = args['destination']
 
-    imageFiles = getImages(folder)
-    labels = readLabel_ids(folder)
+    imageFiles = getImages(sourcefolder)
+    labels = readLabel_ids(sourcefolder)
 
-    # First part has on epicture less
-    moveImages(folder, labels[0], imageFiles, FRAMECOUNT-1, len(labels))
-    foldercounter = 1
+    # First part has one picture less
+    moveImages(sourcefolder, destinationfolder, labels[0], imageFiles, FRAMECOUNT-1, len(labels))
+    sourcefoldercounter = 1
     for label in labels[1:]:
-        print("\n" + str(foldercounter) + ". Moving " + str(FRAMECOUNT) + " images from partno " + label)
-        ret = moveImages(folder, label, imageFiles, FRAMECOUNT, len(labels))
-        foldercounter =  foldercounter + 1
+        print("\n" + str(sourcefoldercounter) + ". Moving " + str(FRAMECOUNT) + " images from partno " + label)
+        ret = moveImages(sourcefolder, destinationfolder, label, imageFiles, FRAMECOUNT, len(labels))
+        sourcefoldercounter =  sourcefoldercounter + 1
         if ret == 0:
             break
 

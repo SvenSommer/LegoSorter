@@ -1,0 +1,124 @@
+# colors thresholds in RGB
+# camera USB
+# light full
+
+# Green, id = 6
+lower_green = np.array([0,70,30])
+upper_green = np.array([39,127,56])
+
+# Green, id = 6 ver 2
+lower_green = np.array([0,96,30])
+upper_green = np.array([60,143,75])
+
+# Green, id = 6 ver 3
+lower_green = np.array([0,96,30])
+upper_green = np.array([99,163,75])
+
+# Lime, id = 34
+lower_lime = np.array([61,124,65])
+upper_lime = np.array([139,177,100])
+
+# Lime, id = 34 ver 2 
+lower_lime = np.array([121,163,82])
+upper_lime = np.array([143,178,94])
+
+# Dark Green, id = 80
+lower_darkgreen = np.array([0,12,26])
+upper_darkgreen = np.array([30,53,45])
+
+# Blue, id = 7 
+lower_blue = np.array([13,61,150])
+upper_blue = np.array([36,112,193])
+
+# Medium Azure, id = 156 
+lower_mediumazure = np.array([88,159,141])
+upper_mediumazure = np.array([106,193,206])
+
+# Dark Blue, id = 63 
+lower_darkblue = np.array([6,18,44])
+upper_darkblue = np.array([46,60,108])
+
+# Medium Blue, id = 42 
+lower_mediumblue = np.array([99,160,195])
+upper_mediumblue = np.array([125,175,207])
+
+# Dark Purple, id = 89
+lower_darkpurple = np.array([66,43,133])
+upper_darkpurple = np.array([88,60,168])
+
+# Reddish Brown, id = 88
+lower_reddishbrown = np.array([88,55,51])
+upper_reddishbrown = np.array([125,77,75])
+
+# Reddish Brown, id = 88 ver 2
+lower_reddishbrown = np.array([58,27,49])
+upper_reddishbrown = np.array([106,59,81])
+
+# Reddish Brown, id = 88 ver 3
+lower_reddishbrown = np.array([58,27,49])
+upper_reddishbrown = np.array([96,100,140])
+
+# Dark Red, id = 59
+lower_darkred = np.array([99,21,44])
+upper_darkred = np.array([132,53,62])
+
+# Dark Orange, id = 68
+lower_darkred = np.array([144,74,58])
+upper_darkred = np.array([166,106,74])
+
+# Red, id = 5
+lower_red = np.array([167,50,74])
+upper_red = np.array([192,73,95])
+
+# Dark Brown, id = 120
+lower_darkbrown = np.array([18,13,15])
+upper_darkbrown = np.array([41,39,44])
+
+# Light Bluish Gray, id = 86
+lower_lightbluishgray = np.array([137,153,162])
+upper_lightbluishgray = np.array([160,175,172])
+
+# White, id = 1
+lower_white = np.array([199,211,196])
+upper_white = np.array([255,255,255])
+
+# Dark Bluish Gray, id = 85
+lower_darkbluishgray = np.array([62,74,76])
+upper_darkbluishgray = np.array([111,106,106])
+
+# Dark Bluish Gray, id = 85 ver 2
+lower_darkbluishgray = np.array([62,74,76])
+upper_darkbluishgray = np.array([111,106,106])
+
+# Black, id = 11
+lower_black = np.array([8,3,11])
+upper_black = np.array([31,27,28])
+
+# Tan, id = 2
+lower_tan = np.array([185,193,155])
+upper_tan = np.array([205,206,174])
+
+# Dark Tan, id = 69
+lower_darktan = np.array([96,80,66])
+upper_darktan = np.array([110,96,84])
+
+# Pearl Gold, id = 115
+lower_pearllgold = np.array([138,110,70])
+upper_darktan = np.array([151,144,86])
+
+# Medium Nougat, id = 150
+lower_mediumnougat = np.array([134,92,77])
+upper_mediumnougat = np.array([143,103,82])
+
+
+# Yellow, id = 3
+lower_yellow = np.array([201,194,114])
+upper_yellow = np.array([226,211,129])
+
+# Orange, id = 4
+lower_orange = np.array([196,126,85])
+upper_orange = np.array([233,151,113])
+
+# Bright Light Orange, id = 110
+lower_brightlightorange = np.array([233,183,126])
+upper_brightlightorange = np.array([251,210,139])

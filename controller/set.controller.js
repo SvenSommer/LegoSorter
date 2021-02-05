@@ -1,4 +1,4 @@
-const Collection = require("../models/collection.model.js");
+
 const Set = require("../models/set.model.js");
 const Subset = require("../models/subset.model.js");
 
@@ -15,83 +15,30 @@ exports.findAll = (req, res) => {
   });
 };
 
-// Show new Set form
-exports.new = (req, res) => {
-  Collection.findById(req.params.Id, (err, collection) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `Not found collection with id ${req.params.id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "Error retrieving collection with id " + req.params.Id
-        });
-      }
-    } else res.render("sets/new", {collection:collection});
+exports.download = (req, res) => {  
+  // PART OUT - Save the inlcuded Parts and their prices in the database
+  setno = req.params.Id.split("-")[0]
+  Set.checkifdownloaded(setno, (err, setalreadydownloaded) => {
+    if (!setalreadydownloaded) {
+      console.log("downloading set " + setno + "...")
+      Subset.create(setno, (err, data) => {
+            if (err)
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while creating the SubSet."
+          });
+      });
+
+      var set = new Set({
+        no: setno
+      });
+      // SAVE SET INFORMATION - Save Set info in the database
+      Set.create(set, (err, data) => {
+        if (err)
+          res.status(500).send({message: err.message || "Some error occurred while creating the Set."});
+        });    
+    } else  console.log("Set " + setno + " is already existing!")
   });
-};
-
-// Create and Save a new Set
-exports.create = (req, res) => {
-   // Validate request
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-  }
-  if(req.params.Id == "") {
-    res.redirect("/collections/"+ req.params.id);
-  }
-  
-  req.params.Id = req.params.Id.replace(/\s+/g, '');
-  
-  Collection.findById(req.params.Id, (err, collection) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `Not found collection with id ${req.params.id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "Error retrieving collection with id " + req.params.Id
-        });
-      }
-    } else {
-          // Create a Set
-          var set = new Set({
-          collection_id: collection.id,
-          no: req.body.no.replace(/\s+/g, ''),
-          comments: req.body.comments,
-          instructions: req.body.instructions,
-          condition: req.body.condition
-        });
-      
-        // PART OUT - Save the inlcuded Parts and their prices in the database
-        Subset.create(req.body.no, (err, data) => {
-               if (err)
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while creating the SubSet."
-            });
-           else res.redirect("/collections/"+ collection.id); 
-        });
-
-             // SAVE SET INFORMATION - Save Set info in the database
-        Set.create(set, (err, data) => {
-          if (err)
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while creating the Set."
-            });
-          else res.redirect("/collections/"+ collection.id);  
-        });
-   
-        
-      }
-  });
-
- 
 };
 
 // Find a single Set with a setId
@@ -141,80 +88,4 @@ exports.findOne = (req, res) => {
       });
     }
   });   
-};
-
-//Edit Show edit form for Set with id
-exports.editOne = (req,res) => {
-   Set.findById(req.params.Id, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `Not found Set with id ${req.params.id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "Error retrieving Set with id " + req.params.Id
-        });
-      }
-    } else res.render("sets/edit", {set:data});
-  });
-};
-
-// Update a Set identified by the setId in the request
-exports.update = (req, res) => {
-   // Validate Request
-
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-  }
-  
-  Set.updateById(
-    req.params.Id,
-    new Set(req.body),
-    (err, data) => {
-      if (err) {
-        if (err.kind === "not_found") {
-          res.status(404).send({
-            message: `Not found Set with id ${req.params.Id}.`
-          });
-        } else {
-          res.status(500).send({
-            message: "Error updating Set with id " + req.params.Id
-          });
-        }
-      } else res.redirect("/sets/"+ req.params.Id);  
-    }
-  );
-};
-
-
-// Delete a Set with the specified setId in the request
-exports.delete = (req, res) => {
-  Set.remove(req.params.Id, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `Not found Set with id ${req.params.Id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "Could not delete Set with id " + req.params.Id
-        });
-      }
-    } else res.redirect("/collections");
-  });
-};
-
-// Delete all Sets from the database.
-exports.deleteAll = (req, res) => {
-  Set.removeAll((err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all Sets."
-      });
-    else res.redirect("/sets");
-  });
 };

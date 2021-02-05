@@ -88,7 +88,23 @@ Part.findByNo = (PartId, result) => {
 
 
 Part.getAll = result => {
-  sql.query("SELECT * FROM Parts", (err, res) => {
+  sql.query("SELECT *, COUNT(*) FROM Parts", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    //console.log("Parts: ", res);
+    result(null, res);
+  });
+};
+
+Part.getAllUnique = result => {
+  sql.query(`SELECT no, p.color_id, c.color_name, type, thumbnail_url, name, AVG(qty_avg_price_sold) as qty_avg_price_sold, COUNT(*) as no_expected 
+            FROM LegoSorterDB.Parts p
+            LEFT JOIN LegoSorterDB.Colors c ON c.color_id = p.color_id
+            WHERE name NOT LIKE '%sticker%' GROUP BY no, color_id, type, thumbnail_url, name ORDER BY no_expected desc`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

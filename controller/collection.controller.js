@@ -1,6 +1,8 @@
 const Collection = require("../models/collection.model.js");
 const Subset = require("../models/subset.model.js");
 const Run = require("../models/run.model.js");
+const Recognisedparts = require("../models/recognisedparts.model.js");
+const Recognisedset = require("../models/recognisedset.model.js");
 
 // Retrieve all Collections from the database.
 exports.findAll = (req, res) => {
@@ -51,7 +53,7 @@ exports.create = (req, res) => {
 
 // Find a single Collection with a collectionId
 exports.findOne = (req, res) => {
-  Collection.findById(req.params.Id, (err, data) => {
+  Collection.findById(req.params.Id, (err, collection) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -63,44 +65,44 @@ exports.findOne = (req, res) => {
         });
       }
     } else {
-        Collection.findAllSetsByCollectionId(req.params.Id, (err, sets) => {
-          sets.forEach(function(set){
-             Subset.CountPartsBySetNo(set.no, (err, partcounts) => {
-              if (err) {
-                res.status(500).send({
-                message: "Error retrieving PartCount for Setid " + req.params.Id
-                });
-              } else{
-                Subset.CountMinifigsBySetNo(set.no, (err, minifigscount) => {
-                if (err) {
-                  res.status(500).send({
-                  message: "Error retrieving Minifigs Count for Setid " + req.params.Id
-                  });
-                } 
-                  
-                });
-              } // 
-            }); //Count parts
-          
-          }); // sets for each
+      Recognisedset.findAllSetsByCollectionId(req.params.Id, (err, recognisedsets) => {
+          if (err) {res.status(500).send({message: "Error retrieving setsCount for collectionid " + req.params.Id});
+        } else{
            Collection.SumallSetInfosByCollectionId(req.params.Id, (err, setssum) => {
-              if (err) {
-                
-                res.status(500).send({
-                message: "Error retrieving setsCount for collectionid " + req.params.Id
-                });
+              if (err) {res.status(500).send({message: "Error retrieving setsCount for collectionid " + req.params.Id});
               } else{
-                  Run.findAllRunsByCollectionId(req.params.Id,(err, runs)  => {
+                Collection.SumAllUniquePartsByCollectionId(req.params.Id, (err, uniquepartsum) => {
+                  Run.getRunsStatisticsByCollectionId(req.params.Id,(err, runStatistics)  => {
                     if (err) {
                         res.status(500).send({
                         message: "Error retrieving setsCount for collectionid " + req.params.Id
                         });
                       } else{
-                        res.render("collections/show", {collection:data, sets : sets,setssum:setssum, runs: runs });
-                      }
+                        Recognisedparts.getAllUnsettedPartsOfCollectionId(req.params.Id,(err, unsettedParts)  => {
+                          if (err) {
+                              res.status(500).send({ message: "Error retrieving UnsettedParts Of CollectionId" + req.params.Id});
+                            } else{
+                              Recognisedparts.getSuggestedSets(req.params.Id,(err, suggestedSets)  => {
+                                if (err) {
+                                  res.status(500).send({ message: "Error retrieving UnsettedParts Of CollectionId" + req.params.Id});
+                                } else{
+                                  Subset.getAllbyColId(req.params.Id,(err, subsetData)  => { 
+                                    if (err) {
+                                      res.status(500).send({ message: "Error retrieving subsetData Of CollectionId" + req.params.Id});
+                                    } else{
+                                      res.render("collections/show", {collection:collection, recognisedsets : recognisedsets,setssum:setssum, runStatistics: runStatistics, uniquepartsum: uniquepartsum, unsettedParts: unsettedParts, suggestedSets: suggestedSets, subsetData: subsetData });
+                                    }
+                                  });
+                                }
+                            });
+                            }
+                          });
+                        }
+                    });
                 });
               }
            });
+          }
       });
       
     }

@@ -4,12 +4,7 @@ const blApi = require("../config/bl.api.js");
 
 // constructor
 const Set = function(set) {
-  this.collection_id = set.collection_id;
   this.no = set.no;
-  this.comments = set.comments;
-  this.instructions = set.instructions;
-  this.condition = set.condition;
-  this.status = 10;
   this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
@@ -49,12 +44,29 @@ Set.create = (newSet, result) => {
     });
 };
 
+Set.checkifdownloaded = (setNo, result) => {
+  sql.query(`SELECT no 
+            FROM LegoSorterDB.Sets  s
+            WHERE s.no =  ${setNo}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found Set already: ", res[0]);
+      result(null, true);
+      return;
+    }
+    console.log("No Set found, will download it: ", res[0]);
+    // not found Set with the setno
+    result(null, false);
+  });
+};
+
 Set.findById = (SetId, result) => {
-  sql.query(`SELECT *, c.category_name, st.name as status_name, st.description as status_description  
-            FROM Sets  s
-            LEFT JOIN Categories c On c.category_id =  s.category_id
-            LEFT JOIN Status st ON s.status = st.id AND st.type = 'set'
-            WHERE s.id = ${SetId}`, (err, res) => {
+  sql.query(`SELECT * FROM LegoSorterDB.sets_view WHERE id = ${SetId}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -75,8 +87,9 @@ Set.findById = (SetId, result) => {
 Set.getAll = result => {
   sql.query(`SELECT s.* , c.category_name, st.name as status_name, st.description as status_description 
             FROM Sets s
+            LEFT JOIN Recognisedsets rs ON rs.setNo = s.no
             LEFT JOIN Categories c On c.category_id =  s.category_id
-            LEFT JOIN Status st ON s.status = st.id AND st.type = 'SET'`, (err, res) => {
+            LEFT JOIN Status st ON rs.status = st.id AND st.type = 'SET'`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -87,62 +100,5 @@ Set.getAll = result => {
     result(null, res);
   });
 };
-
-Set.updateById = (id, Set, result) => {
-  sql.query(
-    "UPDATE `Sets` SET comments = ?, instructions = ?, condition = ? WHERE id = ?",
-    [Set.comments, Set.instructions, Set.condition, id],
-    (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
-
-      if (res.affectedRows == 0) {
-        // not found Set with the id
-        result({ kind: "not_found" }, null);
-        return;
-      }
-
-      //console.log("updated Set: ", { id: id, ...Set });
-      result(null, { id: id, ...Set });
-    }
-  );
-};
-
-Set.remove = (id, result) => {
-  sql.query("DELETE FROM Sets WHERE id = ?", id, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-
-    if (res.affectedRows == 0) {
-      // not found Set with the id
-      result({ kind: "not_found" }, null);
-      return;
-    }
-
-    console.log("deleted Set with id: ", id);
-    result(null, res);
-  });
-};
-
-Set.removeAll = result => {
-  sql.query("DELETE FROM Sets", (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-
-    console.log(`deleted ${res.affectedRows} Set`);
-    result(null, res);
-  });
-};
-
-
 
 module.exports = Set;

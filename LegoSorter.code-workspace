@@ -1,8 +1,12 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"name": "ScaleControllerLCD",
+			"path": "motorcontroller/PlatformIO/ScaleControllerLCD"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"python.pythonPath": "D:\\Users\\rh\\Anaconda3\\python.exe",
+		"git.ignoreLimitWarning": true
+	}
 }

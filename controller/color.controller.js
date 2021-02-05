@@ -9,7 +9,7 @@ const Color = function(color) {
   this.created = new Date().toISOString().slice(0, 19).replace('T', ' ');
 };
 
-// Retrieve all Collections from the database.
+// Retrieve all Colors from the database.
 exports.findAll = (req, res) => {
   Color.getAll((err, data) => {
     if (err)
