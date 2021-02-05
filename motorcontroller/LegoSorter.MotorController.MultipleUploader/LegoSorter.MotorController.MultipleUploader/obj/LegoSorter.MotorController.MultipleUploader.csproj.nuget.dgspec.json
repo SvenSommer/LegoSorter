@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\rhoffmann\\source\\repos\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\rhoffmann\\source\\repos\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rhoffmann\\source\\repos\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader.csproj",
+        "projectName": "LegoSorter.MotorController.MultipleUploader",
+        "projectPath": "C:\\Users\\rhoffmann\\source\\repos\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader.csproj",
+        "packagesPath": "C:\\Users\\rhoffmann\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rhoffmann\\source\\repos\\LegoSorter.MotorController.MultipleUploader\\LegoSorter.MotorController.MultipleUploader\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rhoffmann\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "http://base-server4/aponeonugetserver/nuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "Autofac": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[106.11.7, )"
+            },
+            "RestSharp.Serializers.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[106.11.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

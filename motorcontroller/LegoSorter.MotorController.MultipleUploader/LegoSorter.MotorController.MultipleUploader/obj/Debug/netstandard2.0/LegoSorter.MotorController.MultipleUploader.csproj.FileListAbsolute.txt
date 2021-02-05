@@ -1,0 +1,9 @@
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\bin\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.deps.json
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\bin\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.dll
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\obj\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.csprojAssemblyReference.cache
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\obj\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.AssemblyInfoInputs.cache
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\obj\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.AssemblyInfo.cs
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\bin\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.pdb
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\obj\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.dll
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\obj\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.pdb
+C:\Users\rhoffmann\source\repos\LegoSorter.MotorController.MultipleUploader\LegoSorter.MotorController.MultipleUploader\obj\Debug\netstandard2.0\LegoSorter.MotorController.MultipleUploader.csproj.CoreCompileInputs.cache
