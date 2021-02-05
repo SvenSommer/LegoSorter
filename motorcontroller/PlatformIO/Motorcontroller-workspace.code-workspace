@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"name": "ValveController",
+			"path": "ValveController"
+		},
+		{
+			"name": "LifterControllerVNH7070AS",
+			"path": "LifterControllerVNH7070AS"
+		},
+		{
+			"name": "V-FeederController",
+			"path": "V-FeederController"
+		},
+		{
+			"name": "ConveyorController",
+			"path": "ConveyorController"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"functional": "cpp",
+			"*.tcc": "cpp",
+			"bitset": "cpp",
+			"regex": "cpp",
+			"array": "cpp",
+			"deque": "cpp",
+			"map": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp",
+			"vector": "cpp",
+			"*.tpp": "cpp",
+			"ctime": "cpp",
+			"streambuf": "cpp"
+		}
+	}
+}

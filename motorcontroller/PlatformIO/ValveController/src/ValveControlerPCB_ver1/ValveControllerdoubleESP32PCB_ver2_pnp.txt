@@ -1,0 +1,25 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=ValveControllerdoubleESP32PCB_ver2
+*Date=13:19:08
+*CreatedBy=Fritzing 0.9.4.2019-12-01.CD-498-0-a1ffcea
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;;86.5702;-4.35118;0;Bottom;Hole2
+2;;THT;34.5002;-85.6312;-90;Bottom;J1
+3;;;86.5702;-85.6312;0;Bottom;Hole4
+4;;THT;59.9002;-85.6312;-90;Bottom;J2
+5;;;26.6262;-71.6612;-90;Bottom;Logic Level Converter2
+6;;;68.6495;-27.5032;90;Bottom;ESP33
+7;;;28.0095;-27.5032;90;Bottom;ESP32
+8;;;5.29016;-85.6312;0;Bottom;Hole3
+9;;;67.2258;-71.6883;-90;Bottom;Logic Level Converter 1
+10;;;5.29016;-4.35118;0;Bottom;Hole1

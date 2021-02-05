@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<netlist sketch="ValveControllerDoubleESP32WithPressureSensorPCB.fzz" date="So Okt 18 21:46:55 2020">
+ <net>
+  <connector id="connector9" name="pin10">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+  <connector id="connector18" name="GND">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector2" name="pin3">
+   <part title="Screw terminal - 3 pins" label="J4" id="854376570"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part title="200Ω Resistor" label="R20Ohm1" id="854377290"/>
+  </connector>
+  <connector id="connector37" name="GND">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+  <connector id="connector13" name="GND">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+  <connector id="connector31" name="GND">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="pin2">
+   <part title="Screw terminal - 3 pins" label="J4" id="854376570"/>
+  </connector>
+  <connector id="connector9" name="VCCB">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector18" name="VIN">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="pin1">
+   <part title="Screw terminal - 3 pins" label="J4" id="854376570"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part title="100Ω Resistor" label="R10Ohm1" id="854377210"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part title="200Ω Resistor" label="R20Ohm1" id="854377290"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="Pin 1">
+   <part title="200Ω Resistor" label="R20Ohm" id="854375690"/>
+  </connector>
+  <connector id="connector9" name="pin10">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+  <connector id="connector18" name="VIN">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+  <connector id="connector1" name="pin2">
+   <part title="Screw terminal - 3 pins" label="J3" id="854375670"/>
+  </connector>
+  <connector id="connector2" name="pin3">
+   <part title="Screw terminal - 3 pins" label="J3" id="854375670"/>
+  </connector>
+  <connector id="connector18" name="GND">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector9" name="VCCB">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector37" name="GND">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+  <connector id="connector13" name="GND">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+  <connector id="connector31" name="GND">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="pin1">
+   <part title="Screw terminal - 3 pins" label="J3" id="854375670"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part title="200Ω Resistor" label="R20Ohm" id="854375690"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part title="100Ω Resistor" label="R10Ohm" id="854375570"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector26" name="A2">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector7" name="GPIO33">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector27" name="A1">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector6" name="GPIO32">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector21" name="A7">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector29" name="GPIO18">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector28" name="VCCA">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector19" name="OE">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector0" name="3.3">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector20" name="A8">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector14" name="GPIO13">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector22" name="A6">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector11" name="GPIO14">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector23" name="A5">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector10" name="GPIO27">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector24" name="A4">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector9" name="GPIO26">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector25" name="A3">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector8" name="GPIO25">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector27" name="A1">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector6" name="GPIO32">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector28" name="VCCA">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector19" name="OE">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector0" name="3.3">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector21" name="A7">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector29" name="GPIO18">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector20" name="A8">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector14" name="GPIO13">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector22" name="A6">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector11" name="GPIO14">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector23" name="A5">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector10" name="GPIO27">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector24" name="A4">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector9" name="GPIO26">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector25" name="A3">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector8" name="GPIO25">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector26" name="A2">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector7" name="GPIO33">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector17" name="B8">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector8" name="pin9">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector7" name="pin8">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+  <connector id="connector16" name="B7">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector6" name="pin7">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+  <connector id="connector15" name="B6">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector14" name="B5">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector5" name="pin6">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector13" name="B4">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector4" name="pin5">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector3" name="pin4">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+  <connector id="connector12" name="B3">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector11" name="B2">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector2" name="pin3">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector10" name="B1">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter2" id="854166060"/>
+  </connector>
+  <connector id="connector1" name="pin2">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector17" name="B8">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector8" name="pin9">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector16" name="B7">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector7" name="pin8">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector15" name="B6">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector6" name="pin7">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector14" name="B5">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector5" name="pin6">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector13" name="B4">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector4" name="pin5">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector12" name="B3">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector3" name="pin4">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector11" name="B2">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector2" name="pin3">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector10" name="B1">
+   <part title="TXB0108 8-channel Bi-directional Logic Level Converter" label="Logic Level Converter 1" id="854163460"/>
+  </connector>
+  <connector id="connector1" name="pin2">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector4" name="GPIO34">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part title="100Ω Resistor" label="R10Ohm1" id="854377210"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector4" name="GPIO34">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part title="100Ω Resistor" label="R10Ohm" id="854375570"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="pin2">
+   <part title="Screw terminal - 3 pins" label="J5" id="854377190"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector2" name="pin3">
+   <part title="Screw terminal - 3 pins" label="J5" id="854377190"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="pin1">
+   <part title="Screw terminal - 3 pins" label="J5" id="854377190"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="pin1">
+   <part title="Generic female header - 10 pins" label="J1" id="854238020"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="pin1">
+   <part title="Generic female header - 10 pins" label="J2" id="854238090"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector23" name="GPIO2">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector12" name="GPIO12">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector17" name="GPIO11">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector16" name="GPIO10">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector20" name="GPIO7">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector32" name="GPIO21">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector28" name="GPIO5">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector15" name="GPIO9">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector2" name="GPIO36">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector26" name="GPIO16">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector27" name="GPIO17">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector5" name="GPIO35">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector35" name="GPIO22">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="EN">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector30" name="GPIO19">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector24" name="GPIO0">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector19" name="GPIO6">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector34" name="GPIO1">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector21" name="GPIO8">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector25" name="GPIO4">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector33" name="GPIO3">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector3" name="GPIO39">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector36" name="GPIO23">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector22" name="GPIO15">
+   <part title="ESP32-38PinWide" label="ESP32" id="854102440"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector23" name="GPIO2">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector12" name="GPIO12">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector17" name="GPIO11">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector16" name="GPIO10">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector20" name="GPIO7">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector32" name="GPIO21">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector28" name="GPIO5">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector15" name="GPIO9">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector2" name="GPIO36">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector26" name="GPIO16">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector27" name="GPIO17">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector5" name="GPIO35">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector35" name="GPIO22">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="EN">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector30" name="GPIO19">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector24" name="GPIO0">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector19" name="GPIO6">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector34" name="GPIO1">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector21" name="GPIO8">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector25" name="GPIO4">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector33" name="GPIO3">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector3" name="GPIO39">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector36" name="GPIO23">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector22" name="GPIO15">
+   <part title="ESP32-38PinWide" label="ESP33" id="854293420"/>
+  </connector>
+ </net>
+</netlist>
