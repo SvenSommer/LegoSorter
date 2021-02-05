@@ -12,6 +12,7 @@ cap2.set(cv2.CAP_PROP_FOURCC,cv2.VideoWriter_fourcc('M','J','P','G'))
 cap2.set(cv2.CAP_PROP_FRAME_WIDTH, 1024)
 cap2.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 #cap2.set(cv2.CAP_PROP_AUTOFOCUS, 0)
+cap.set(cv2.CV_CAP_PROP_SETTINGS, 1)
 focus = 0.05
 zoom = 200
 scale=20

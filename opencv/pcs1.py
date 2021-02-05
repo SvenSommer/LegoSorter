@@ -122,14 +122,14 @@ def detectmotion_alt(frame):
 	blur = 255.*blur/np.amax(blur)
 
 
-	dummy,cnts,hier = cv2.findContours(blur.astype(np.uint8),cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+	cnts,_ = cv2.findContours(blur.astype(np.uint8),cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 	
 	return cnts
 
 # initialize the video stream and allow the cammera sensor to warmup
 vs1 = VideoStream(0).start()
 #vs2 = VideoStream(2).start()
-startLegoSorter()
+#startLegoSorter()
 time.sleep(2.0)
 
 fps = FPS().start()
@@ -207,7 +207,7 @@ while True:
 		break
 
 # do a bit of cleanup
-stopLegoSorter()
+#stopLegoSorter()
 cv2.destroyAllWindows()
 vs1.stop()
 
