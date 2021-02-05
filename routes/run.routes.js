@@ -1,11 +1,12 @@
 module.exports = app => {
   const runs = require("../controller/run.controller.js");
-  const partimages = require("../controller/partimage.controller.js");
+  const recognisedpart = require("../controller/recognisedpart.controller.js");
 
   // INDEX - Retrieve all runs
   app.get("/runs", runs.findAll);
 
   // NEW - Show new form
+  //app.get("/collections/:Id/runs/new", runs.new);
   app.get("/collections/:Id/runs/new", runs.new);
 
   // CREATE - add new run
@@ -26,8 +27,8 @@ module.exports = app => {
   // DESTROY - Delete all runs
   app.delete("/runs", runs.deleteAll);
 
-  // scanFolder - import new Partimages for run
-  app.post("/runs/:Id/scanFolder", partimages.importImagesFromFolder);
+  // show - label page
+  app.get("/runs/:Id/labelImages", recognisedpart.showlabelTool);
 
   // startRun - run python script to execute run
   app.get("/runs/:Id/startRun", runs.startRun);

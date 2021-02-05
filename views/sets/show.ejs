@@ -1,6 +1,6 @@
 <%- include ("../partials/header.ejs") %> 
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-12">
         <% if(set.image_url  != null) {%>
         <div class="col-md-3">
             <div class="thumbnail">
@@ -8,176 +8,227 @@
             </div>
         </div>
         <% }%>
-        <div class="col-md-9">
+        <div class="col-md-6">
             <div class="well well">
                 <div class="caption-full">
                     <h2><%=set.no %> - <%=set.name%></h2>
-                    <a href="/sets/<%= set.id %>/edit" class="btn btn-warning">Edit</a>
-                    <form id="delete-form" action="/sets/<%=set.id %>?_method=DELETE" method="POST" >
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
                     <hr>
                 </div>
-            <div class="caption">
-                <!--Details!-->
-                <h3>Details</h3>
-                    <div class="table-responsive">          
-                        <table class="table">
-                            <tbody>
-                              <tr>
-                                <td><strong>Category</strong></td>
-                                    <td><%=set.category_name%></td>
-                              </tr>
-                              <tr>
-                                <td><strong>Year</strong></td>
-                                    <td><%=set.year%></td>
-                              </tr>
-                              <tr>
-                                <td><strong>Weight</strong></td>
-                                    <td><%=set.weight_g%> g</td>
-                              </tr>
-                              <tr>
-                                <td><strong>Size</strong></td>
-                                    <td><%=set.size%></td>
-                              </tr>
-                              <tr>
-                                <td><strong>Instructions</strong></td>
-                                    <td><%=set.instructions%></td>
-                              </tr>
-                              <tr>
-                                <td><strong>Parts</strong></td>
-                                    <td>
-                                        complete: <%=partcounts[0].parts_count%></br>
-                                        extra: <%=partcounts[0].extra_quantity_count%></br>
-                                        alternate_count: <%=partcounts[0].alternate_count%></br>
-                                        counterpart: <%=partcounts[0].counterpart_count%></br>
-                                    </td>
-                              </tr>
-                              <tr>
-                                <td><strong>Minifigs</strong></td>
-                                    <td><%=minifigscount[0].minifigs_count%></td>
-                              </tr>
-                              <td><strong>Set Price</strong></td>
-                                    <td>
-                                        Min  <%=set.min_price%> €</br>
-                                        Avg  <%=set.avg_price%> €</br>
-                                        QAvg <%=set.qty_avg_price%> €</br>
-                                        Max  <%=set.max_price%> €
-                                     </td>
-                              </tr>
-                              <tr>
-                                <td><strong>Parts price (stock)</strong></td>
-                                    <td><%=partcounts[0].part_stock_price_sum.toFixed(2)%>€%></td>
-                              </tr>
-                               <tr>
-                                <td><strong>Parts price (sold)</strong></td>
-                                    <td><%=partcounts[0].part_sold_price_sum.toFixed(2)%>€%></td>
-                              </tr>
-                              <% if(minifigscount[0].minifigs_count != null) {%> 
-                              <tr>
-                                <td><strong>Minifigs price (stock)</strong></td>
-                                    <td><%=minifigscount[0].part_stock_price_sum.toFixed(2)%>€%></td>
-                              </tr>
-                               <tr>
-                                <td><strong>Minifigs price (sold)</strong></td>
-                                    <td><%=minifigscount[0].part_sold_price_sum.toFixed(2)%>€%></td>
-                              </tr>
-                              <% }%>
-                              <tr>
-                                <td><strong>Comments</strong></td>
-                                    <td><%=set.comments%> </td>
-                              </tr>
-                              <tr>
-                                <td><strong>Status</strong></td>
-                                    <td><%=set.status%> </td>
-                              </tr>
-                              <tr>
-                                  <td><strong>Created:</strong></td>
-                                  <td><%=moment(set.created).format('DD. MMMM YYYY')%></td>
-                              </tr>
-                            </tbody>
-                        </table>
-                        
-                        <h3>Minifigs</h3>
-                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                            <thead>
-                                <tr>
-                                    <th data-sortable="true">Match No</th>
-                                    <th>Image</th>
-                                    <th data-sortable="true">Qty</th>
-                                    <th data-sortable="true">Item No</th>
-                                    <th data-sortable="true">Description</th>
-                                    <th data-sortable="true">Price (stock)</th>
-                                    <th data-sortable="true">Price (sold)</th>
-                                    <th data-sortable="true">Status</th>
-                                   <!--   <th data-sortable="true">extra_quantity</th>-->
-                                   <!--   <th data-sortable="true">is_alternate</th>-->
-                                  <!--    <th data-sortable="true">is_counterpart</th>-->
-                                </tr>
-                            </thead>
-                            <tbody>
-                        <% subsetData.forEach(function(subset){ %>
-                        <% if(subset.type == "MINIFIG"){%>
-                         <tr>
-                                <td><%=subset.match_no%></td>
-                                <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/M/<%=subset.part_no%>.jpg"  onerror="this.onerror=null;this.src='//img.bricklink.com/M/<%=subset.part_no%>.gif';"></td>
-                                <td><%=subset.quantity%></td>
-                                <td><%=subset.part_no%></td>
-                                <td><%=subset.color_name%> <%-subset.name%></td>
-                                <td><%=subset.qty_avg_price_stock.toFixed(2)%>€</td>
-                                <td><%=subset.qty_avg_price_sold.toFixed(2)%>€</td>
-                                <td><%=subset.status_name%></td>
-                        <!--         <td><%=subset.extra_quantity%></td>-->
-                         <!--        <td><%=subset.is_alternate%></td>-->
-                          <!--       <td><%=subset.is_counterpart%></td>-->
+                <div class="caption">
+                    <!--Details!-->
+                    <h3>Details</h3>
+                </div>
+                <div class="table-responsive">          
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td><strong>Category</strong></td>
+                                <td><%=set.category_name%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Year</strong></td>
+                                <td><%=set.year%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weight</strong></td>
+                                <td><%=set.weight_g%> g</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Size</strong></td>
+                                <td><%=set.size%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Instructions</strong></td>
+                                <td><%=set.instructions%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parts</strong></td>
+                                <td>
+                                    complete: <%=partcounts[0].parts_count%></br>
+                                    extra: <%=partcounts[0].extra_quantity_count%></br>
+                                    alternate_count: <%=partcounts[0].alternate_count%></br>
+                                    counterpart: <%=partcounts[0].counterpart_count%></br>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minifigs</strong></td>
+                                <td><%=minifigscount[0].minifigs_count%></td>
+                        </tr>
+                        <td><strong>Set Price</strong></td>
+                                <td>
+                                    Min  <%=set.min_price%> €</br>
+                                    Avg  <%=set.avg_price%> €</br>
+                                    QAvg <%=set.qty_avg_price%> €</br>
+                                    Max  <%=set.max_price%> €
+                                </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parts price (stock)</strong></td>
+                            <% if (partcounts[0].part_stock_price_sum !== null) {%>
+                                <td><%=partcounts[0].part_stock_price_sum.toFixed(2)%>€%></td>
                                 <% } %>
-                        
-                             <% }); %>
-                            </tr>
-                         </tbody>
-                        </table>
-                        <h3>Parts</h3>
-                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                            <thead>
-                                <tr>
-                                    <th data-sortable="true">Match No</th>
-                                    <th>Image</th>
-                                    <th data-sortable="true">Qty</th>
-                                    <th data-sortable="true">Item No</th>
-                                    <th data-sortable="true">Description</th>
-                                    <th data-sortable="true">Price (stock)</th>
-                                    <th data-sortable="true">Price (sold)</th>
-                                    <th data-sortable="true">Status</th>
-                                   <!--   <th data-sortable="true">extra_quantity</th>-->
-                                   <!--   <th data-sortable="true">is_alternate</th>-->
-                                  <!--    <th data-sortable="true">is_counterpart</th>-->
-                                </tr>
-                            </thead>
-                            <tbody>
-                        <% subsetData.forEach(function(subset){ %>
-                         <tr>
-                              <% if(subset.type == "PART"){%>
-                                <td><%=subset.match_no%></td>
-                                <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.jpg" onerror="this.onerror=null;this.src='//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.gif';"></td>
-                                <td><%=subset.quantity%></td>
-                                <td><%=subset.part_no%></td>
-                                <td><%=subset.color_name%> <%-subset.name%></td>
-                                <td><%=subset.qty_avg_price_stock.toFixed(2)%>€</td>
-                                <td><%=subset.qty_avg_price_sold.toFixed(2)%>€</td>
-                                <td><%=subset.status_name%></td>
-                        <!--         <td><%=subset.extra_quantity%></td>-->
-                         <!--        <td><%=subset.is_alternate%></td>-->
-                          <!--       <td><%=subset.is_counterpart%></td>-->
+                        </tr>
+                        <tr>
+                            <td><strong>Parts price (sold)</strong></td>
+                            <% if (partcounts[0].part_sold_price_sum !== null) {%>
+                                <td><%=partcounts[0].part_sold_price_sum.toFixed(2)%>€%></td>
                                 <% } %>
-                        
-                             <% }); %>
-                            </tr>
-                         </tbody>
-                        </table>
-                    </div>
+                        </tr>
+                        <% if(minifigscount[0].minifigs_count !== null) {%> 
+                        <tr>
+                            <td><strong>Minifigs price (stock)</strong></td>
+                                <td><%=minifigscount[0].part_stock_price_sum.toFixed(2)%>€%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minifigs price (sold)</strong></td>
+                                <td><%=minifigscount[0].part_sold_price_sum.toFixed(2)%>€%></td>
+                        </tr>
+                        <% } else {%>
+                        <tr>
+                            <td><strong>Minifigs</strong></td>
+                            <td>None in this set</td>
+                        </tr>    
+                        <% } %>
+                        <tr>
+                            <td><strong>Downloaded:</strong></td>
+                            <td><%=moment(set.created).format('DD. MMMM YYYY')%></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            <div class="well well">
+                <div class="caption-full">
+                    <h2>Collection list</h2>
+                    <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th data-sortable="true">Collection id</th>
+                                <th data-sortable="true">Comments</th>
+                                <th data-sortable="true">Instructions</th>
+                                <th data-sortable="true">Condition</th>
+                                <th data-sortable="true">Status</th>
+                                <th data-sortable="true">Created</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if (set.rs_collection_ids !== null && set.rs_collection_ids !== undefined)  {
+                                rs_ids = set.rs_ids.split("|")
+                                rs_collection_ids = set.rs_collection_ids.split("|")
+                                rs_comments = set.rs_comments.split("|")                  
+                                rs_instructions = set.rs_instructions.split("|")
+                                rs_conditions = set.rs_conditions.split("|")
+                                rs_status_names = set.rs_status_names.split("|")
+                                rs_created = set.rs_created.split("|")
+                                i = 0
+                                rs_collection_ids.forEach(function(rs_id){ %>
+                                <tr>
+                                    <td><%=rs_collection_ids[i]%></td>
+                                    <td><%=rs_comments[i]%></td>
+                                    <td><%=rs_instructions[i]%></td>
+                                    <td><%=rs_conditions[i]%></td>
+                                    <td><%=rs_status_names[i]%></td>
+                                    <td><%=rs_created[i]%></td>
+                                    <td><a href="/recognisedsets/<%=rs_ids[i]%>/edit" class="btn btn-sm btn-warning">Edit</a> 
+                                        <form id="delete-form" action="/recognisedsets/<%=rs_ids[i]%>?_method=DELETE" method="POST" >
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% 
+                                i = i+1
+                            });
+                        } else { %>
+                            <tr>
+                                Not yet in a collection
+                            </tr>
+                            <% } %>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="well well">
+                <h3>Minifigs</h3>
+                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th data-sortable="true">Match No</th>
+                            <th>Image</th>
+                            <th data-sortable="true">Qty</th>
+                            <th data-sortable="true">Item No</th>
+                            <th data-sortable="true">Description</th>
+                            <th data-sortable="true">Price (stock)</th>
+                            <th data-sortable="true">Price (sold)</th>
+                            <th data-sortable="true">Status</th>
+                        <!--   <th data-sortable="true">extra_quantity</th>-->
+                        <!--   <th data-sortable="true">is_alternate</th>-->
+                        <!--    <th data-sortable="true">is_counterpart</th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                <% subsetData.forEach(function(subset){ %>
+                <% if(subset.type == "MINIFIG"){%>
+                <tr>
+                        <td><%=subset.match_no%></td>
+                        <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/M/<%=subset.part_no%>.jpg"  onerror="this.onerror=null;this.src='//img.bricklink.com/M/<%=subset.part_no%>.gif';"></td>
+                        <td><%=subset.quantity%></td>
+                        <td><%=subset.part_no%></td>
+                        <td><%=subset.color_name%> <%-subset.name%></td>
+                        <td><%=subset.qty_avg_price_stock.toFixed(2)%>€</td>
+                        <td><%=subset.qty_avg_price_sold.toFixed(2)%>€</td>
+                        <td><%=subset.status_name%></td>
+                <!--         <td><%=subset.extra_quantity%></td>-->
+                <!--        <td><%=subset.is_alternate%></td>-->
+                <!--       <td><%=subset.is_counterpart%></td>-->
+                        <% } %>
+                
+                    <% }); %>
+                    </tr>
+                </tbody>
+                </table>
+                <h3>Parts</h3>
+                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th data-sortable="true">Match No</th>
+                            <th>Image</th>
+                            <th data-sortable="true">Qty</th>
+                            <th data-sortable="true">Item No</th>
+                            <th data-sortable="true">Description</th>
+                            <th data-sortable="true">Price (stock)</th>
+                            <th data-sortable="true">Price (sold)</th>
+                            <th data-sortable="true">Status</th>
+                        <!--   <th data-sortable="true">extra_quantity</th>-->
+                        <!--   <th data-sortable="true">is_alternate</th>-->
+                        <!--    <th data-sortable="true">is_counterpart</th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                <% subsetData.forEach(function(subset){ %>
+                <tr>
+                    <% if(subset.type == "PART"){%>
+                        <td><%=subset.match_no%></td>
+                        <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.jpg" onerror="this.onerror=null;this.src='//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.gif';"></td>
+                        <td><%=subset.quantity%></td>
+                        <td><%=subset.part_no%></td>
+                        <td><%=subset.color_name%> <%-subset.name%></td>
+                        <td><%=subset.qty_avg_price_stock.toFixed(2)%>€</td>
+                        <td><%=subset.qty_avg_price_sold.toFixed(2)%>€</td>
+                        <td><%=subset.status_name%></td>
+                <!--         <td><%=subset.extra_quantity%></td>-->
+                <!--        <td><%=subset.is_alternate%></td>-->
+                <!--       <td><%=subset.is_counterpart%></td>-->
+                        <% } %>
+                
+                    <% }); %>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
         </div>
+            
     </div>  
     
     <a href="/collections">Go back</a>

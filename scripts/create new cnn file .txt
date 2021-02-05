@@ -1,0 +1,6 @@
+1. Label new images from a run
+2. execute script python /home/robert/LegoSorter/sorted_partimages/mergeImagesWithRenderedData.py -folder dataset_20200621_onlyFotos -fotos 1 -ren 0
+3. Start up jupiter notebook and copy a script for creating the new cnn
+4. Copy and Paste classes into pythonconnector/model_fastai.py 
+5. Copy new pth file into models folder in models/fastai/models
+6. change filename of pth file in model_fastai.py file

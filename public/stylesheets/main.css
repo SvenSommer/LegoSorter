@@ -16,6 +16,7 @@
     display: block;
     width: auto;
     background-size: contain;
+    height: 60px;
 }
 
 .photosmall img {
@@ -61,6 +62,23 @@
       background-color: green;
 }
 
+.color-box {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    background-color: #ccc;
+    left: 5px;
+    top: 5px;
+    border:1px solid #CCC;
+    background:#DDD;
+    border-radius: 4px;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+}
+.color-box:hover {
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.8);
+}
+
 /* Google Maps */
 #map {
     height: 400px;
@@ -93,3 +111,19 @@
     color: white;
 }
 
+.rotate90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+
+.table-hover-sp>tbody>tr>td:hover, .table-hover-sp>tbody>tr>td:hover{
+        background-color: #f5f5f5!important;
+    }
+
+.table-hover-sp>tbody>tr:hover>td, .table-hover-sp>tbody>tr:hover>th{
+        background-color: inherit;
+    }

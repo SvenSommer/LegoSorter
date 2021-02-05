@@ -1,0 +1,80 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="row">
+    <div class="col-md-12">
+        <% if(part.image_url  != null) {%>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img class="img-responsive" style= "width:300px" src="<%=part.image_url %>">
+            </div>
+        </div>
+        <% }%>
+        <div class="col-md-6">
+            <div class="well well">
+                <div class="caption-full">
+                    <h2><%=part.no %> - <%=part.name%></h2>
+                    <hr>
+                </div>
+                <div class="caption">
+                    <!--Details!-->
+                    <h3>Details</h3>
+                </div>
+                <div class="table-responsive">          
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td><strong>Category</strong></td>
+                                <td><%=part.category_name%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Year</strong></td>
+                                <td><%=part.year%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weight</strong></td>
+                                <td><%=part.weight_g%> g</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Size</strong></td>
+                                <td><%=part.size%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>is obselete</strong></td>
+                                <td><%=part.is_obsolete%></td>
+                        </tr>
+                        <td><strong>Part Price</strong></td>
+                                <td>
+                                    Avg Stock <%=part.avg_price_stock%> €</br>
+                                    Avg Sold <%=part.qty_avg_price_sold%> €</br>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Downloaded:</strong></td>
+                            <td><%=moment(part.created).format('DD. MMMM YYYY')%></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="well well">
+                <div class="caption-full">
+                    <h2>Collection list</h2>
+                    <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th data-sortable="true">Collection id</th>
+                                <th data-sortable="true">Score</th>
+                                <th data-sortable="true">Identifier</th>
+                                <th data-sortable="true">Created</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Minifigs identiid in a collection should be addable here. Show Partout Minifig with each subpart clickable if available.-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>      
+    </div>  
+</div>
+<%- include ("../partials/footer.ejs") %> 

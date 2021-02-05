@@ -2,78 +2,87 @@
 <div class="container">
     <div class="row">
         <div style="margin: 25px auto;">
-              <h3>Minifigs</h3>
-                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                            <thead>
-                                <tr>
-                                    <th data-sortable="true">Col.</th>
-                                    <th data-sortable="true">Set No</th>
-                                    <th data-sortable="true">Qty</th>
-                                    <th data-sortable="true">Item No</th>
-                                    <th data-sortable="true">Description</th>
-                                    <th data-sortable="true">Status</th>
-                                   <!--   <th data-sortable="true">extra_quantity</th>-->
-                                   <!--   <th data-sortable="true">is_alternate</th>-->
-                                  <!--    <th data-sortable="true">is_counterpart</th>-->
-                                </tr>
-                            </thead>
-                            <tbody>
-                        <% subsetData.forEach(function(subset){ %>
-                        <% if(subset.type == "MINIFIG"){%>
-                         <tr>
-                                <td><%=subset.collection_id%></td>
-                                <td><%=subset.setNo%></td>
-                                <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/M/<%=subset.part_no%>.jpg"  onerror="this.onerror=null;this.src='//img.bricklink.com/M/<%=subset.part_no%>.gif';"></td>
-                                <td><%=subset.quantity%></td>
-                                <td><%=subset.part_no%></td>
-                                <td><%=subset.color_name%> <%-subset.name%></td>
-                                <td><%=subset.status_name%></td>
-                        <!--         <td><%=subset.extra_quantity%></td>-->
-                         <!--        <td><%=subset.is_alternate%></td>-->
-                          <!--       <td><%=subset.is_counterpart%></td>-->
-                                <% } %>
-                        
-                             <% }); %>
-                            </tr>
-                         </tbody>
-                        </table>
-                        <h3>Parts</h3>
-                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                            <thead>
-                                <tr>
-                                    <th data-sortable="true">Col.</th>
-                                    <th data-sortable="true">Set No</th>
-                                    <th>Image</th>
-                                    <th data-sortable="true">Qty</th>
-                                    <th data-sortable="true">Item No</th>
-                                    <th data-sortable="true">Description</th>
-                                    <th data-sortable="true">Status</th>
-                                   <!--   <th data-sortable="true">extra_quantity</th>-->
-                                   <!--   <th data-sortable="true">is_alternate</th>-->
-                                  <!--    <th data-sortable="true">is_counterpart</th>-->
-                                </tr>
-                            </thead>
-                            <tbody>
-                        <% subsetData.forEach(function(subset){ %>
-                         <tr>
-                              <% if(subset.type == "PART"){%>
-                                <td><%=subset.collection_id%></td>
-                                <td><%=subset.setNo%></td>
-                                <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.jpg" onerror="this.onerror=null;this.src='//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.gif';"></td>
-                                <td><%=subset.quantity%></td>
-                                <td><%=subset.part_no%></td>
-                                <td><%=subset.color_name%> <%-subset.name%></td>
-                                <td><%=subset.status_name%></td>
-                        <!--         <td><%=subset.extra_quantity%></td>-->
-                         <!--        <td><%=subset.is_alternate%></td>-->
-                          <!--       <td><%=subset.is_counterpart%></td>-->
-                                <% } %>
-                        
-                             <% }); %>
-                            </tr>
-                         </tbody>
-                        </table>
+        
+        <h3>Parts</h3>
+        <input type="text" id="search" placeholder="Search for Description...">
+        <table id="Parttable" data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th data-sortable="true">Col.</th>
+                    <th data-sortable="true">Part No (ColorId)</th>
+                    <th>Image</th>
+                    <th data-sortable="true">Set No (Quantities) </th>
+                    <th data-sortable="true">Total Quantity</th>
+                    <th data-sortable="true">Description</th>
+                    <th data-sortable="true">Status</th>
+                    <th data-sortable="true">avg € (sold)</th>
+                <!--   <th data-sortable="true">extra_quantity</th>-->
+                <!--   <th data-sortable="true">is_alternate</th>-->
+                <!--    <th data-sortable="true">is_counterpart</th>-->
+                </tr>
+            </thead>
+            <tbody>
+        <% subsetData.forEach(function(subset){ %>
+        <tr>
+                <td><%=subset.collection_id%></td>
+            <% if(subset.type == "PART"){%>
+                <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=<%=subset.part_no%>" ><%=subset.part_no%></a> (<%=subset.color_id%>)</td>
+                <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.jpg" onerror="this.onerror=null;this.src='//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.gif';"></td>
+                <td><% i = 0
+                    if(subset.quantities != null && subset.setIds != null) {
+                        quantities = subset.quantities.split(",")
+                        setIds = subset.setIds.split(",")
+                        subset.setNos.split(",").forEach(function(setNo){ %>
+                            <a data-value="<%= setIds[i] %>" href="/sets/<%=setIds[i]%>"><%=setNo%></a> (<%=quantities[i]%>) <br>
+                        <% 
+                    i = i +1
+                
+                }); }%>
+                </td>
+                
+                <td><%=subset.total_quantity%></td>
+                <td><%=subset.color_name%> <%-subset.name%></td>
+                <td><%=subset.status_name%></td>
+                <td><%=subset.qty_avg_price_sold.toFixed(2)%>€%></td>
+        <!--         <td><%=subset.extra_quantity%></td>-->
+        <!--        <td><%=subset.is_alternate%></td>-->
+        <!--       <td><%=subset.is_counterpart%></td>-->
+                <% } %>
+        
+            <% }); %>
+            </tr>
+        </tbody>
+        </table>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    var $rows = $('#Parttable tr');
+    $('#search').keyup(debounce(function() {
+        var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
+
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+}, 300));
+
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
+</script>
 <%- include ("../partials/footer.ejs") %> 

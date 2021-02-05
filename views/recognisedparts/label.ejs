@@ -1,0 +1,189 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="row">
+    <div class="col-md-12">
+        <div style="width: 100%; margin: 25px auto;">
+            <h1 style="text-align:center;">Label images from Run <%= run.run_id %></h1><label id="label_run_id"><%= run.run_id %></label> 
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="container">
+            <select class="image-picker " masonry multiple show-labels>
+                <% recognisedParts.forEach(function(part){ %>
+                <optgroup data-selected='false' class="btn btn-lg btn-primary" label="Partid <%=part.id%>">
+                    <%  part.images.forEach(image => { 
+                        if (image.camera == "USB" ){ %>
+                            <option  data-img-class="<%=part.id%>-<%=image.id%>" data-img-label ="<%=part.id%>-<%=image.id%>" data-img-src="<%=image.path.replace('/home/robert/LegoSorter/partimages','') %>" value="<%=part.id%>-<%=image.id%>">"<%=part.id%>-<%=image.id%></option> 
+                            <%}});  %><%
+                        part.images.forEach(image => { 
+                        if (image.camera == "BRIO" ){ %>
+                            <option  data-img-class="<%=part.id%>-<%=image.id%>" data-img-label ="<%=part.id%>-<%=image.id%>" data-img-src="<%=image.path.replace('/home/robert/LegoSorter/partimages','') %>" value="<%=part.id%>-<%=image.id%>">"<%=part.id%>-<%=image.id%></option> 
+                            <% }});
+                        part.images.forEach(image => { 
+                            if (image.camera == "BRIO_lower"){ %>
+                                <option  data-img-class="<%=part.id%>-<%=image.id%>" data-img-label ="<%=part.id%>-<%=image.id%>" data-img-src="<%=image.path.replace('/home/robert/LegoSorter/partimages','') %>" value="<%=part.id%>-<%=image.id%>">"<%=part.id%>-<%=image.id%></option> 
+                        <% }});
+                        part.images.forEach(image => { 
+                            if (image.camera != "BRIO_lower" && image.camera != "BRIO" && image.camera != "USB"){ %>
+                                <option  data-img-class="<%=part.id%>-<%=image.id%>" data-img-label ="<%=part.id%>-<%=image.id%>" data-img-src="<%=image.path.replace('/home/robert/LegoSorter/partimages','') %>" value="<%=part.id%>-<%=image.id%>">"<%=part.id%>-<%=image.id%></option> 
+                        <% }}); %>
+                </optgroup>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="container">
+            
+            <a href="/runs/<%=run.run_id%>">Go back</a>
+            <div style="width: 100%; margin: 25px auto;">
+                <div class="row">
+                    <div class="col">
+                            <div class="col"><label id="label_partname"></label></div>
+                            <img id="img_foundpart" src="https://img.brickowl.com/files/image_cache/large/placeholder.png" width="200">
+                    </div>
+                    <div class="col">
+
+                         <img id="img_predictedpart" src="https://img.brickowl.com/files/image_cache/large/placeholder.png" width="200">
+                         <div class="col"><label id="label_predictedpartname"></label></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <input type="text" id="input_partno" placeholder="partno" style="width: 100px;">
+                        <button id="button_label" class="btn btn-lg btn-primary" >Label</button>
+                        <button id="button_deletePartimages" class="btn btn-lg btn-danger" >X</button>
+                        <button id="button_predict" class="btn btn-lg btn-secondary" >Predict</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="container">
+                        <input type="text" id="input_colorid" placeholder="colorid" style="width: 100px;">
+                            <h5>Solid</h5>
+                        <%  colors.forEach(color => {  
+                            if (color.color_type == "Solid" ){ %>
+                                <div id="color_id_<%=color.color_id%>" class="color-box" style="background-color: #<%=color.color_code%>;" title="<%=color.color_name%> (<%=color.color_id%>)"></div>
+                            <% }
+                        }); %>
+                        <h5>Transparent</h5>
+                        <%  colors.forEach(color => {  
+                            if (color.color_type == "Transparent" ){ %>
+                                <div id="color_id_<%=color.color_id%>" class="color-box" style="background-color: #<%=color.color_code%>;" title="<%=color.color_name%> (<%=color.color_id%>)"></div>
+                            <% }
+                        }); %>  
+                        <h5>Others</h5>
+                        <%  colors.forEach(color => {  
+                            if (color.color_type == "Metallic" || color.color_type =="Pearl" || color.color_type =="Chrome"){ %>
+                                <div id="color_id_<%=color.color_id%>" class="color-box" style="background-color: #<%=color.color_code%>;" title="<%=color.color_name%> (<%=color.color_id%>)"></div>
+                            <% }
+                        }); %>                                          
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                        <div class="col">
+                            <table id="fc_numbers" data-classes="table table-no-bordered" class="table-sm table-hover-sp table-responsive">
+                                <tr>
+                                    <td><label id="fastclicklabel_plate">plate </label></td>
+                                    <td><label id="fastclicklabel_wedge">wedge </label></td>
+                                    <td><label id="fastclicklabel_modified">modified </label></td>  
+                                    <td><label id="fastclicklabel_grille">grille </label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="fastclicklabel_slope">slope </label></td>
+                                    <td><label id="fastclicklabel_connector">connector </label></td>
+                                    <td><label id="fastclicklabel_technic">technic </label></td>
+                                    <td><label id="fastclicklabel_technic">round </label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="fastclicklabel_brick">brick </label></td>
+                                    <td><label id="fastclicklabel_jumper">jumper </label></td>
+                                    <td><label id="fastclicklabel_pin">pin </label></td>
+                                    <td><label id="fastclicklabel_corner">corner </label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="fastclicklabel_tile">tile </label></td>  
+                                    <td><label id="fastclicklabel_cone">cone </label></td>
+                                    <td><label id="fastclicklabel_pneumatic">pneumatic </label></td>   
+                                    <td><label id="fastclicklabel_inverted">inverted </label></td>  
+                                </tr>
+                                <tr>
+                                    <td><label id="fastclicklabel_bracket">bracket </label></td>
+                                    <td><label id="fastclicklabel_hinge">hinge </label></td>
+                                    <td><label id="fastclicklabel_tread">tread </label></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col">
+                            <table id="fc_numbers" data-classes="table table-no-bordered" class="table-sm table-hover-sp table-responsive">
+                                <tr>
+                                    <td><label id="fastclicklabel_1x">1 x </label>
+                                    <td><label id="fastclicklabel_1">1 </label></td>
+                                    <td><label id="fastclicklabel_6">6 </label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="fastclicklabel_2x">2 x </label>
+                                    <td><label id="fastclicklabel_2">2 </label></td>
+                                    <td><label id="fastclicklabel_8">8 </label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="fastclicklabel_3x">3 x </label>
+                                    <td><label id="fastclicklabel_3">3 </label></td>
+                                    <td><label id="fastclicklabel_10">10 </label></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="fastclicklabel_1x">4 x </label>
+                                    <td><label id="fastclicklabel_4">4 </label></td>
+                                    <td><label id="fastclicklabel_12">12 </label></td>
+                                </tr>
+                            </table>
+                        </div>
+                </div>
+               
+                <div class="row">
+                    <div class="container">
+                        <input type="text" id="search" placeholder="Search for Description..." style="width: 600px;">
+                        <button id="button_deleteSearchInput" class="btn btn-sm btn-secondary" >X</button>
+                    </div>
+                </div>
+                <hr>
+                <h3>Parts</h3>
+                <table id="Parttable" data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th data-sortable="true">Color id</th>
+                            <th data-sortable="true">Item No</th>
+                            <th data-sortable="true">Description</th>
+                            <th data-sortable="true">Amount expected</th>
+                            <th data-sortable="true">avg €</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                <% partsdata.forEach(function(part){ %>
+                <tr>
+                    <% if(part.type == "PART"){%>
+                        <td><img style= "height:60px" src="//img.bricklink.com/P/<%=part.color_id%>/<%=part.no%>.jpg"></td>
+                        <td><%=part.color_id%></td>
+                        <td><%=part.no%></td>
+                        <td><%=part.color_name%> <%-part.name%></td>
+                        <td><%=part.no_expected%></td>
+                        <td><%=part.qty_avg_price_sold.toFixed(2)%>€</td>
+                        <% } %>
+                
+                    <% }); %>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="/stylesheets/js/lib/image-picker.min.js"></script>
+<script type="text/javascript" src="/stylesheets/js/labelscripts.js"></script>
+
+<%- include ("../partials/footer.ejs") %> 

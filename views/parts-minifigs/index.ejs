@@ -1,0 +1,45 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="container">
+    <div class="row">
+        <div style="margin: 25px auto;">
+              <h3>Minifigs</h3>
+                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th data-sortable="true">Col.</th>
+                                    <th data-sortable="true">Set No</th>
+                                    <th data-sortable="true">Image</th>
+                                    <th data-sortable="true">Qty</th>
+                                    <th data-sortable="true">Part No</th>
+                                    <th data-sortable="true">Part Name</th>
+                                    <th data-sortable="true">Status</th>
+                                   <!--   <th data-sortable="true">extra_quantity</th>-->
+                                   <!--   <th data-sortable="true">is_alternate</th>-->
+                                  <!--    <th data-sortable="true">is_counterpart</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <% subsetData.forEach(function(subset){ %>
+                        <% if(subset.type == "MINIFIG"){%>
+                         <tr>
+                                <td><%=subset.collection_id%></td>
+                                <td><%=subset.setNo%></td>
+                                <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/M/<%=subset.part_no%>.jpg"  onerror="this.onerror=null;this.src='//img.bricklink.com/M/<%=subset.part_no%>.gif';"></td>
+                                <td><%=subset.quantity%></td>
+                                <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?M=<%=subset.part_no%>" ><%=subset.part_no%></a> </td>
+                                <td><%=subset.color_name%> <%-subset.name%></td>
+                                <td><%=subset.status_name%></td>
+                        <!--         <td><%=subset.extra_quantity%></td>-->
+                         <!--        <td><%=subset.is_alternate%></td>-->
+                          <!--       <td><%=subset.is_counterpart%></td>-->
+                                <% } %>
+                        
+                             <% }); %>
+                            </tr>
+                         </tbody>
+                        </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<%- include ("../partials/footer.ejs") %> 

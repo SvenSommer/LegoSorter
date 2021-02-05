@@ -1,0 +1,67 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="row">
+    <div class="col-md-12">
+        <div style="width: 100%; margin: 25px auto;">
+            <h1 style="text-align:center;">Edit Recognised images of Part <%= recognisedpart.id %></h1>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="container">
+            <h2>As part <%=recognisedpart.no%> labeled images</h2>
+            <select class="image-picker " masonry multiple show-labels>
+                <optgroup data-selected='false' class="btn btn-lg btn-primary" label="Partid <%=recognisedpart.id%>">
+                    <%  recognisedpart.images.forEach(image => {  %>
+                        <option data-img-class="<%=recognisedpart.id%>-<%=image.id%>" data-img-label ="<%=recognisedpart.id%>-<%=image.id%>" data-img-src="<%=image.path.replace('/home/robert/LegoSorter/partimages','') %>" value="<%=recognisedpart.id%>-<%=image.id%>">"<%=recognisedpart.id%>-<%=image.id%></option> 
+                    <% }); %>
+                </optgroup>
+            </select>
+           
+            <h2>Ignored images</h2>
+            <select class="image-picker " masonry multiple show-labels>
+                <optgroup data-selected='false' class="btn btn-lg btn-primary" label="Partid <%=recognisedpart.id%>"> 
+                    <%  recognisedpart.images_deleted.forEach(image => {  %>
+                        <option data-img-class="<%=recognisedpart.id%>-<%=image.id%>" data-img-label ="<%=recognisedpart.id%>-<%=image.id%>" data-img-src="<%=image.path.replace('/home/robert/LegoSorter/partimages','') %>" value="<%=recognisedpart.id%>-<%=image.id%>">"<%=recognisedpart.id%>-<%=image.id%></option> 
+                    <% }); %>
+                </optgroup>
+            </select>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="container">
+            
+            <a href="/runs/<%=recognisedpart.run_id%>">Go back</a>
+            <div style="width: 100%; margin: 25px auto;">
+                <div class="row">
+                    <div class="col">
+                            <div class="col"><label id="label_partname"></label></div>
+                            <img id="img_foundpart" src="https://img.brickowl.com/files/image_cache/large/placeholder.png" width="200">
+                    </div>
+                    <div class="col">
+
+                         <img id="img_predictedpart" src="https://img.brickowl.com/files/image_cache/large/placeholder.png" width="200">
+                         <div class="col"><label id="label_predictedpartname"></label></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container">
+                        <input type="text" id="input_colorid" placeholder="colorid">
+                        <input type="text" id="input_partno" placeholder="partno">
+                        <button id="button_label" class="btn btn-lg btn-primary" >Label</button>
+                        <button id="button_deletePartimages" class="btn btn-lg btn-danger" >X</button>
+                        <button id="button_predict" class="btn btn-lg btn-secondary" >Predict</button>
+                    </div>
+                </div>               
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="/stylesheets/js/lib/image-picker.min.js"></script>
+<script type="text/javascript" src="/stylesheets/js/labelscripts.js"></script>
+
+<%- include ("../partials/footer.ejs") %> 

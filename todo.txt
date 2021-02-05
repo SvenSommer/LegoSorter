@@ -23,17 +23,32 @@ Parts.create
 - Bugfix: alternativ parts download (compare with bl site)
 
 Hardware:
-- Let motor control search for server
-- if server is not available -> offline mode
-- if server is online post request to start and stop, and speed control
-- if server is online, manuial mode should be an option
 
 ImageCams
-- mask areas where no part appears
-- get a higher FrameRate for less blurred pictures
 - design a solid frame for mirrors
 - prevent parts from falling down
 
 Pusher
 - design and build
+
+label page
+- dont show images with a ratio smaller 50% than the biggest image
+- show only images of one part, scaled by biggest in fixed grid
+- show preview of next parts in queue
+- autocomplete in search box
+- add trending search terms to fast tags
+- complete parts list (not only parts of some sets)
+- shortcuts
+    - label image   = Ctrl+S
+    - postpone      = Ctrl+a
+- synonym mapping of common tags
+- Predict:
+    - predict with confidence
+    - show multiple options for prediction
+    - predict on biggest images, second on smaller 
+
+
+Preferences:
+- make all Parts downloadable
+- make all sets downloadable
 

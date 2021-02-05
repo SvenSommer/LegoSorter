@@ -1,4 +1,9 @@
 <%- include ("../partials/header.ejs") %> 
+<%
+Number.prototype.format = function(){
+    return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+ }
+ %>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -33,157 +38,411 @@
     </div>
     <div class="row">
         <div class="col-md-4">
+            <div class="well well">
             <!--Details!-->
-            <h3>Properties
-                <a href="/collections/<%= collection.id %>/edit" style=" display: inline;" class="btn btn-sm btn-warning">Edit</a>
-                <form style="display: inline;" id="delete-form"  action="/collections/<%=collection.id %>?_method=DELETE" method="POST" >
-                    <button class="btn btn-sm btn-danger">Delete</button>
-                </form>
-            </h3>
-            <hr>
-            <p></p><span style="white-space: pre-line"><%=collection.description%></span></p>
-            <div class="table-responsive">          
-                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                    <tbody>
-                    <tr>
-                        <td><strong>Weight</strong></td>
-                            <td><%=collection.weight_kg%> kg</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Origin</strong></td>
-                        <td> <% if(collection.origin_url  != '') {%><a href="<%= collection.origin_url %>"><% }%><%= collection.origin %></a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Seller</strong></td>
-                        <td><%=collection.seller%> </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Cost</strong></td>
-                        <td><%=collection.cost + collection.porto%>€ (incl. Porto <%=collection.porto%>€)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sets identified</strong></td>
-                        <td><%=setssum[0].allSets_count%></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sum Parts Weight</strong></td>
-                        <td><%=setssum[0].allSets_weight/1000%> kg</td>
-                    </tr>
-                                                    <tr>
-                        <td><strong>Sum Parts Count</strong></td>
-                        <td><%=setssum[0].allSets_part_count%></td>
-                    </tr>
-                                                    <tr>
-                        <td><strong>Sum Minifigs Count</strong></td>
-                        <td><%=setssum[0].allSets_minifigs_count%></td>
-                    </tr>
-                                                    <tr>
-                        <td><strong>All Sets Price</strong></td>
-                        <td>Min <%=setssum[0].AllSets_minPrice%>€</br>Avg <%=setssum[0].AllSets_avgPrice%>€</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Purchased</strong></td>
-                        <td><%=moment(collection.purchase_date).format('DD.MM.YYYY')%></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Created</strong></td>
-                        <td><%=moment(collection.created).format('DD.MM.YYYY')%></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <h3>Properties
+                    <a href="/collections/<%= collection.id %>/edit" style=" display: inline;" class="btn btn-sm btn-warning">Edit</a>
+                    <form style="display: inline;" id="delete-form"  action="/collections/<%=collection.id %>?_method=DELETE" method="POST" >
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </h3>
+                <hr>
+                <p></p><span style="white-space: pre-line"><%=collection.description%></span></p>
+                <div class="table-responsive">          
+                    <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                        <tbody>
+                        <tr>
+                            <td><strong>Weight</strong></td>
+                                <td><%=collection.weight_kg%> kg</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Origin</strong></td>
+                            <td> <% if(collection.origin_url  != '') {%><a href="<%= collection.origin_url %>"><% }%><%= collection.origin %></a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Seller</strong></td>
+                            <td><%=collection.seller%> </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost</strong></td>
+                            <td><%=collection.cost + collection.porto%>€ (incl. Porto <%=collection.porto%>€)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sets identified</strong></td>
+                            <td><% if (setssum[0].allSets_count != null) { %>
+                                <%=setssum[0].allSets_count.format()%>
+                                <% }%>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sum Parts Weight</strong></td>
+                            <td><%=setssum[0].allSets_weight/1000%> kg</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sum Parts Count</strong></td>
+                            <td>
+                                <% if (setssum[0].allSets_part_count != null) { %>
+                                    <%=setssum[0].allSets_part_count.format()%>
+                                <% } else {%>
+                                    0
+                                    <% }%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sum unique Parts Count</strong></td>
+                            <td><%=uniquepartsum.uniquePartCount.format()%></td>
+                        </tr>
+                        <% if(setssum[0].allSets_minifigs_count!= null){ %>
+                        <tr>
+                            <td><strong>Sum Minifigs Count</strong></td>
+                            <td><%=setssum[0].allSets_minifigs_count.format()%></td>
+                        </tr>
+                        <% } %>
+                        <tr>
+                            <td><strong>All Sets Price</strong></td>
+                            <td>Min <%=setssum[0].AllSets_minPrice%>€</br>Avg <%=setssum[0].AllSets_avgPrice%>€</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Purchased</strong></td>
+                            <td><%=moment(collection.purchase_date).format('DD.MM.YYYY')%></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Created</strong></td>
+                            <td><%=moment(collection.created).format('DD.MM.YYYY')%></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     
         <div class="col-md-8">
-            <h3>Runs
-                <a href="/collections/<%= collection.id %>/runs/new" style="float:right;"  class="btn btn-sm btn-primary">Add</a>
-            </h3>
-            <p>
-            <div class="table-responsive">   
-                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                    <thead>
-                        <tr>
-                            <th data-sortable="true">Run</th>
-                            <th data-sortable="true">Status</th>
-                            <th data-sortable="true">Partimages untagged</th>
-                            <th data-sortable="true">Partimages tagged</th>
-                            <th data-sortable="true">Parts identified</th>
-                            <th data-sortable="true">created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% runs.forEach(function(run){ %>
-                        <tr>
-                            <td><a href="/runs/<%=run.run_id %>">Run <%=run.run_id %></a></td>
-                            <td><%= run.status_name %></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td><%=moment(run.created).format('DD.MM.YYYY HH:mm:ss')%></td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
-            </div>
-            </p>
-        </div>
-    </div>
-        <div class="caption">
-            <!--Sets!-->
-            <h3>Sets</h3>
-        </div>
-        <form style="display: inline;" action="/collections/<%= collection.id %>/sets" method ="POST">
-                <input style="display: inline;" id="no"  type="text" name="no">
-                <button style="display: inline;" class="btn btn-sm btn-primary" >Add new set</button>
-        </form>
-        <a class="btn btn-sm btn-secondary" style="float:right;" href="/collections/<%=collection.id %>/sets/new">Add new detailed Set</a>
-        </p>
-            <div class="table table-striped table-hover table-responsive">          
-                <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th data-sortable="true">Number</th>
-                            <th data-sortable="true">Category</th>
-                            <th data-sortable="true">Name</th>
-                            <th data-sortable="true">Year</th>
-                            <th data-sortable="true">Weight (g)</th>
-                            <th data-sortable="true">Parts</th>
-                            <th data-sortable="true">Minifigs</th>
-                            <th data-sortable="true">min. Price (€)</th>
-                            <th data-sortable="true">avg. Price (€)</th>
-                            <th data-sortable="true">Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% sets.forEach(function(set){ %>
-                        <tr>
-                            <td><img class="img-responsive" style= "height:60px" src="<%=set.thumbnail_url %>"></td>
-                            <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?S=<%= set.no %>#T=S&O={%22ss%22:%22DE%22,%22cond%22:%22U%22,%22ii%22:0,%22is%22:0,%22iconly%22:0}"><%=set.no%></a></td>
-                            <td><%= set.category_name%></td>
-                            <td><a data-value="<%= set.id %>" href="/sets/<%=set.id %>"><%= set.name  %></a></td>
-                            <td><%=set.year%></td>
-                            <td><%=set.weight_g%></td>
-                            <td><%=set.complete_part_count%></td>
-                            <td><%=set.complete_minifigs_count%></td>
-                            <td><%=set.min_price.toFixed(2)%>€%></td>
-                            <td><%=set.avg_price.toFixed(2)%>€%></td>
-                            <td><%=set.status_name%></td>
-                            <td><a href="/sets/<%= set.id %>/edit" class="btn btn-sm btn-warning">Edit</a> 
-                            <form id="delete-form" action="/sets/<%= set.id %>?_method=DELETE" method="POST" >
-                                <button class="btn btn-sm btn-danger">Delete</button>
-                            </form></td>
-                        </tr>
-                    <% }); %>
-                    </tbody>
-                </table>
+            <div class="well well">
+                <h3>Runs
+                    <a href="/collections/<%= collection.id %>/runs/new" style="float:right;"  class="btn btn-sm btn-primary">Add</a>
+                </h3>
+                <p>
+                <div class="table-responsive">   
+                    <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th data-sortable="true">Run</th>
+                                <th data-sortable="true">Status</th>
+                                <th data-sortable="true">Parts unidentified</th>
+                                <th data-sortable="true">Parts deleted</th>
+                                <th data-sortable="true">Parts identified</th>
+                                <th data-sortable="true">unique Parts identified</th>
+                                <th data-sortable="true">created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% runStatistics.forEach(function(run){ %>
+                            <tr>
+                                <td><a href="/runs/<%=run.run_id %>">Run <%=run.run_id %></a></td>
+                                <td><%= run.status_name %></td>
+                                <td><%= run.parts_unidentified %></td>
+                                <td><%= run.parts_deleted %></td>
+                                <td><%= run.parts_identified %><br> (<%= run.parts_identified_by_human %>/<%= run.parts_identified_by_cnn %>)</td>
+                                <td><%= run.parts_uniquepartsidentified %></td>
+                                <td><%=moment(run.created).format('DD.MM.YYYY HH:mm:ss')%></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+        <div class="container"> 
+            <form [formGroup]="form">
+                <div class="form-component-container">
+                    <div class="panel panel-default form component main">
+                        <div class="panel-heading">
+                            <ul id="rowTab" class="nav nav-tabs">
+                                <li class="dropdown">
+                                    <a class="dropdown" data-toggle="dropdown" href="#">Sets
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a data-toggle="tab" href="#tabExpSets">Expected</a></li>
+                                      <li><a data-toggle="tab" href="#tabSugSets">Suggested</a></li>
+                                      <li><a data-toggle="tab" href="#tabIncompleteSets">Imcomplete</a></li>
+                                      <li><a data-toggle="tab" href="#tabCompleteSets">Complete</a></li>
+                                      <li><a data-toggle="tab" href="#tabInseratedSets">Inserated</a></li>
+                                      <li><a data-toggle="tab" href="#tabSoldSets">Sold</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown" data-toggle="dropdown" href="#">Parts
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a data-toggle="tab" href="#tabExpParts">Expected Parts</a></li>
+                                      <li><a data-toggle="tab" href="#tabIdentParts">Identified Parts</a></li>
+                                      <li><a data-toggle="tab" href="#tabUnsetParts">Unsetted Parts</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown" data-toggle="dropdown" href="#">Minifigs
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a data-toggle="tab" href="#tabExpMinifigs">Expected Minifigs</a></li>
+                                      <li><a data-toggle="tab" href="#tabIdentMinifigs">Identified Minifigs</a></li>
+                                      <li><a data-toggle="tab" href="#tabUnsetMinifigs">Unsetted Minifigs</a></li>
+                                    </ul>
+    
+                            </ul>
+                            <div class="tab-content">              
+                                <div id="tabExpSets" class="tab-pane fade active in">
+                                    <h3>Expected Sets</h3>
+                                </form>
+                                    <form action="/collections/<%= collection.id %>/recognisedsets" method ="POST">
+                                        <div class="form-group">
+                                            <input style="display: inline;" id="no"  type="text" name="no">
+                                            <button style="display: inline;" class="btn btn-sm btn-primary" >Add new set</button>
+                                        </div>
+                                    </form>
+
+                                    <a class="btn btn-sm btn-secondary" style="float:right;" href="/collections/<%=collection.id %>/recognisedsets/new">Add new detailed Set</a>
+                                    <p></p>
+                                    <div class="table table-striped table-hover table-responsive">          
+                                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th data-sortable="true">SetNo</th>
+                                                    <th data-sortable="true">Category</th>
+                                                    <th data-sortable="true">Name</th>
+                                                    <th data-sortable="true">Year</th>
+                                                    <th data-sortable="true">Weight (g)</th>
+                                                    <th data-sortable="true">Parts</th>
+                                                    <th data-sortable="true">Complete %</th>
+                                                    <th data-sortable="true">Minifigs</th>
+                                                    <th data-sortable="true">min. Price (€)</th>
+                                                    <th data-sortable="true">avg. Price (€)</th>
+                                                    <th data-sortable="true">Status</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% recognisedsets.forEach(function(set){ %>
+                                                <tr>
+                                                    <td><img class="img-responsive" style= "height:60px" src="<%=set.thumbnail_url %>"></td>
+                                                    <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?S=<%= set.no %>#T=S&O={%22ss%22:%22DE%22,%22cond%22:%22U%22,%22ii%22:0,%22is%22:0,%22iconly%22:0}"><%=set.no%></a></td>
+                                                    <td><%= set.category_name%></td>
+                                                    <td><a data-value="<%= set.s_id %>" href="/sets/<%=set.s_id %>"><%= set.name  %></a></td>
+                                                    <td><%=set.year%></td>
+                                                    <td><%=set.weight_g%></td>
+                                                    <td><%=set.parts_existing%> / <%=set.complete_part_count%></td>
+                                                    <td><%=set.complete_percentage  %></td>
+                                                    <td><%=set.complete_minifigs_count%></td>
+                                                    
+                                                    <td><%if (set.min_price != null) { %> 
+                                                        <%=set.min_price.toFixed(2)%>€%>
+                                                    <%} %></td>
+                                                    <td><%if (set.avg_price != null) { %>
+                                                        <%=set.avg_price.toFixed(2)%>€%>
+                                                    <%} %></td>
+                                                    <td><%=set.status_name%></td>
+                                                    <td><a href="/recognisedsets/<%= set.rs_id %>/edit" class="btn btn-sm btn-warning">Edit</a> 
+                                                    <form id="delete-form" action="/recognisedsets/<%= set.rs_id %>?_method=DELETE" method="POST" >
+                                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                                    </form></td>
+                                                </tr>
+                                            <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="tabSugSets" class="tab-pane fade">
+                                    <h3>Suggested Sets</h3>
+                                    <div class="table table-striped table-hover table-responsive">          
+                                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th data-sortable="true">SetNo</th>
+                                                    <th data-sortable="true">matching unsetted Parts</th>
+                                                    <th data-sortable="true">Category</th>
+                                                    <th data-sortable="true">Name</th>
+                                                    <th data-sortable="true">Year</th>
+                                                    <th data-sortable="true">Weight (g)</th>
+                                                    <th data-sortable="true">Parts</th>
+                                                    <th data-sortable="true">Complete %</th>
+                                                    <th data-sortable="true">Minifigs</th>
+                                                    <th data-sortable="true">min. Price (€)</th>
+                                                    <th data-sortable="true">avg. Price (€)</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% suggestedSets.forEach(function(suggestedSet){ %>
+                                                <tr>
+                                                    <td><img class="img-responsive" style= "height:60px;  display: inline-block;" src="https://img.bricklink.com/ItemImage/SN/0/<%=suggestedSet.setNo%>.png"></td>
+                                                    <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?S=<%= suggestedSet.setNo %>#T=S&O={%22ss%22:%22DE%22,%22cond%22:%22U%22,%22ii%22:0,%22is%22:0,%22iconly%22:0}"><%=suggestedSet.setNo%></a></td>
+                                                    <td>
+                                                        <% i = 0
+                                                        colorids = suggestedSet.color_ids.split(",")
+                                                         suggestedSet.partNos.split(",").forEach(function(partno){
+                                                             %>
+                                                             <img class="img" style= "height:60px; display: inline-block;" src="//img.bricklink.com/P/<%=colorids[i]%>/<%=partno%>.jpg" onerror="this.onerror=null;this.src='//img.bricklink.com/P/<%=colorids[i]%>/<%=partno%>.gif';">
+                                                             <% 
+                                                             i = i +1
+                                                        }); %>
+                                                    </td>
+                                                    <td><%= suggestedSet.category_name%></td>
+                                                    <td><a data-value="<%= suggestedSet.s_id %>" href="/sets/<%=suggestedSet.s_id %>"><%= suggestedSet.name  %></a></td>
+                                                    <td><%=suggestedSet.year%></td>
+                                                    <td><%=suggestedSet.weight_g%></td>
+                                                    <td><%=suggestedSet.parts_existing%> / <%=suggestedSet.complete_part_count%></td>
+                                                    <td><%=suggestedSet.complete_percentage  %></td>
+                                                    <td><%=suggestedSet.complete_minifigs_count%></td>
+                                                    
+                                                    <td><%if (suggestedSet.min_price != null) { %> 
+                                                        <%=suggestedSet.min_price.toFixed(2)%>€%>
+                                                    <%} %></td>
+                                                    <td><%if (suggestedSet.avg_price != null) { %>
+                                                        <%=suggestedSet.avg_price.toFixed(2)%>€%>
+                                                    <%} %></td>
+                                                    <td><a href="/sets/<%=suggestedSet.setNo%>/download" style="float:right;"  class="btn btn-sm btn-primary">Get Set Informations</a></td>
+                                                </tr>
+                                            <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="tabExpParts" class="tab-pane fade">
+                                    <table id="Parttable" data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th data-sortable="true">Part No (ColorId)</th>
+                                                <th>Image</th>
+                                                <th data-sortable="true">Set No (Quantities) </th>
+                                                <th data-sortable="true">Total Quantity</th>
+                                                <th data-sortable="true">Description</th>
+                                                <th data-sortable="true">Status</th>
+                                                <th data-sortable="true">avg € (sold)</th>
+                                            <!--   <th data-sortable="true">extra_quantity</th>-->
+                                            <!--   <th data-sortable="true">is_alternate</th>-->
+                                            <!--    <th data-sortable="true">is_counterpart</th>-->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                    <% subsetData.forEach(function(subset){ %>
+                                    <tr>
+                                        <% if(subset.type == "PART"){%>
+                                            <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=<%=subset.part_no%>" ><%=subset.part_no%></a> (<%=subset.color_id%>)</td>
+                                            <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.jpg" onerror="this.onerror=null;this.src='//img.bricklink.com/P/<%=subset.color_id%>/<%=subset.part_no%>.gif';"></td>
+                                            <td><% i = 0
+                                                quantities = subset.quantities.split(",")
+                                                setIds = subset.setIds.split(",")
+                                                subset.setNos.split(",").forEach(function(setNo){ %>
+                                                    <a data-value="<%= setIds[i] %>" href="/sets/<%=setIds[i]%>"><%=setNo%></a> (<%=quantities[i]%>) <br>
+                                                <% 
+                                                i = i +1
+                                            }); %>
+                                            </td>
+                                            <td><%=subset.total_quantity%></td>
+                                            <td><%=subset.color_name%> <%-subset.name%></td>
+                                            <td><%=subset.status_name%></td>
+                                            <td><%=subset.qty_avg_price_sold.toFixed(2)%>€%></td>
+                                    <!--         <td><%=subset.extra_quantity%></td>-->
+                                    <!--        <td><%=subset.is_alternate%></td>-->
+                                    <!--       <td><%=subset.is_counterpart%></td>-->
+                                            <% } %>
+                                    
+                                        <% }); %>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                                <div id="tabUnsetParts" class="tab-pane fade">
+                                    <h3>Unsetted Parts</h3>
+                                    <div class="table-responsive">   
+                                        <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                                            <thead>
+                                                <tr>
+                
+                                                    <th data-sortable="true">Image</th>
+                                                    <th data-sortable="true">No</th>
+                                                    <th data-sortable="true">Color_id</th>
+                                                    <th data-sortable="true">Appears in Sets</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% unsettedParts.forEach(function(part){ %>
+                                                <tr>
+                                                    <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/P/<%=part.color_id%>/<%=part.partNo%>.jpg" onerror="this.onerror=null;this.src='//img.bricklink.com/P/<%=part.color_id%>/<%=part.partNo%>.gif';"></td>            
+                                                    <td><%= part.partNo %></td>
+                                                    <td><%= part.color_id %></td>
+                                                    <td>
+                                                    <% if(part.super_set_count != 0){%>
+                                                            <%= part.super_set_count %>
+                                                    <%}else{ %>
+                                                        <a href="/supersets/<%=part.partNo%>/create" style="float:right;"  class="btn btn-sm btn-primary">Get Supersets</a>
+                                                    <% }%>
+                                                </td>
+                                                </tr>
+                                                <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="tabIdentParts" class="tab-pane fade">
+                                    <h3>Identified Parts of Collection</h3>
+                                </div>
+                                <div id="tabExpMinifigs" class="tab-pane fade">
+                                    <table id="Parttable" data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th data-sortable="true">Part No</th>
+                                                <th>Image</th>
+                                                <th data-sortable="true">Set No</th>
+                                                <th data-sortable="true">Total Quantity</th>
+                                                <th data-sortable="true">Description</th>
+                                                <th data-sortable="true">Status</th>
+                                                <th data-sortable="true">avg € (sold)</th>
+                                            <!--   <th data-sortable="true">extra_quantity</th>-->
+                                            <!--   <th data-sortable="true">is_alternate</th>-->
+                                            <!--    <th data-sortable="true">is_counterpart</th>-->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                    <% subsetData.forEach(function(subset){ %>
+                                    <tr>
+                                        <% if(subset.type == "MINIFIG"){%>
+                                            <td><a href="https://www.bricklink.com/v2/catalog/catalogitem.page?M=<%=subset.part_no%>"><%=subset.part_no%></a></td>
+                                            <td><img class="img-responsive" style= "height:60px" src="//img.bricklink.com/M/<%=subset.part_no%>.jpg"  onerror="this.onerror=null;this.src='//img.bricklink.com/M/<%=subset.part_no%>.gif';"></td>
+                                            <td><% i = 0
+                                                quantities = subset.quantities.split(",")
+                                                setIds = subset.setIds.split(",")
+                                                subset.setNos.split(",").forEach(function(setNo){ %>
+                                                    <a data-value="<%= setIds[i] %>" href="/sets/<%=setIds[i]%>"><%=setNo%></a>(<%=quantities[i]%>) <br>
+                                                <% 
+                                                i = i +1
+                                            }); %>
+                                            </td>
+                                            <td><%=subset.total_quantity%></td>
+                                            <td><%=subset.color_name%> <%-subset.name%></td>
+                                            <td><%=subset.status_name%></td>
+                                            <td><%=subset.qty_avg_price_sold.toFixed(2)%>€%></td>
+                                    <!--         <td><%=subset.extra_quantity%></td>-->
+                                    <!--        <td><%=subset.is_alternate%></td>-->
+                                    <!--       <td><%=subset.is_counterpart%></td>-->
+                                            <% } %>
+                                    
+                                        <% }); %>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            Hallo
-        </div>
+           
     </div>
 </div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
 <%- include ("../partials/footer.ejs") %> 

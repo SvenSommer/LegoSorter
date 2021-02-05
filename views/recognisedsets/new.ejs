@@ -1,0 +1,32 @@
+<%- include ("../partials/header.ejs") %> 
+<div class="container">
+    <div class="row">
+        <div style="width: 30%; margin: 25px auto;">
+            <h1 style="text-align:center;">Add new Set to <%= collection.name %></h1>
+            <form action="/collections/<%= collection.id %>/recognisedsets" method ="POST">
+                <div class="form-group">
+                    <label for="no">Number</label>
+                    <input id="no" class="form-control" type="text" name="no">
+                </div>
+                <div class="form-group">
+                    <label for="instructions">Instructions</label>
+                    <input id="instructions" class="form-control" type="text" name="instructions" >
+                </div>
+                <div class="form-group">
+                    <label for="condition">Condition</label>
+                    <input id="condition" class="form-control" type="text" name="condition" >
+                </div>
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <input id="comments" class="form-control" type="text" name="comments">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" >Submit!</button>
+                </div>
+            </form>
+                    <a href="/collections/<%=collection.id%> ">Go back</a>
+        </div>
+
+    </div>
+</div>
+<%- include ("../partials/footer.ejs") %> 

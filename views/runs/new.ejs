@@ -1,16 +1,20 @@
 <%- include ("../partials/header.ejs") %> 
 <div class="container">
     <div class="row">
-        <div style="width: 30%; margin: 25px auto;">
-            <h1 style="text-align:center;">Add new Run to <%= collection.name %></h1>
+        <div style="width: 40%; margin: 25px auto;">
+            <h1 style="text-align:center;">Add new Run to Collection '<%= collection.name %>'</h1>
             <form action="/collections/<%= collection.id %>/runs" method ="POST">
+                <div class="form-group">
+                    <label for="no">Run Number</label>
+                    <input readonly="readonly" id="no" class="form-control" type="text" name="no" value="<%=run.no_next%>" >
+                </div>
                 <div class="form-group">
                     <label for="sorter_id">Sorter id</label>
                     <input id="sorter_id" class="form-control" type="text" name="sorter_id" value="1">
                 </div>
                 <div class="form-group">
-                    <label for="imagefolder">Image Folder</label>
-                    <input id="imagefolder" class="form-control" type="text" name="imagefolder" value="/home/robert/LegoSorter/public/partimages">
+                    <label for="imagefolder">Create Image Folder</label>
+                    <input id="imagefolder" class="form-control" type="text" name="imagefolder" value="/home/robert/LegoSorter/partimages/collection<%= collection.id%>/run<%=run.no_next%>">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block" >Create Run</button>

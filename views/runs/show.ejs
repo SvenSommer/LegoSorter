@@ -26,11 +26,7 @@
                             <td><%=run.collection_id%></td>
                         </tr>
                             <td><strong>Image Folder</strong></td>
-                            <td> 
-                                <form style="display: inline;" action="/runs/<%= run.run_id %>/scanFolder" method ="POST">
-                                    <button style="display: inline;" class="btn btn-sm btn-primary" ><%=run.imagefolder%></button>
-                                </form>
-                            </td>
+                            <td><%=run.imagefolder%></td>
                         </tr>
                         <tr>
                             <td><strong>Current Status</strong></td>
@@ -89,40 +85,46 @@
     <div class="row"></div>
         <div class="col-lg">
             <div class="caption">
-                <h3>Partimages</h3>
+                <h3>Parts (<%=recognisedParts.length %>)</h3>
+                <a href="/runs/<%=run.run_id%>/labelImages" class="btn btn-primary">Label Images</a>
             </div>
             <table data-toggle="table" data-classes="table table-no-bordered" class="table table-hover table-responsive">
                 <thead>
                     <tr>
                         <th data-sortable="true">Image</th>
                         <th data-sortable="true">No</th>
+                        <th data-sortable="true">Partimages</th>
                         <th data-sortable="true">ColorId</th>
                         <th data-sortable="true">Score</th>
                         <th data-sortable="true">Identifier</th>
-                        <th data-sortable="true">Size (kb)</th>
                         <th data-sortable="true">Created</th>
-                        <th data-sortable="true">Imported</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% partimages.forEach(function(image){ %>
+                    <%recognisedParts.forEach(function(part){ %>
                         <tr>
-                            <td><img class="img-responsive" style= "height:60px" src="<%=image.path %>"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><%=image.size_kb/1000%></td>
-                            <td><%=moment(image.created).format('DD.MM.YYYY HH:mm:ss')%></td>
-                            <td><%=moment(image.imported).format('DD.MM.YYYY HH:mm:ss')%></td>
+                            <td><%if(part.no != null) { %> <img class="img-responsive" style= "height:60px" src="//img.bricklink.com/P/<%=part.color_id%>/<%=part.no%>.jpg"><% }%></td>
+                            <td><%=part.no%></td>
+                            <td><%  part.images.forEach(image => {  %>
+                                <img class="img-responsive" style= "height:60px; display: inline-block;" src="<%=image.path.replace('/home/robert/LegoSorter/partimages','')%>">
+                                <% }); %>
+                            </td>
+                            <td><%=part.color_id%></td>
+                            <td><%=part.score%></td>
+                            <td><%=part.identifier%></td>
+                            <td><%=moment(part.created).format('DD.MM.YYYY HH:mm:ss')%></td>
+                            <td><a href="/recognisedpart/<%= part.id %>/edit" class="btn btn-sm btn-warning">Edit</a> 
+                                <form id="delete-form" action="/recognisedpart/<%= part.id %>?_method=DELETE" method="POST" >
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form></td>
                         </tr>
                     <% }); %>
-                    
                 </tbody>
             </table>
         </div>
         </div>
     </div>
-</div>  
-    
+</div>
+   
 <%- include ("../partials/footer.ejs") %> 
