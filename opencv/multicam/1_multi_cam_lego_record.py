@@ -31,8 +31,8 @@ def init():
 	ap = argparse.ArgumentParser()
 	return vars(ap.parse_args())
 
-filenameBrio = 'outputUSB.avi'
-filenameUSB = 'outputBrio.avi'
+filenameBrio = 'outputUSB_example1.avi'
+filenameUSB = 'outputBrio_example1.avi'
 camMotionUSB = PartsDetectorUsbCam(1,  "", filenameUSB)
 camMotionBRIO = PartsDetectorBrioCam(1, "", filenameBrio)
 control = Controllegosorter

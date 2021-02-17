@@ -125,7 +125,7 @@ class Part(object):
          # prediction turned off
          #predictedPartno = self.most_common(self.predictedPartnos)
          predictedPartno = 1200
-         self.bucket = 2
+         self.bucket = 1
          #bug: most common if there are all different
          print(f"{self.getTime()} {self.partid} most common predictedPartno: {predictedPartno}" )
 

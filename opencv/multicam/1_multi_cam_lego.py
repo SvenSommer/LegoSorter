@@ -51,8 +51,8 @@ readNextFrame = False
 print("readfolder: " + str(readfolder))
 
 if readfolder is not None :
-	webcamBRIO = FileVideoStream('outputBrio_testrun4.avi').start()
-	webcamUSB = FileVideoStream('outputUSB_testrun4.avi').start()
+	webcamBRIO = FileVideoStream('outputBrio_example1.avi').start()
+	webcamUSB = FileVideoStream('outputUSB_example1.avi').start()
 	FileMode = True
 	print("[INFO] reading files...!")
 
@@ -101,7 +101,7 @@ if FileMode is False:
 	control.startLegoSorter()
 while True:
 	frames = []
-	
+
 	for (stream, partdetector) in zip((webcamUSB, webcamBRIO), (camMotionUSB, camMotionBRIO)):
 		if readNextFrame or total < 4 or FileMode is False:
 			frame = stream.read()
